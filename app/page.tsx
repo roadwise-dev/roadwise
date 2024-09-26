@@ -7,7 +7,8 @@ export default function Home() {
       <header className="text-center mb-10">
         <h1 className="text-4xl font-bold">Welcome to Roadwise</h1>
         <p className="mt-4 text-lg">
-          Create, manage, and share your app's roadmap and feedback with ease.
+          Create, manage, and share your app&apos;s roadmap and feedback with
+          ease.
         </p>
       </header>
 

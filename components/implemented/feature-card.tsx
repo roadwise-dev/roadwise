@@ -4,7 +4,7 @@ import UpvoteButton from "./upvote";
 type Feature = {
   id: string;
   title: string;
-  description: string | null;
+  description: string;
   upvotes: number;
 };
 

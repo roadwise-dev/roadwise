@@ -37,7 +37,7 @@ export const feature = pgTable("feature", {
     .references(() => board.id)
     .notNull(), // Reference to the board
   title: text("title").notNull(), // Title of the feature
-  description: text("description"), // Detailed description
+  description: text("description").notNull(), // Detailed description
   upvotes: integer("upvotes").default(0).notNull(), // Number of upvotes
   implemented: text("implemented").default("false").notNull(), // Feature implemented status
   createdAt: timestamp("created_at").defaultNow().notNull(), // Creation timestamp

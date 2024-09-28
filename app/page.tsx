@@ -1,8 +1,20 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { ArrowRight, CheckCircle, MessageSquare, ThumbsUp, Users } from "lucide-react"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  ArrowRight,
+  CheckCircle,
+  MessageSquare,
+  ThumbsUp,
+  Users,
+} from "lucide-react";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -13,7 +25,9 @@ export default function HomePage() {
             Roadwise
           </Link>
           <nav className="space-x-4">
-            <Button variant="outline">Log in</Button>
+            <Button asChild variant="outline">
+              <Link href="/login">Log in</Link>
+            </Button>
             <Button>Sign up</Button>
           </nav>
         </div>
@@ -21,9 +35,12 @@ export default function HomePage() {
 
       <main>
         <section className="py-20 text-center">
-          <h1 className="text-5xl font-bold mb-6">Empower Your Product with User Feedback</h1>
+          <h1 className="text-5xl font-bold mb-6">
+            Empower Your Product with User Feedback
+          </h1>
           <p className="text-xl text-gray-600 mb-8">
-            Create feedback boards for your apps and let your users shape the future of your product.
+            Create feedback boards for your apps and let your users shape the
+            future of your product.
           </p>
           <div className="flex justify-center space-x-4">
             <Input className="w-64" placeholder="Enter your app name" />
@@ -36,7 +53,9 @@ export default function HomePage() {
 
         <section className="py-20 bg-gray-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">
+              How It Works
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
@@ -65,7 +84,9 @@ export default function HomePage() {
                   <CardContent>
                     <div className="flex flex-col items-center text-center">
                       {step.icon}
-                      <CardDescription className="mt-4">{step.description}</CardDescription>
+                      <CardDescription className="mt-4">
+                        {step.description}
+                      </CardDescription>
                     </div>
                   </CardContent>
                 </Card>
@@ -76,7 +97,9 @@ export default function HomePage() {
 
         <section className="py-20">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">
+              Key Features
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 "Custom feedback boards for each app",
@@ -99,9 +122,14 @@ export default function HomePage() {
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold mb-6">Ready to get started?</h2>
             <p className="text-xl mb-8">
-              Join thousands of product teams using Roadwise to build better products.
+              Join thousands of product teams using Roadwise to build better
+              products.
             </p>
-            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-gray-900">
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-white border-white hover:bg-white hover:text-gray-900"
+            >
               Sign up for free
             </Button>
           </div>
@@ -114,5 +142,5 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

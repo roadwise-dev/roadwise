@@ -3,9 +3,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { db } from "@/lib/drizzle/db";
 import { app, board } from "@/lib/drizzle/schema";
 import { eq } from "drizzle-orm";
+import { notFound } from "next/navigation";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const [dbApp] = await db.select().from(app).where(eq(app.slug, params.slug));
+
+  if (!dbApp) {
+    notFound();
+  }
+
   const dbBoards = await db
     .select()
     .from(board)

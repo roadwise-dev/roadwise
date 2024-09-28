@@ -8,12 +8,11 @@ export default function DashboardLayout({
   return (
     <div className="flex flex-col min-h-screen items-center">
       {/* Navbar */}
-      <div className="w-full max-w-5xl">
+      <div className="w-full px-8 py-4 max-w-5xl">
         <Navbar />
+        {/* Main Content */}
+        <main className="mt-16 w-full max-w-5xl">{children}</main>
       </div>
-
-      {/* Main Content */}
-      <main className="p-8 w-full max-w-5xl">{children}</main>
     </div>
   );
 }

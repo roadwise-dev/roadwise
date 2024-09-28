@@ -1,5 +1,6 @@
 import AppCard from "@/components/dashboard/app-card";
-import { Button } from "@/components/ui/button";
+import CreateAppButton from "@/components/dashboard/create-app";
+import { Search } from "@/components/dashboard/search";
 import { db } from "@/lib/drizzle/db";
 import { app } from "@/lib/drizzle/schema";
 import { createClient } from "@/lib/supabase/server";
@@ -19,8 +20,9 @@ export default async function Dashboard() {
   return (
     <>
       {/* Create New App Button */}
-      <div className="flex justify-end mb-6">
-        <Button variant="outline">Create New App</Button>
+      <div className="flex justify-end gap-4 mb-6">
+        <Search />
+        <CreateAppButton />
       </div>
 
       {/* App Cards */}

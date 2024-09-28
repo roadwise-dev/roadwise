@@ -15,7 +15,9 @@ export default function AppCard({ app }: { app: App }) {
       <CardHeader className="flex flex-row items-center gap-4">
         <Avatar className="w-16 h-16">
           <AvatarImage src={app.avatarUrl} alt={app.name} />
-          <AvatarFallback>{app.name.charAt(0)}</AvatarFallback>
+          <AvatarFallback className="text-2xl font-semibold">
+            {app.name.charAt(0).toUpperCase()}
+          </AvatarFallback>
         </Avatar>
         <div className="flex flex-col justify-center">
           <CardTitle className="text-2xl">{app.name}</CardTitle>

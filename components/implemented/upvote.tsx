@@ -27,17 +27,15 @@ export default function UpvoteButton({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-      <Button
-            variant="outline"
-            size="icon"
-            className=" flex-col flex-shrink-0"
-          >
-            <ChevronUp />
-            <div className="text-xs mt-1">{votes}</div>
-          </Button>
+        <Button
+          variant="outline"
+          className="w-12 h-12 rounded-md flex flex-col items-center justify-center p-1"
+        >
+          <ChevronUp size={24} />
+          <span className="text-md font-medium mt-1">{votes}</span>
+        </Button>
       </AlertDialogTrigger>
       <UpvoteSubmitDialogContent featureTitle={featureInfo.title} />
     </AlertDialog>
-
   );
 }

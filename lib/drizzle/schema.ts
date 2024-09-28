@@ -15,8 +15,10 @@ export const app = pgTable("app", {
     .references(() => user.id)
     .notNull(), // Reference to the user
   name: text("name").notNull(), // Name of the app
-  slug: text("slug").notNull(), // URL-friendly slug
   description: text("description"), // Description of the app
+  domain: text("domain").notNull(), // Domain of the app
+  avatarUrl: text("avatar_url").notNull(), // Avatar URL of the app
+  slug: text("slug").notNull(), // URL-friendly slug
   createdAt: timestamp("created_at").defaultNow().notNull(), // Creation timestamp
 });
 

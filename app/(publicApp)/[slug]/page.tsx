@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     <div className="flex flex-col gap-6">
       <div className="flex items-end justify-between">
         <div className="flex gap-4 items-center">
-          <Avatar className="w-14 h-14">
+          <Avatar className="w-16 h-16 rounded-none">
             <AvatarImage src={dbApp.avatarUrl} alt={dbApp.name} />
             <AvatarFallback className="text-2xl font-semibold">
               {dbApp.name.charAt(0).toUpperCase()}

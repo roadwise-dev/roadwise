@@ -13,7 +13,7 @@ export default function AppCard({ app }: { app: App }) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center gap-4">
-        <Avatar className="w-16 h-16">
+        <Avatar className="w-16 h-16 rounded-none">
           <AvatarImage src={app.avatarUrl} alt={app.name} />
           <AvatarFallback className="text-2xl font-semibold">
             {app.name.charAt(0).toUpperCase()}

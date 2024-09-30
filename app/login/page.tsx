@@ -1,15 +1,18 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { login } from "@/lib/actions/login";
+import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
-import { useFormState } from "react-dom";
+import { redirect } from "next/navigation";
+import LoginForm from "./login-form";
 
-export default function LoginPage() {
-  const [errorMessage, formAction] = useFormState(login, "");
+export default async function LoginPage() {
+  const supabase = createClient();
+  const { data } = await supabase.auth.getUser();
+  // If user is already signed in, redirect to dashboard
+  if (data?.user) {
+    redirect("/dashboard");
+  }
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-neutral-900">
       <div className="space-y-4 bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -37,27 +40,8 @@ export default function LoginPage() {
           <Separator className="w-44" />
         </div>
 
-        {/* Email and Password Form */}
-        <form action={formAction}>
-          <div className="space-y-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="email">Email address</Label>
-              <Input name="email" type="email" required />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input name="password" type="password" required />
-            </div>
-
-            {errorMessage && (
-              <div className="text-red-500 text-sm">{errorMessage}</div>
-            )}
-
-            <Button type="submit" className="w-full">
-              Continue
-            </Button>
-          </div>
-        </form>
+        {/* Render the client-side form */}
+        <LoginForm />
 
         <Button asChild variant="ghost" className="w-full">
           <Link href="/signup">Don’t have an account? Sign up</Link>

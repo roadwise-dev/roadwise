@@ -35,7 +35,7 @@ export default function Navbar() {
           <Link
             key={link.href}
             href={`/${basePath}/${link.href}`} // Create dynamic URLs based on slug
-            className={`text-md transition-colors flex items-center space-x-2 ${
+            className={`text-base transition-colors flex items-center space-x-2 ${
               isActive(link.href)
                 ? "text-black font-bold"
                 : "text-muted-foreground hover:text-primary"

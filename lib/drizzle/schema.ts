@@ -8,6 +8,18 @@ export const user = pgTable("user", {
   avatarUrl: text("avatar_url").notNull(), // Avatar URL column
 });
 
+// Team table
+export const team = pgTable("team", {
+  id: uuid("id").defaultRandom().primaryKey(), // Team's unique ID
+  name: text("name").notNull(), // Team name
+  description: text("description"), // Team description
+  avatarUrl: text("avatar_url"), // Avatar URL of the team (optional)
+  creatorId: uuid("creator_id")
+    .references(() => user.id)
+    .notNull(), // Reference to the user who created the team
+  createdAt: timestamp("created_at").defaultNow().notNull(), // Creation timestamp
+});
+
 // App table
 export const app = pgTable("app", {
   id: uuid("id").defaultRandom().primaryKey(), // App's unique ID

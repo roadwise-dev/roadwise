@@ -29,6 +29,8 @@ import { useRef, useState } from "react";
 export default function CreateAppButton() {
   const [avatar, setAvatar] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [appName, setAppName] = useState("");
+  const [appSlug, setAppSlug] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +72,7 @@ export default function CreateAppButton() {
             />
           </div>
           <AlertDialogHeader className="flex flex-col justify-center">
-            <AlertDialogTitle>Create New App</AlertDialogTitle>
+            <AlertDialogTitle>Create {appName || "New App"}</AlertDialogTitle>
             <AlertDialogDescription>
               Click on the avatar to upload a custom image.
             </AlertDialogDescription>
@@ -81,7 +83,32 @@ export default function CreateAppButton() {
             <Label htmlFor="app-name" className="block text-sm font-medium">
               App Name
             </Label>
-            <Input name="app-name" placeholder="Enter app name" required />
+            <Input
+              name="app-name"
+              placeholder="Enter app name"
+              value={appName}
+              onChange={(e) => setAppName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label
+              htmlFor="app-name"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              App Link
+            </Label>
+            <Input
+              id="app-slug"
+              type="text"
+              placeholder="your-app-url"
+              value={appSlug}
+              onChange={(e) => setAppSlug(e.target.value)}
+            />
+            <p className="text-sm text-muted-foreground">
+              roadwise.vercel.app/
+              {appSlug || "your-app-name"}
+            </p>
           </div>
           <div className="space-y-2">
             <Label
@@ -100,13 +127,13 @@ export default function CreateAppButton() {
             <Label htmlFor="app-group" className="block text-sm font-medium">
               Group
             </Label>
-            <Select required>
+            <Select defaultValue="personal" required>
               <SelectTrigger id="app-group">
                 <SelectValue placeholder="Select a group" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="personal">Personal</SelectItem>
-                <SelectItem value="others">Others</SelectItem>
+                {/* <SelectItem value="others">Others</SelectItem> */}
               </SelectContent>
             </Select>
           </div>

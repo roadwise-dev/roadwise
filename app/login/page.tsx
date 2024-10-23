@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import LoginForm from "./login-form";
 
 export default async function LoginPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   // If user is already signed in, redirect to dashboard
   if (data?.user) {

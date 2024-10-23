@@ -3,8 +3,7 @@
 import { toast } from "@/hooks/use-toast";
 import { upvoteWithEmail } from "@/lib/actions/upvote";
 import { ChevronUp } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useFormState } from "react-dom";
+import { useActionState, useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -35,7 +34,7 @@ export default function UpvoteButton({
 }: {
   featureInfo: Feature;
 }) {
-  const [state, formAction] = useFormState<FormState, FormData>(
+  const [state, formAction] = useActionState<FormState, FormData>(
     upvoteWithEmail,
     {
       message: "",

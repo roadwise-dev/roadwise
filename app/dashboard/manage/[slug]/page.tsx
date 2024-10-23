@@ -7,7 +7,8 @@ import { app } from "@/lib/drizzle/schema";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const [dbApp] = await db.select().from(app).where(eq(app.slug, params.slug));
 
   if (!dbApp) {

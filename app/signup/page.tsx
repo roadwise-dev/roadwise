@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import SignupForm from "./signup-form";
 
 export default async function SignupPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   // If user is already signed in, redirect to dashboard
   if (data?.user) {

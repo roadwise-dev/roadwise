@@ -1,13 +1,14 @@
 "use client";
 
+import { useActionState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { login } from "@/lib/actions/login";
-import { useFormState } from "react-dom";
 
 export default function LoginForm() {
-  const [errorMessage, formAction] = useFormState(login, "");
+  const [errorMessage, formAction] = useActionState(login, "");
 
   return (
     <form action={formAction}>

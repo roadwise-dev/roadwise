@@ -7,8 +7,8 @@ import { usePathname } from "next/navigation"; // Import the usePathname hook
 export default function Navbar() {
   const pathname = usePathname(); // Get the current pathname
 
-  // Extract the base path (which includes the slug)
-  const basePath = pathname.split("/")[1]; // This will give you 'my-app' or whatever slug is there
+  // Extract the base path after '/app', which includes the app slug
+  const basePath = pathname.split("/")[2]; // This will now give you 'app-name'
 
   const links = [
     { href: "", label: "Roadmap", icon: Map },
@@ -20,11 +20,11 @@ export default function Navbar() {
   const isActive = (href: string) => {
     if (
       href === "" &&
-      (pathname === `/${basePath}` || pathname === `/${basePath}/`)
+      (pathname === `/app/${basePath}` || pathname === `/app/${basePath}/`)
     ) {
-      return true; // Ensure Roadmap is active for both /some-app and /some-app/
+      return true; // Ensure Roadmap is active for both /app/app-name and /app/app-name/
     }
-    if (pathname === `/${basePath}/${href}`) return true;
+    if (pathname === `/app/${basePath}/${href}`) return true;
     return false;
   };
 
@@ -34,7 +34,7 @@ export default function Navbar() {
         {links.map((link) => (
           <Link
             key={link.href}
-            href={`/${basePath}/${link.href}`} // Create dynamic URLs based on slug
+            href={`/app/${basePath}/${link.href}`} // Adjust dynamic URLs based on new structure
             className={`text-base transition-colors flex items-center space-x-2 ${
               isActive(link.href)
                 ? "text-black font-bold"

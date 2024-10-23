@@ -1,5 +1,6 @@
 "use server";
 
+import { and, eq } from "drizzle-orm";
 import { db } from "../drizzle/db";
 import { upvote } from "../drizzle/schema";
 
@@ -20,9 +21,23 @@ export async function upvoteWithEmail(prevState: any, formData: FormData) {
   };
 
   try {
+    const existingUpvote = await db
+      .select()
+      .from(upvote)
+      .where(
+        and(eq(upvote.email, data.email), eq(upvote.featureId, data.featureId)),
+      );
+    if (existingUpvote.length > 0) {
+      return {
+        message: "You have already upvoted this feature.",
+        success: false,
+      };
+    }
+
     await db.insert(upvote).values(data);
+
     return {
-      message: "Your vote has been recorded successfully!",
+      message: "",
       success: true,
     };
   } catch (error) {

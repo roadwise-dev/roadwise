@@ -24,23 +24,15 @@ type Feature = {
   upvotes: number;
 };
 
-type FormState = {
-  message: string;
-  success: boolean;
-};
-
 export default function UpvoteButton({
   featureInfo,
 }: {
   featureInfo: Feature;
 }) {
-  const [state, formAction] = useActionState<FormState, FormData>(
-    upvoteWithEmail,
-    {
-      message: "",
-      success: false,
-    },
-  );
+  const [state, formAction] = useActionState(upvoteWithEmail, {
+    message: "",
+    success: false,
+  });
   const [isOpen, setIsOpen] = useState(false);
   const [localUpvotes, setLocalUpvotes] = useState(featureInfo.upvotes);
 
@@ -83,17 +75,13 @@ export default function UpvoteButton({
             className="my-4"
           />
           <Input name="feature-id" type="hidden" value={featureInfo.id} />
+          {state.message && (
+            <p className={`mt-2 text-sm text-red-600`}>{state.message}</p>
+          )}
           <AlertDialogFooter>
             <AlertDialogCancel type="button">Cancel</AlertDialogCancel>
             <Button type="submit">Continue</Button>
           </AlertDialogFooter>
-          {state.message && (
-            <p
-              className={`mt-2 text-sm ${state.success ? "text-green-600" : "text-red-600"}`}
-            >
-              {state.message}
-            </p>
-          )}
         </form>
       </AlertDialogContent>
     </AlertDialog>

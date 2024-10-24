@@ -8,8 +8,8 @@ import { revalidatePath } from "next/cache";
 export async function createAppAction(formData: FormData) {
   const appName = formData.get("app-name") as string;
   const appDescription = formData.get("app-description") as string;
-  const appGroup = formData.get("app-group") as string;
-  const appAvatar = formData.get("avatar") as File | null; // Avatar file (if uploaded)
+  // const appGroup = formData.get("app-group") as string;
+  // const appAvatar = formData.get("avatar") as File | null; // Avatar file (if uploaded)
 
   // Insert new app into the database
   await db.insert(app).values({

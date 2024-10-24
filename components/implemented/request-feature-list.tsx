@@ -3,11 +3,11 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { MessageSquare, Plus, Search } from "lucide-react";
@@ -110,76 +110,86 @@ export default function RequestFeatureList() {
 
   return (
     <div className="flex flex-col">
-    <div className="flex gap-4 mb-6">
-            <div className="relative flex-grow">
-              <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              <Input
-                type="text"
-                placeholder="Search features..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" /> New Request
-            </Button>
-          </div>
-
-          <div className="mb-6">
-            {allTags.map(tag => (
-              <Badge
-                key={tag}
-                variant={selectedTags.includes(tag) ? "default" : "outline"}
-                className="mr-2 mb-2 cursor-pointer"
-                onClick={() => toggleTag(tag)}
-              >
-                {tag}
-              </Badge>
-            ))}
-          </div>
-
-          {filteredFeatures.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredFeatures.map(feature => (
-                <Card key={feature.id} className="cursor-pointer hover:shadow-md transition-shadow">
-                  <CardHeader>
-                    <CardTitle>{feature.title}</CardTitle>
-                    <CardDescription>{feature.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center">
-                        <MessageSquare className="h-4 w-4 mr-1" />
-                        <span className="text-sm text-gray-500">{feature.comments}</span>
-                      </div>
-                      <div>
-                        {feature.tags.map(tag => (
-                          <Badge key={tag} variant="secondary" className="mr-1 mb-1">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-10">
-              <h2 className="text-2xl font-semibold mb-2">No results found</h2>
-              <p className="text-gray-600">
-                We couldn't find any features matching your search or selected tags.
-              </p>
-              <p className="text-gray-600">
-                Try adjusting your search terms or selected tags, or{' '}
-                <Button variant="link" className="p-0 h-auto font-semibold">
-                  submit a new feature request
-                </Button>
-                .
-              </p>
-            </div>
-          )}
+      <div className="flex gap-4 mb-6">
+        <div className="relative flex-grow">
+          <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <Input
+            type="text"
+            placeholder="Search features..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
         </div>
+        <Button>
+          <Plus className="mr-2 h-4 w-4" /> New Request
+        </Button>
+      </div>
+
+      <div className="mb-6">
+        {allTags.map((tag) => (
+          <Badge
+            key={tag}
+            variant={selectedTags.includes(tag) ? "default" : "outline"}
+            className="mr-2 mb-2 cursor-pointer"
+            onClick={() => toggleTag(tag)}
+          >
+            {tag}
+          </Badge>
+        ))}
+      </div>
+
+      {filteredFeatures.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredFeatures.map((feature) => (
+            <Card
+              key={feature.id}
+              className="cursor-pointer hover:shadow-md transition-shadow"
+            >
+              <CardHeader>
+                <CardTitle>{feature.title}</CardTitle>
+                <CardDescription>{feature.description}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center">
+                    <MessageSquare className="h-4 w-4 mr-1" />
+                    <span className="text-sm text-gray-500">
+                      {feature.comments}
+                    </span>
+                  </div>
+                  <div>
+                    {feature.tags.map((tag) => (
+                      <Badge
+                        key={tag}
+                        variant="secondary"
+                        className="mr-1 mb-1"
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-10">
+          <h2 className="text-2xl font-semibold mb-2">No results found</h2>
+          <p className="text-gray-600">
+            We couldn&apos;t find any features matching your search or selected
+            tags.
+          </p>
+          <p className="text-gray-600">
+            Try adjusting your search terms or selected tags, or{" "}
+            <Button variant="link" className="p-0 h-auto font-semibold">
+              submit a new feature request
+            </Button>
+            .
+          </p>
+        </div>
+      )}
+    </div>
   );
 }

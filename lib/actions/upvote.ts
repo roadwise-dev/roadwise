@@ -4,7 +4,7 @@ import { and, eq } from "drizzle-orm";
 import { db } from "../drizzle/db";
 import { upvote } from "../drizzle/schema";
 
-export async function upvoteWithEmail(prevState: any, formData: FormData) {
+export async function upvoteWithEmail(prevState: unknown, formData: FormData) {
   const email = formData.get("email");
   const featureId = formData.get("feature-id");
 

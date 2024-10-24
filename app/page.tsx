@@ -1,3 +1,4 @@
+import { HowItWorks } from "@/components/how-it-works";
 import Footer from "@/components/landing/footer";
 import Hero from "@/components/landing/hero";
 import Navbar from "@/components/landing/navbar";
@@ -11,6 +12,7 @@ export default function HomePage() {
       <main>
         <Hero />
 
+        <HowItWorks />
         <Statistics />
 
         {/* <section className="py-20 bg-gray-900 text-white">

@@ -106,8 +106,8 @@ export default function CreateAppButton() {
               onChange={(e) => setAppSlug(e.target.value)}
             />
             <p className="text-sm text-muted-foreground">
-              roadwise.vercel.app/
-              {appSlug || "your-app-name"}
+              {appSlug || "your-app-url"}
+              .roadwiseapp.com
             </p>
           </div>
           <div className="space-y-2">

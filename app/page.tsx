@@ -3,17 +3,16 @@ import Footer from "@/components/landing/footer";
 import Hero from "@/components/landing/hero";
 import Navbar from "@/components/landing/navbar";
 import { Pricing } from "@/components/landing/pricing";
-import { Statistics } from "@/components/statistics";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen max-w-[1240px] mx-auto px-4 text-gray-900">
       <Navbar />
-      <main>
+      <main className="flex flex-col gap-10">
         <Hero />
 
         <HowItWorks />
-        <Statistics />
+        {/* <Statistics /> */}
 
         {/* <section className="py-20 bg-gray-900 text-white">
           <div className="container mx-auto px-4 text-center">

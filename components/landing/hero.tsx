@@ -10,7 +10,7 @@ const slogan = {
 
 export default function Hero() {
   return (
-    <section className="py-24 text-center">
+    <section className="py-36 text-center">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
         <div className="text-left">
           <h1 className="text-7xl font-bold mb-6">{slogan.title}</h1>
@@ -27,21 +27,21 @@ const name = "Features";
 const features = [
   {
     id: "1",
-    title: "Create a Feedback Board",
-    description: "Create a feedback board for your app.",
-    upvotes: 10,
+    title: "Dark Mode",
+    description: "Enable dark mode for better night-time usability.",
+    upvotes: 48,
   },
   {
     id: "2",
-    title: "Customize the Board",
-    description: "Customize the look and feel of your feedback board.",
-    upvotes: 20,
+    title: "Multi-Language Support",
+    description: "Support multiple languages for a global audience.",
+    upvotes: 35,
   },
   {
     id: "3",
-    title: "Add Features",
-    description: "Add features like upvotes, comments, and more.",
-    upvotes: 30,
+    title: "Real-Time Notifications",
+    description: "Receive real-time notifications for user feedback.",
+    upvotes: 12,
   },
 ];
 

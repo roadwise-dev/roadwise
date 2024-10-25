@@ -17,9 +17,9 @@ export default function AppCard({ app }: { app: App }) {
     >
       <Card className="hover:shadow-md transition-shadow">
         <CardHeader className="flex flex-row items-center gap-4">
-          <Avatar className="w-16 h-16 rounded-none">
+          <Avatar className="w-16 h-16 rounded-md">
             <AvatarImage src={app.avatarUrl} alt={app.name} />
-            <AvatarFallback className="text-2xl font-semibold">
+            <AvatarFallback className="text-3xl border bg-gray font-semibold rounded-md">
               {app.name.charAt(0).toUpperCase()}
             </AvatarFallback>
           </Avatar>

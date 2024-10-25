@@ -11,7 +11,7 @@ export default function DashboardLayout({
       <div className="w-full px-8 py-4 max-w-5xl">
         <Navbar />
         {/* Main Content */}
-        <main className="mt-16 w-full">{children}</main>
+        <main className="mt-4 w-full">{children}</main>
       </div>
     </div>
   );

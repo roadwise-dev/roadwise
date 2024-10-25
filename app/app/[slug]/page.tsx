@@ -7,7 +7,23 @@ import { eq } from "drizzle-orm";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-export default async function Page(props: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  // read route params
+  const slug = (await params).slug;
+  const [dbApp] = await db.select().from(app).where(eq(app.slug, slug));
+
+  return {
+    title: dbApp.name,
+  };
+}
+
+export default async function Page(props: {
+  params: Promise<{ slug: string }>;
+}) {
   const params = await props.params;
   const [dbApp] = await db.select().from(app).where(eq(app.slug, params.slug));
 
@@ -24,9 +40,9 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
     <div className="flex flex-col gap-6">
       <div className="flex items-end justify-between">
         <div className="flex gap-4 items-center">
-          <Avatar className="w-16 h-16 rounded-none">
+          <Avatar className="w-16 h-16 rounded-md">
             <AvatarImage src={dbApp.avatarUrl} alt={dbApp.name} />
-            <AvatarFallback className="text-2xl font-semibold">
+            <AvatarFallback className="text-3xl font-semibold rounded-md">
               {dbApp.name.charAt(0).toUpperCase()}
             </AvatarFallback>
           </Avatar>

@@ -14,7 +14,7 @@ export default function Navbar() {
           height={32}
           className="rounded-md opacity-90"
         />
-        <Link href="/" className="text-2xl font-bold">
+        <Link href="/" className="hidden md:block text-2xl font-bold">
           Roadwise
         </Link>
       </div>

@@ -8,7 +8,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen max-w-[1240px] mx-auto px-4 text-gray-900">
       <Navbar />
-      <main className="flex flex-col gap-10">
+      <main className="flex flex-col gap-0 sm:gap-10">
         <Hero />
 
         <HowItWorks />

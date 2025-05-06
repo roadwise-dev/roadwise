@@ -5,7 +5,7 @@ import StartButton from "./start-button";
 
 export default function Navbar() {
   return (
-    <div className="px-4 py-6 flex justify-between items-center">
+    <div className="py-6 flex justify-between items-center">
       <div className="flex flex-row gap-4">
         <Image
           src="/logo.png"
@@ -14,11 +14,11 @@ export default function Navbar() {
           height={32}
           className="rounded-md opacity-90"
         />
-        <Link href="/" className="hidden md:block text-2xl font-bold">
+        <Link href="/" className="hidden sm:block text-2xl font-bold">
           Roadwise
         </Link>
       </div>
-      <nav className="space-x-4">
+      <nav className="space-x-2">
         <Button asChild variant="outline" className="rounded-lg text-md">
           <Link href="/login">Log in</Link>
         </Button>

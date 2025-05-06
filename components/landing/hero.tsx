@@ -1,6 +1,7 @@
+import Link from "next/link";
 import FeatureCard from "../implemented/feature-card";
+import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import StartButton from "./start-button";
 
 const slogan = {
   title: "Empower Your Product with User Feedback",
@@ -10,12 +11,14 @@ const slogan = {
 
 export default function Hero() {
   return (
-    <section className="py-36 text-center">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
-        <div className="text-left">
-          <h1 className="text-7xl font-bold mb-6">{slogan.title}</h1>
+    <section className="py-12 md:py-36 text-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-20">
+        <div className="text-center md:text-left">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6">{slogan.title}</h1>
           <p className="text-xl text-gray-600 mb-8">{slogan.description}</p>
-          <StartButton />
+          <Button className="w-full md:w-fit rounded-lg text-md">
+            <Link href="/signup">Start for free</Link>
+          </Button>
         </div>
         <InteractiveBoard />
       </div>

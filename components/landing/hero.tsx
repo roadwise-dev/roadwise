@@ -16,13 +16,17 @@ export default function Hero() {
         <div className="text-center md:text-left">
           <h1 className="text-5xl md:text-7xl font-bold mb-6">{slogan.title}</h1>
           <p className="text-xl text-gray-600 mb-8">{slogan.description}</p>
-          <Button className="w-full md:w-fit rounded-lg text-md">
-            <Link href="/signup">Start for free</Link>
-          </Button>
+          <div className="space-x-2">
+            <Button className="w-full md:w-fit rounded-lg text-md">
+              <Link href="/signup">Start for free</Link>
+            </Button>
+            <Button className="w-full md:w-fit rounded-lg text-md" variant="outline">
+              <Link href="/app/roadwise">See roadwise in action</Link>
+            </Button></div>
         </div>
         <InteractiveBoard />
       </div>
-    </section>
+    </section >
   );
 }
 

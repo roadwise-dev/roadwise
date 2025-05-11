@@ -24,11 +24,11 @@ export default function Navbar() {
             height={32}
             className="rounded-md opacity-90"
           />
-          <span className="text-xl font-bold ml-2 k">Roadwise</span>
+          <span className="text-2xl font-bold ml-4 k">Roadwise</span>
         </Link>
 
         {/* Desktop Navigation - hidden on mobile */}
-        <nav className="hidden md:flex items-center justify-center space-x-8">
+        <nav className="hidden sm:flex items-center justify-center space-x-8">
           <Link
             href="/features"
             className="text-foreground/80 hover:text-black transition"
@@ -72,7 +72,7 @@ export default function Navbar() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden ml-2"
+            className="sm:hidden ml-2"
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
@@ -83,7 +83,7 @@ export default function Navbar() {
 
       {/* Mobile menu - slides down when open */}
       {isMenuOpen && (
-        <div className="md:hidden bg-background border-t min-h-full">
+        <div className="sm:hidden bg-background border-t min-h-full">
           <div className="px-4 py-2 space-y-3">
             <Link
               href="/features"

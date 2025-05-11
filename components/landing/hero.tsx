@@ -11,12 +11,12 @@ const slogan = {
 
 export default function Hero() {
   return (
-    <section className="py-12 md:py-36 text-center">
+    <section className="py-32 md:py-60 text-center">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-20">
         <div className="text-center md:text-left">
           <h1 className="text-5xl md:text-7xl font-bold mb-6">{slogan.title}</h1>
           <p className="text-xl text-gray-600 mb-8">{slogan.description}</p>
-          <div className="space-x-2">
+          <div className="flex flex-col md:flex-row gap-2">
             <Button className="w-full md:w-fit rounded-lg text-md">
               <Link href="/signup">Start for free</Link>
             </Button>

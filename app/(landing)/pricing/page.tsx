@@ -21,7 +21,7 @@ export default function PricingPage() {
       ctaLink: "/signup",
     },
     {
-      name: "Pro",
+      name: "Pro (Coming Soon!)",
       description: "For teams serious about user-driven development",
       price: "$5",
       interval: "per month",

@@ -27,7 +27,7 @@ export function Pricing() {
       cta: "Get Started",
     },
     {
-      name: "Pro",
+      name: "Pro (Coming Soon!)",
       description: "For teams serious about user-driven development",
       price: "$5",
       interval: "per month",

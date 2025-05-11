@@ -58,12 +58,12 @@ export default function Navbar() {
           <div className="flex items-center space-x-2">
             <Button asChild variant="outline" className="rounded-lg text-sm hidden sm:block">
               <Link href="/login" aria-label="Log in to your account">
-                Log in
+                Sign in
               </Link>
             </Button>
             <Button asChild className="rounded-lg text-sm">
               <Link href="/signup" aria-label="Sign up for an account">
-                Start Now
+                Start for free
               </Link>
             </Button>
           </div>

@@ -21,13 +21,6 @@ export default function CustomersPage() {
                   Discover how companies of all sizes use Roadwise to build better products with user feedback.
                 </p>
               </div>
-              <div className="space-x-4">
-                <Button asChild>
-                  <Link href="/pricing">
-                    Join Our Customers <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
             </div>
           </div>
         </section>

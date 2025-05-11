@@ -20,13 +20,6 @@ export default function FeaturesPage() {
                   Discover all the tools and capabilities that make Roadwise the ultimate platform for collecting and acting on user feedback.
                 </p>
               </div>
-              <div className="space-x-4">
-                <Button asChild>
-                  <Link href="/pricing">
-                    Get Started <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
             </div>
           </div>
         </section>
@@ -167,6 +160,6 @@ export default function FeaturesPage() {
           </div>
         </section>
       </main>
-    </div>
+    </div >
   )
 }

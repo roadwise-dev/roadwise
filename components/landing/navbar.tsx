@@ -22,9 +22,9 @@ export default function Navbar() {
             alt="Roadwise app logo"
             width={32}
             height={32}
-            className="rounded-md opacity-90"
+            className="rounded-sm opacity-90"
           />
-          <span className="text-2xl font-bold ml-4 k">roadwise</span>
+          <span className="text-2xl font-bold ml-4 k">Roadwise</span>
         </Link>
 
         {/* Desktop Navigation - hidden on mobile */}

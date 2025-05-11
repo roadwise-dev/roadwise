@@ -4,11 +4,6 @@ import { Button } from "../ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { Badge } from "@/components/ui/badge"
 
-const slogan = {
-  title: "Empower Your Product with User Feedback",
-  description: "Create feedback boards for your apps and let your users shape the future of your product.",
-}
-
 export default function Hero() {
   return (
     <section className="py-20 mt-30 md:py-32 container px-4 md:px-6">
@@ -16,8 +11,10 @@ export default function Hero() {
         <Badge variant="outline" className="mb-6 px-4 py-1.5 text-sm font-medium">Alpha version - Try Now</Badge>
 
         {/* Centered text */}
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">{slogan.title}</h1>
-        <p className="text-xl text-muted-foreground mb-8 max-w-2xl">{slogan.description}</p>
+        <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">Empower Your Product<br />with User Feedback</h1>
+        <p className="text-xl text-muted-foreground mb-8 max-w-2xl">
+          Create feedback boards for your apps and let your users<br />shape the future of your product
+        </p>
 
         {/* Centered buttons */}
         <div className="flex flex-col sm:flex-row gap-4 mb-16 w-full max-w-md justify-center">

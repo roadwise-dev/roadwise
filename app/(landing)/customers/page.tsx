@@ -14,32 +14,16 @@ export default function CustomersPage() {
   return (
     <div className="flex min-h-screen flex-col mt-48">
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="w-full py-12 md:py-20 bg-gray-50 border rounded-2xl">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  Trusted by Innovative Teams Worldwide
-                </h1>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
-                  Discover how companies of all sizes use Roadwise to build better products with user feedback.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Featured Customers */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  Featured Customers
+                  Trusted by Innovative Teams Worldwide
                 </h2>
                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
-                  See how these innovative companies leverage Roadwise to transform their product development
+                  Discover how companies of all sizes use Roadwise to build better products with user feedback.
                 </p>
               </div>
             </div>

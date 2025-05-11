@@ -13,32 +13,16 @@ export default function FeaturesPage() {
   return (
     <div className="flex min-h-screen flex-col mt-48">
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="w-full py-12 md:py-20 bg-gray-50 border rounded-2xl">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  Powerful Features to Transform Your Product Development
-                </h1>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
-                  Discover all the tools and capabilities that make Roadwise the ultimate platform for collecting and acting on user feedback.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Feature Categories */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  Core Features
+                  Powerful Features to Transform Your Product Development
                 </h2>
                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
-                  Everything you need to collect, organize, and prioritize user feedback
+                  Discover all the tools and capabilities that make Roadwise the ultimate platform for collecting and acting on user feedback.
                 </p>
               </div>
             </div>
@@ -138,7 +122,7 @@ export default function FeaturesPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="w-full py-12 md:py-20 bg-gray-50 border rounded-2xl">
+        <section className="w-full mt-10 py-12 md:py-20 bg-gray-50 border rounded-2xl">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, BarChart3, Bell, Globe, Moon, Users, MessageSquare, Zap, Shield, Palette, Layers, Repeat } from 'lucide-react'
+import { ArrowRight, BarChart3, Bell, Globe, Moon, Users, MessageSquare } from 'lucide-react'
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"

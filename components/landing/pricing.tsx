@@ -67,7 +67,7 @@ export function Pricing() {
                 </CardTitle>
                 <CardDescription>{plan.description}</CardDescription>
               </CardHeader>
-              <CardContent className="flex-grow">
+              <CardContent className="grow">
                 <div className="mb-4">
                   <span className="text-4xl font-bold">{plan.price}</span>
                   {plan.interval && (

@@ -45,7 +45,7 @@ export function HowItWorks() {
           {steps.map((step, index) => (
             <Card
               key={index}
-              className="border-black/10 shadow-sm hover:shadow-md transition-shadow"
+              className="border-black/10 shadow-xs hover:shadow-md transition-shadow"
             >
               <CardHeader>
                 <div className="flex items-center justify-center">

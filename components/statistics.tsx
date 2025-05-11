@@ -43,7 +43,7 @@ export function Statistics() {
           {stats.map((stat, index) => (
             <Card
               key={index}
-              className="border-black/10 shadow-sm hover:shadow-md transition-shadow"
+              className="border-black/10 shadow-xs hover:shadow-md transition-shadow"
             >
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">

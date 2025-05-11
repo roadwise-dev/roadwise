@@ -13,7 +13,7 @@ export default function FeatureCard({ feature }: { feature: Feature }) {
     <Card key={feature.id} className="p-4">
       <div className="flex items-start gap-4">
         <UpvoteButton featureInfo={feature} />
-        <div className="flex-grow">
+        <div className="grow">
           <h3 className="font-semibold">{feature.title}</h3>
           <p className="text-sm text-muted-foreground">{feature.description}</p>
         </div>

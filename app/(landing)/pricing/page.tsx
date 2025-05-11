@@ -100,7 +100,7 @@ export default function PricingPage() {
                     <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
                     <CardDescription>{plan.description}</CardDescription>
                   </CardHeader>
-                  <CardContent className="flex-grow">
+                  <CardContent className="grow">
                     <div className="mb-6">
                       <span className="text-4xl font-bold">{plan.price}</span>
                       {plan.interval && <span className="text-gray-600 ml-2">{plan.interval}</span>}
@@ -225,7 +225,7 @@ export default function PricingPage() {
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow">
+              <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
                 <thead>
                   <tr className="bg-gray-100">
                     <th className="py-4 px-6 text-left font-medium">Feature</th>

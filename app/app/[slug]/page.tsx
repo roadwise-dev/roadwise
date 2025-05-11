@@ -55,7 +55,7 @@ export default async function Page(props: {
           <Link href={dbApp.slug + "/feature-request"}>Request a feature</Link>
         </Button>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-grow h-full">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 grow h-full">
         {dbBoards.map((board) => (
           <FeatureBoard key={board.id} id={board.id} name={board.name} />
         ))}

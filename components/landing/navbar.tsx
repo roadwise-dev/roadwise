@@ -24,7 +24,7 @@ export default function Navbar() {
             height={32}
             className="rounded-md opacity-90"
           />
-          <span className="text-2xl font-bold ml-4 k">Roadwise</span>
+          <span className="text-2xl font-bold ml-4 k">roadwise</span>
         </Link>
 
         {/* Desktop Navigation - hidden on mobile */}

@@ -4,6 +4,11 @@ import { ArrowRight, Check, HelpCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: 'Pricing'
+}
 
 export default function PricingPage() {
   const plans = [

@@ -3,6 +3,11 @@ import { ArrowRight, BarChart3, Bell, Globe, Moon, Users, MessageSquare } from '
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: 'Features'
+}
 
 export default function FeaturesPage() {
   return (

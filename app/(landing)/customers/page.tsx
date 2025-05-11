@@ -4,6 +4,11 @@ import { ArrowRight, Star } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: 'Customers'
+}
 
 export default function CustomersPage() {
   return (

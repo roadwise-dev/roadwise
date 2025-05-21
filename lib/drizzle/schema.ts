@@ -41,6 +41,7 @@ export const board = pgTable("board", {
     .references(() => app.id)
     .notNull(), // Reference to the app
   name: text("name").notNull(), // Board name (e.g., Implementing, Won't Have)
+  column: integer("column"), // Column number - 0 indexed
   createdAt: timestamp("created_at").defaultNow().notNull(), // Creation timestamp
 });
 

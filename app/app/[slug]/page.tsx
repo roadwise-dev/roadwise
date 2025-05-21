@@ -34,7 +34,8 @@ export default async function Page(props: {
   const dbBoards = await db
     .select()
     .from(board)
-    .where(eq(board.appId, dbApp.id));
+    .where(eq(board.appId, dbApp.id))
+    .orderBy(board.column);
 
   return (
     <div className="flex flex-col gap-6">

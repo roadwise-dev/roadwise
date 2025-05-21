@@ -1,9 +1,11 @@
 "use client"
+
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Menu } from "lucide-react";
+import { AuthButtons } from "./auth-buttons";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,19 +56,8 @@ export default function Navbar() {
 
         {/* Right: Login/Signup buttons and menu icon */}
         <div className="flex items-center space-x-2">
-          {/* Auth buttons - always visible */}
-          <div className="flex items-center space-x-2">
-            <Button asChild variant="outline" className="rounded-lg text-sm hidden sm:block">
-              <Link href="/login" aria-label="Log in to your account">
-                Sign in
-              </Link>
-            </Button>
-            <Button asChild className="rounded-lg text-sm">
-              <Link href="/signup" aria-label="Sign up for an account">
-                Start for free
-              </Link>
-            </Button>
-          </div>
+          {/* Auth buttons */}
+          <AuthButtons />
 
           {/* Menu button - visible on mobile */}
           <Button

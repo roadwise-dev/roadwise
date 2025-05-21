@@ -35,11 +35,10 @@ export default function Navbar() {
           <Link
             key={link.href}
             href={`/app/${basePath}/${link.href}`} // Adjust dynamic URLs based on new structure
-            className={`text-base transition-colors flex items-center space-x-2 ${
-              isActive(link.href)
-                ? "text-black font-bold"
-                : "text-muted-foreground hover:text-primary"
-            }`}
+            className={`text-base transition-colors flex items-center space-x-2 ${isActive(link.href)
+              ? "text-black font-bold"
+              : "text-muted-foreground hover:text-primary"
+              }`}
           >
             <link.icon size={18} />
             <span>{link.label}</span>
@@ -48,7 +47,7 @@ export default function Navbar() {
       </div>
       <div>
         <Link
-          href="https://roadwiseboard.vercel.app"
+          href="https://roadwiseapp.com"
           className="text-muted-foreground hover:text-primary"
         >
           Powered by Roadwise™

@@ -1,6 +1,7 @@
 import AppCard from "@/components/dashboard/app-card";
 import CreateAppButton from "@/components/dashboard/create-app";
 import { Search } from "@/components/dashboard/search";
+import { StatsCards } from "@/components/dashboard/stats-cards";
 import { db } from "@/lib/drizzle/db";
 import { app } from "@/lib/drizzle/schema";
 import { createClient } from "@/lib/supabase/server";
@@ -24,8 +25,9 @@ export default async function Dashboard() {
       </div>
 
       {/* Create New App Button */}
-      <section>
-        <div className="flex justify-between gap-4 mb-6">
+      <section className="space-y-6">
+        <StatsCards />
+        <div className="flex justify-between">
           <Search />
           <CreateAppButton />
         </div>

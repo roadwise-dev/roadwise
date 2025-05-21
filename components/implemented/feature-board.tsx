@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { db } from "@/lib/drizzle/db";
 import { feature } from "@/lib/drizzle/schema";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import FeatureCard from "./feature-card";
 
 interface FeatureBoardProps {
@@ -13,7 +13,8 @@ export default async function FeatureBoard({ id, name }: FeatureBoardProps) {
   const features = await db
     .select()
     .from(feature)
-    .where(eq(feature.boardId, id));
+    .where(eq(feature.boardId, id))
+    .orderBy(desc(feature.upvotes));
 
   return (
     <Card className="h-full">

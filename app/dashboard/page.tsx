@@ -17,19 +17,26 @@ export default async function Dashboard() {
   const apps = await db.select().from(app).where(eq(app.userId, data.user.id));
 
   return (
-    <>
-      {/* Create New App Button */}
-      <div className="flex justify-end gap-4 mb-6">
-        <Search />
-        <CreateAppButton />
+    <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-1">
+        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+        <p className="text-muted-foreground">Manage your apps and view feedback statistics.</p>
       </div>
 
-      {/* App Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {apps.map((app) => (
-          <AppCard key={app.id} app={app} />
-        ))}
-      </div>
-    </>
+      {/* Create New App Button */}
+      <section>
+        <div className="flex justify-between gap-4 mb-6">
+          <Search />
+          <CreateAppButton />
+        </div>
+
+        {/* App Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {apps.map((app) => (
+            <AppCard key={app.id} app={app} />
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }

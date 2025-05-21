@@ -1,29 +1,16 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import { Button } from "../ui/button";
+import { ThemeToggle } from "./theme-toggle";
+import { UserNav } from "./user-nav";
 
 export default function Navbar() {
-  const supabase = createClient();
-  const router = useRouter();
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push("/"); // Redirect to main page after sign out
-  };
-
   return (
-    <div className="flex h-16 items-center justify-end">
-      <Button variant="outline" className="mr-3" onClick={handleSignOut}>
-        Sign Out
-      </Button>
-      <Avatar>
-        <AvatarFallback>
-          <span className="text-xl">U</span>
-        </AvatarFallback>
-      </Avatar>
-    </div>
+    <div className="top-0 z-20 w-full shadow-sm">
+      <div className="max-w-7xl flex flex-row justify-between mx-auto items-center px-10">
+        <h1 className="font-bold text-2xl">Roadwise</h1>
+        <div className="flex gap-4 h-16 items-center justify-end">
+          <ThemeToggle />
+          <UserNav />
+        </div>
+      </div>
+    </div >
   );
 }

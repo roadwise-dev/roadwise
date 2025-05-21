@@ -18,6 +18,7 @@ import { AppNameInput } from "./app-name-input";
 import { AppSlugInput } from "./app-slug-input";
 import { AvatarSection } from "./avatar-selection";
 import { GroupSelect } from "./group-select";
+import { Plus } from "lucide-react";
 
 export default function CreateAppButton() {
   const [avatar, setAvatar] = useState<string | null>(null);
@@ -73,7 +74,10 @@ export default function CreateAppButton() {
   return (
     <AlertDialog open={isOpen} onOpenChange={handleDialogChange}>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">Create App</Button>
+        <Button>
+          <Plus className="mr-2 h-4 w-4" />
+          Create App
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="sm:max-w-[425px]">
         <form action={createAppAction}>

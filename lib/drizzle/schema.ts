@@ -93,3 +93,12 @@ export const comment = pgTable("comment", {
   content: text("content").notNull(), // Content of the comment
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(), // When the comment was created
 });
+
+export const subscribe = pgTable("subscribe", {
+  id: uuid("id").defaultRandom().primaryKey(), // Unique ID for the subscriber
+  appId: uuid("app_id")
+    .references(() => app.id)
+    .notNull(), // Reference to the app
+  name: text("name").notNull(), // Subscriber name
+  email: text("email").notNull(), // Email of the subscriber
+});

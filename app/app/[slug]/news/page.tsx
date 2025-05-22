@@ -24,7 +24,7 @@ export default async function Page(props: {
           <h1 className="text-4xl font-bold">News</h1>
           <p className="text-gray-600">New updates and improvements on {dbApp.name}</p>
         </div>
-        <SubscribeDialog />
+        <SubscribeDialog appId={dbApp.id} appName={dbApp.name} />
       </div>
 
       <Suspense fallback={<NewsLoadingSkeleton />}>

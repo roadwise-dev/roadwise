@@ -1,23 +1,53 @@
 "use server";
 
+import { db } from "@/lib/drizzle/db";
+import { subscribe } from "@/lib/drizzle/schema";
+import { and, eq } from "drizzle-orm";
+
 interface SubscriptionData {
   email: string;
   name: string;
+  appId: string;
   consent: boolean;
 }
 
 export async function subscribeToUpdates(data: SubscriptionData) {
-  // Log the subscription data
-  console.log("New subscription:", data);
+  try {
+    // Validate consent
+    if (!data.consent) {
+      return {
+        success: false,
+        error: "You must consent to receive updates",
+      };
+    }
+    const [existingSubscription] = await db
+      .select()
+      .from(subscribe)
+      .where(and(eq(subscribe.appId, data.appId), eq(subscribe.email, data.email)));
 
-  // In a real application, you would:
-  // 1. Validate the data
-  // 2. Store it in a database
-  // 3. Send a confirmation email
-  // 4. Handle errors properly
+    if (existingSubscription) {
+      return {
+        success: false,
+        error: "This email is already subscribed to updates for this app",
+      };
+    }
 
-  // Simulate a delay to show loading state
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+    // Insert new subscription
+    await db.insert(subscribe).values({
+      name: data.name,
+      email: data.email,
+      appId: data.appId,
+    });
 
-  return { success: true };
+    return {
+      success: true,
+      message: "Successfully subscribed to updates",
+    };
+  } catch (error) {
+    console.error("Subscription error:", error);
+    return {
+      success: false,
+      error: "Failed to subscribe. Please try again later.",
+    };
+  }
 }

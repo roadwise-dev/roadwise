@@ -1,6 +1,5 @@
 "use client";
 
-import { toast } from "@/hooks/use-toast";
 import { upvoteWithEmail } from "@/lib/actions/upvote";
 import { ChevronUp } from "lucide-react";
 import { useActionState, useEffect, useState } from "react";
@@ -18,6 +17,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react"
+import { toast } from "sonner";
 
 type Feature = {
   id: string;
@@ -43,8 +43,7 @@ export default function UpvoteButton({
     if (state.success) {
       setIsOpen(false);
       setLocalUpvotes((prevUpvotes) => prevUpvotes + 1);
-      toast({
-        title: "Success!",
+      toast("Success!", {
         description: "Your vote has been recorded.",
       });
     }

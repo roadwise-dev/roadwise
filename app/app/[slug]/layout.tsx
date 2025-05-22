@@ -8,8 +8,8 @@ export default function PublicAppLayout({
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navbar */}
+      <Navbar />
       <div className="w-full px-8 py-4 max-w-[1440px] mx-auto grow">
-        <Navbar />
         {/* Main Content */}
         <main className="mt-4 w-full h-full">{children}</main>
       </div>

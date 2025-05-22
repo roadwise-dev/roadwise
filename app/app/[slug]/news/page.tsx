@@ -1,30 +1,25 @@
 import { NewsPost } from "@/components/app/news-post"
 import { SubscribeDialog } from "@/components/app/news/subsribe-dialog"
+import { db } from "@/lib/drizzle/db";
+import { eq, desc } from "drizzle-orm";
+import { app, news } from "@/lib/drizzle/schema";
+import { notFound } from "next/navigation";
 
-export default function AnnouncementsPage() {
-  // Sample data for announcements
-  const announcements = [
-    {
-      date: "May 16, 2025",
-      title: "Subscribe to Updates",
-      content:
-        "You can now let your users subscribe with one click to receive email notifications whenever you publish a new announcement.",
-      image: "https://hcdqvxzjnkgscvkvplfd.supabase.co/storage/v1/object/public/news//roadwise-subscribe.png",
-      tags: ["New Feature", "Announcement"],
-    },
-    {
-      date: "May 10, 2025",
-      title: "New Dashboard Layout",
-      content: "We've redesigned the dashboard to make it more intuitive and easier to navigate.",
-      tags: ["Product Update"],
-    },
-    {
-      date: "May 5, 2025",
-      title: "API Documentation Updates",
-      content: "We've updated our API documentation with more examples and clearer explanations.",
-      tags: ["Documentation"],
-    },
-  ]
+export default async function Page(props: {
+  params: Promise<{ slug: string }>;
+}) {
+  const params = await props.params;
+  const [dbApp] = await db.select().from(app).where(eq(app.slug, params.slug));
+
+  if (!dbApp) {
+    notFound();
+  }
+
+  const dbNews = await db
+    .select()
+    .from(news)
+    .where(eq(news.appId, dbApp.id))
+    .orderBy(desc(news.date));
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -37,14 +32,14 @@ export default function AnnouncementsPage() {
       </div>
 
       <div className="border-t border-gray-200">
-        {announcements.map((announcement, index) => (
+        {dbNews.map((news, index) => (
           <div key={index}>
             <NewsPost
-              date={announcement.date}
-              title={announcement.title}
-              content={announcement.content}
-              image={index === 0 ? announcement.image : undefined}
-              tags={announcement.tags}
+              date={news.date}
+              title={news.title}
+              content={news.content}
+              image={news.image}
+              tags={news.tags}
             />
           </div>
         ))}

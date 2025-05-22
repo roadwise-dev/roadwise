@@ -67,3 +67,17 @@ export const upvote = pgTable("upvote", {
     .notNull(), // Reference to the feature
   createdAt: timestamp("created_at").defaultNow().notNull(), // Creation timestamp
 });
+
+// News table
+export const news = pgTable("news", {
+  id: uuid("id").defaultRandom().primaryKey(), // Unique ID for the upvote
+  appId: uuid("app_id")
+    .references(() => app.id)
+    .notNull(), // Reference to the app
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  image: text("image"),
+  tags: text("tags").array().notNull().default([]),
+  date: timestamp("date", { withTimezone: true }).defaultNow().notNull(), // News timestamp
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(), // Creation timestamp
+});

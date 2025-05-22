@@ -13,9 +13,15 @@ export default function PricingPage() {
   const plans = [
     {
       name: "Standard",
-      description: "Perfect for indie developers and small teams",
+      description: "Perfect for indie developers",
       price: "Free",
-      features: ["5 feedback boards", "Unlimited users", "Basic analytics", "Email support"],
+      features: [
+        "Up to 3 apps",
+        "Unlimited feedback submissions",
+        "Unlimited news updates",
+        "Basic analytics dashboard",
+        "Email support"
+      ],
       cta: "Get Started",
       ctaLink: "/signup",
       disabled: false,
@@ -27,15 +33,14 @@ export default function PricingPage() {
       interval: "per month",
       features: [
         "All Standard features",
-        "Unlimited feedback boards",
+        "Unlimited apps",
         "Custom domain",
-        "HTML embed",
+        "Widget for your website",
         "Advanced analytics",
         "Priority support",
-        "Team collaboration",
       ],
       cta: "Coming Soon",
-      ctaLink: "#",
+      ctaLink: "/",
       disabled: true,
     },
   ]

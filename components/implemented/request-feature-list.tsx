@@ -167,7 +167,7 @@ export default function RequestFeatureList({ features }: { features: Feature[] }
               <div>
                 <div className="flex items-center mb-4">
                   <MessageSquare className="mr-2 h-5 w-5" />
-                  {/* <h2 className="text-lg font-semibold">Comments ({selectedFeature.comments.length})</h2> */}
+                  <h2 className="text-lg font-semibold">Comments</h2>
                 </div>
 
                 {/* <div className="space-y-4 mb-6"> */}
@@ -192,8 +192,10 @@ export default function RequestFeatureList({ features }: { features: Feature[] }
                 {/*   ))} */}
                 {/* </div> */}
 
-                <div className="mb-2">
+                <div className="mb-2 space-y-2">
                   <h3 className="text-base font-medium mb-2">Add a comment</h3>
+                  <Input placeholder="Name" />
+                  <Input placeholder="Email" />
                   <Textarea
                     placeholder="Share your thoughts on this feature request..."
                     className="min-h-[80px] mb-2"

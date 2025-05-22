@@ -38,11 +38,11 @@ export default async function Page(props: {
     .orderBy(board.column);
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex items-end justify-between">
+    <div className="flex flex-col h-[calc(100vh-10rem)]">
+      <div className="flex items-end justify-between mb-6">
         <div className="flex gap-4 items-center">
           <Avatar className="w-16 h-16 rounded-md">
-            <AvatarImage src={dbApp.avatarUrl} alt={dbApp.name} />
+            <AvatarImage src={dbApp.avatarUrl || "/placeholder.svg"} alt={dbApp.name} />
             <AvatarFallback className="text-3xl font-semibold rounded-md">
               {dbApp.name.charAt(0).toUpperCase()}
             </AvatarFallback>
@@ -56,7 +56,8 @@ export default async function Page(props: {
           <Link href={dbApp.slug + "/feature-request"}>Request a feature</Link>
         </Button>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 grow h-full">
+      {/* Use flex-1 to make the grid take up all remaining space */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
         {dbBoards.map((board) => (
           <FeatureBoard key={board.id} id={board.id} name={board.name} />
         ))}

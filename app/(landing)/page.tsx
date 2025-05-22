@@ -2,8 +2,6 @@ import { Features } from "@/components/blocks/features-8";
 import { HowItWorks } from "@/components/how-it-works";
 import { CallToAction } from "@/components/landing/cta";
 import Hero from "@/components/landing/hero";
-import { Pricing } from "@/components/landing/pricing";
-import { Statistics } from "@/components/statistics";
 
 export default function HomePage() {
   return (
@@ -11,8 +9,7 @@ export default function HomePage() {
       <Hero />
       <HowItWorks />
       <Features />
-      <Statistics />
-      <Pricing />
+      {/* <Statistics /> */}
       <CallToAction />
     </main>
   );

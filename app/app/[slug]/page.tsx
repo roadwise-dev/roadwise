@@ -1,4 +1,4 @@
-import FeatureBoard from "@/components/implemented/feature-board";
+import FeatureBoard, { FeatureBoardSkeleton } from "@/components/implemented/feature-board";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/drizzle/db";
@@ -6,6 +6,7 @@ import { app, board } from "@/lib/drizzle/schema";
 import { eq, and, ne } from "drizzle-orm";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 export async function generateMetadata({
   params,
@@ -63,7 +64,9 @@ export default async function Page(props: {
       {/* Use flex-1 to make the grid take up all remaining space */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
         {dbBoards.map((board) => (
-          <FeatureBoard key={board.id} id={board.id} name={board.name} />
+          <Suspense key={board.id} fallback={<FeatureBoardSkeleton />}>
+            <FeatureBoard id={board.id} name={board.name} />
+          </Suspense>
         ))}
       </div>
     </div>

@@ -35,6 +35,12 @@ export default function Footer() {
             >
               Pricing
             </Link>
+            <Link
+              href="/privacy-policy"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Privacy Policy
+            </Link>
           </nav>
           <p className="text-center text-sm text-muted-foreground md:text-left">
             &copy; {new Date().getFullYear()} Roadwise. All rights reserved.

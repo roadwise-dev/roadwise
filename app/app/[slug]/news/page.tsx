@@ -1,45 +1,54 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { NewsPost } from "@/components/app/news-post"
+import { SubscribeDialog } from "@/components/app/news/subsribe-dialog"
 
-const newsItems = [
-  {
-    id: 1,
-    title: "Version 1.2 Released",
-    description:
-      "We’ve just released version 1.2 with new features and bug fixes.",
-    date: "September 25, 2024",
-  },
-  {
-    id: 2,
-    title: "Mobile App Development",
-    description: "Our mobile app for iOS and Android is now in development!",
-    date: "October 1, 2024",
-  },
-];
+export default function AnnouncementsPage() {
+  // Sample data for announcements
+  const announcements = [
+    {
+      date: "May 16, 2025",
+      title: "Subscribe to Updates",
+      content:
+        "You can now let your users subscribe with one click to receive email notifications whenever you publish a new announcement.",
+      image: "https://hcdqvxzjnkgscvkvplfd.supabase.co/storage/v1/object/public/news//roadwise-subscribe.png",
+      tags: ["New Feature", "Announcement"],
+    },
+    {
+      date: "May 10, 2025",
+      title: "New Dashboard Layout",
+      content: "We've redesigned the dashboard to make it more intuitive and easier to navigate.",
+      tags: ["Product Update"],
+    },
+    {
+      date: "May 5, 2025",
+      title: "API Documentation Updates",
+      content: "We've updated our API documentation with more examples and clearer explanations.",
+      tags: ["Documentation"],
+    },
+  ]
 
-export default function NewsPage() {
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-4xl font-bold mb-4">News</h1>
-      <p className="mb-6">
-        Stay updated with the latest news and updates from our team.
-      </p>
+    <div className="max-w-5xl mx-auto px-4 py-8">
+      <div className="flex flex-row justify-between items-end mb-4">
+        <div className="flex flex-col">
+          <h1 className="text-3xl font-bold">News</h1>
+          <p className="text-gray-600">New updates and improvements</p>
+        </div>
+        <SubscribeDialog />
+      </div>
 
-      {/* News Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {newsItems.map((item) => (
-          <Card key={item.id} className="shadow-lg">
-            <CardHeader>
-              <CardTitle>{item.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>{item.description}</p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Published on {item.date}
-              </p>
-            </CardContent>
-          </Card>
+      <div className="border-t border-gray-200">
+        {announcements.map((announcement, index) => (
+          <div key={index}>
+            <NewsPost
+              date={announcement.date}
+              title={announcement.title}
+              content={announcement.content}
+              image={index === 0 ? announcement.image : undefined}
+              tags={announcement.tags}
+            />
+          </div>
         ))}
       </div>
     </div>
-  );
+  )
 }

@@ -16,6 +16,8 @@ import {
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { cn } from "@/lib/utils";
+import { motion } from "motion/react"
 
 type Feature = {
   id: string;
@@ -35,6 +37,7 @@ export default function UpvoteButton({
   });
   const [isOpen, setIsOpen] = useState(false);
   const [localUpvotes, setLocalUpvotes] = useState(featureInfo.upvotes);
+  const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
     if (state.success) {
@@ -52,11 +55,39 @@ export default function UpvoteButton({
       <AlertDialogTrigger asChild>
         <Button
           variant="outline"
-          className="w-12 h-12 rounded-md flex flex-col items-center justify-center p-1"
+          className={cn(
+            "w-12 h-12 rounded-md flex flex-col transition-colors",
+            isHovered ? "" : "",
+          )}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          <ChevronUp size={24} />
-          <span className="text-md font-medium mt-1">{localUpvotes}</span>
+          <motion.div
+            className="flex flex-col items-center"
+            animate={{
+              y: isHovered ? -2 : 0,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 10,
+            }}
+          >
+            <motion.div
+              transition={{ duration: 0.2 }}
+            >
+              <ChevronUp size={20} />
+            </motion.div>
+
+            <motion.span
+              className="text-md font-medium mt-1"
+              transition={{ duration: 0.2 }}
+            >
+              {localUpvotes}
+            </motion.span>
+          </motion.div>
         </Button>
+
       </AlertDialogTrigger>
       <AlertDialogContent>
         <form action={formAction}>
@@ -87,3 +118,4 @@ export default function UpvoteButton({
     </AlertDialog>
   );
 }
+

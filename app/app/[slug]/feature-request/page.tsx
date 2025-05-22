@@ -28,7 +28,5 @@ export default async function Page(props: {
   // Extract features only
   const dbFeatures = dbFeaturesRaw.map((row) => row.feature);
 
-  console.log(dbFeatures);
-
   return <RequestFeatureList features={dbFeatures} />;
 }

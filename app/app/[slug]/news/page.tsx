@@ -24,9 +24,9 @@ export default async function Page(props: {
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       <div className="flex flex-row justify-between items-end mb-4">
-        <div className="flex flex-col">
-          <h1 className="text-3xl font-bold">News</h1>
-          <p className="text-gray-600">New updates and improvements</p>
+        <div className="flex flex-col gap-2">
+          <h1 className="text-4xl font-bold">News</h1>
+          <p className="text-gray-600">New updates and improvements on {dbApp.name}</p>
         </div>
         <SubscribeDialog />
       </div>

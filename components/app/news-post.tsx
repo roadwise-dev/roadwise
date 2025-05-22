@@ -17,7 +17,9 @@ interface NewsPostProps {
 export function NewsPost({ date, title, content, image, tags, link }: NewsPostProps) {
   return (
     <div className="border-t border-gray-200 py-8">
-      <div className="text-sm text-gray-500 mb-2">{date.toLocaleDateString()}</div>
+      <div className="text-sm text-gray-500 mb-2">
+        {date.toLocaleDateString("en-US", { day: "2-digit", month: "short", year: "numeric" })}
+      </div>
       <div className="flex justify-between items-center gap-2 mb-4">
         <h2 className="text-2xl font-bold">{title}</h2>
         <div className="flex gap-2">

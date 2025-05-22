@@ -9,13 +9,15 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
-import { MessageSquare, Plus, Search, X } from "lucide-react"
+import { MessageSquare, Plus, Search } from "lucide-react"
+import { Badge } from "../ui/badge"
 
 interface Feature {
   id: string;
   boardId: string;
   title: string;
   description: string;
+  tags: string[];
   name: string;
   upvotes: number;
   createdAt: Date;
@@ -93,17 +95,18 @@ export default function RequestFeatureList({ features }: { features: Feature[] }
               </CardHeader>
               <CardContent>
                 <div className="flex justify-between items-center">
-                  {/* <div className="flex items-center"> */}
-                  {/*   <MessageSquare className="h-4 w-4 mr-1" /> */}
-                  {/*   <span className="text-sm text-gray-500">{feature.comments.length}</span> */}
-                  {/* </div> */}
-                  {/* <div> */}
-                  {/*   {feature.tags.map((tag) => ( */}
-                  {/*     <Badge key={tag} variant="secondary" className="mr-1 mb-1"> */}
-                  {/*       {tag} */}
-                  {/*     </Badge> */}
-                  {/*   ))} */}
-                  {/* </div> */}
+                  <div className="flex items-center">
+                    <MessageSquare className="h-4 w-4 mr-1" />
+                    {/* <span className="text-sm text-gray-500">{feature.comments.length}</span> */}
+                    <span className="text-sm text-gray-500">2</span>
+                  </div>
+                  <div>
+                    {feature.tags.map((tag) => (
+                      <Badge key={tag} variant="secondary" className="mr-1 mb-1">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -150,13 +153,13 @@ export default function RequestFeatureList({ features }: { features: Feature[] }
 
                 <p className="text-base mb-4">{selectedFeature.description}</p>
 
-                {/* <div className="flex flex-wrap gap-2 mb-4"> */}
-                {/*   {selectedFeature.tags.map((tag) => ( */}
-                {/*     <Badge key={tag} variant="secondary"> */}
-                {/*       {tag} */}
-                {/*     </Badge> */}
-                {/*   ))} */}
-                {/* </div> */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {selectedFeature.tags.map((tag) => (
+                    <Badge key={tag} variant="secondary">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
               </div>
 
               <Separator className="my-4" />

@@ -1,4 +1,5 @@
 import { integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { array } from "zod";
 
 // User table
 export const user = pgTable("user", {
@@ -53,6 +54,7 @@ export const feature = pgTable("feature", {
     .notNull(), // Reference to the board
   title: text("title").notNull(), // Title of the feature
   description: text("description").notNull(), // Detailed description
+  tags: text("tags").array().notNull().default([]),
   name: text("name").notNull(), // Authors Name
   upvotes: integer("upvotes").default(0).notNull(), // Number of upvotes
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(), // Creation timestamp

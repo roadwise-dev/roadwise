@@ -90,7 +90,7 @@ export default function PrivacyPolicyPage() {
         <h2 className="text-2xl font-bold mb-4">Where and How Your Data Is Stored</h2>
         <p>
           Your data is stored securely in <strong>Supabase</strong>, a managed backend platform. While data is protected
-          by Supabase's security measures, it may <strong>not be encrypted at rest</strong>, and you should be aware of
+          by Supabase&apos;s security measures, it may <strong>not be encrypted at rest</strong>, and you should be aware of
           this if you have heightened privacy concerns.
         </p>
       </section>
@@ -127,7 +127,7 @@ export default function PrivacyPolicyPage() {
         <p className="mb-4">We keep your data as long as:</p>
         <ul className="list-disc pl-6 space-y-1 mb-4">
           <li>You remain subscribed to a newsletter, or</li>
-          <li>Your upvote remains associated with a feature on an app's feedback board.</li>
+          <li>Your upvote remains associated with a feature on an app&apos;s feedback board.</li>
         </ul>
         <p>You can request removal at any time.</p>
       </section>

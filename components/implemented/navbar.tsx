@@ -27,7 +27,7 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-10 border-b py-4">
-      <div className="flex justify-between max-w-[1440px] mx-auto gap-6 px-6">
+      <div className="flex justify-between max-w-[1440px] mx-auto gap-6 px-6 items-center">
         <div className="flex gap-6">
           {links.map((link) => (
             <Link

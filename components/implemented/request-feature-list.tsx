@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
@@ -133,14 +133,9 @@ export default function RequestFeatureList({ features }: { features: Feature[] }
         <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
           {selectedFeature && (
             <div className="relative">
-              <Button variant="ghost" size="icon" className="absolute right-0 top-0" onClick={handleCloseDialog}>
-                <X className="h-4 w-4" />
-                <span className="sr-only">Close</span>
-              </Button>
-
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h1 className="text-2xl font-bold">{selectedFeature.title}</h1>
+                  <DialogTitle className="text-2xl font-bold">{selectedFeature.title}</DialogTitle>
                 </div>
 
                 <div className="flex items-center mb-4">

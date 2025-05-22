@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/drizzle/db";
 import { app, board } from "@/lib/drizzle/schema";
-import { eq } from "drizzle-orm";
+import { eq, and, ne } from "drizzle-orm";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -34,7 +34,11 @@ export default async function Page(props: {
   const dbBoards = await db
     .select()
     .from(board)
-    .where(eq(board.appId, dbApp.id))
+    .where(
+      and(
+        eq(board.appId, dbApp.id),
+        ne(board.name, "Unassigned")
+      ))
     .orderBy(board.column);
 
   return (

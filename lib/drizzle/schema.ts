@@ -53,9 +53,9 @@ export const feature = pgTable("feature", {
     .notNull(), // Reference to the board
   title: text("title").notNull(), // Title of the feature
   description: text("description").notNull(), // Detailed description
+  name: text("name").notNull(), // Authors Name
   upvotes: integer("upvotes").default(0).notNull(), // Number of upvotes
-  implemented: text("implemented").default("false").notNull(), // Feature implemented status
-  createdAt: timestamp("created_at").defaultNow().notNull(), // Creation timestamp
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(), // Creation timestamp
 });
 
 // Upvote table
@@ -80,4 +80,15 @@ export const news = pgTable("news", {
   tags: text("tags").array().notNull().default([]),
   date: timestamp("date", { withTimezone: true }).defaultNow().notNull(), // News timestamp
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(), // Creation timestamp
+});
+
+export const comment = pgTable("comment", {
+  id: uuid("id").defaultRandom().primaryKey(), // Unique ID for the comment
+  featureId: uuid("feature_id")
+    .references(() => feature.id)
+    .notNull(), // Reference to the feature being commented on
+  name: text("name").notNull(), // Name of the commenter
+  email: text("email").notNull(), // Email of the commenter
+  content: text("content").notNull(), // Content of the comment
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(), // When the comment was created
 });

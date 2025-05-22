@@ -1,5 +1,4 @@
 import { integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
-import { array } from "zod";
 
 // User table
 export const user = pgTable("user", {

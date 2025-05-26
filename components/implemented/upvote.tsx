@@ -4,15 +4,15 @@ import { upvoteWithEmail } from "@/lib/actions/upvote";
 import { ChevronUp } from "lucide-react";
 import { useActionState, useEffect, useState } from "react";
 import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "../ui/alert-dialog";
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
@@ -50,8 +50,8 @@ export default function UpvoteButton({
   }, [state.success]);
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogTrigger asChild>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
         <Button
           variant="outline"
           className={cn(
@@ -87,16 +87,16 @@ export default function UpvoteButton({
           </motion.div>
         </Button>
 
-      </AlertDialogTrigger>
-      <AlertDialogContent>
+      </DialogTrigger>
+      <DialogContent>
         <form action={formAction}>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Vote for {featureInfo.title}</AlertDialogTitle>
-            <AlertDialogDescription>
+          <DialogHeader>
+            <DialogTitle>Vote for {featureInfo.title}</DialogTitle>
+            <DialogDescription>
               When you upvote a feature, you are showing your support for it.
               You will be notified if the feature is implemented.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
+            </DialogDescription>
+          </DialogHeader>
           <Input
             name="email"
             type="email"
@@ -108,13 +108,17 @@ export default function UpvoteButton({
           {state.message && (
             <p className={`mt-2 text-sm text-red-600`}>{state.message}</p>
           )}
-          <AlertDialogFooter>
-            <AlertDialogCancel type="button">Cancel</AlertDialogCancel>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="button" variant="outline">
+                Close
+              </Button>
+            </DialogClose>
             <Button type="submit">Continue</Button>
-          </AlertDialogFooter>
+          </DialogFooter>
         </form>
-      </AlertDialogContent>
-    </AlertDialog>
+      </DialogContent>
+    </Dialog>
   );
 }
 

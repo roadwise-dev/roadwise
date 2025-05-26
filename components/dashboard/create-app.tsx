@@ -1,15 +1,5 @@
 "use client";
 
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { createAppAction } from "@/lib/actions/create-app";
 import { useRef, useState } from "react";
@@ -19,6 +9,7 @@ import { AppSlugInput } from "./app-slug-input";
 import { AvatarSection } from "./avatar-selection";
 import { GroupSelect } from "./group-select";
 import { Plus } from "lucide-react";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 
 export default function CreateAppButton() {
   const [avatar, setAvatar] = useState<string | null>(null);
@@ -72,14 +63,14 @@ export default function CreateAppButton() {
   };
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={handleDialogChange}>
-      <AlertDialogTrigger asChild>
+    <Dialog open={isOpen} onOpenChange={handleDialogChange}>
+      <DialogTrigger asChild>
         <Button>
           <Plus className="mr-2 h-4 w-4" />
           Create App
         </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent className="sm:max-w-[425px]">
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
         <form action={createAppAction}>
           <div className="flex gap-4">
             <AvatarSection
@@ -88,25 +79,29 @@ export default function CreateAppButton() {
               onAvatarClick={() => fileInputRef.current?.click()}
               fileInputRef={fileInputRef}
             />
-            <AlertDialogHeader className="flex flex-col justify-center">
-              <AlertDialogTitle>Create {appName || "New App"}</AlertDialogTitle>
-              <AlertDialogDescription>
+            <DialogHeader className="flex flex-col justify-center">
+              <DialogTitle>Create {appName || "New App"}</DialogTitle>
+              <DialogDescription>
                 Click on the avatar to upload a custom image.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
+              </DialogDescription>
+            </DialogHeader>
           </div>
           <div className="space-y-4 mt-4">
             <AppNameInput value={appName} onChange={handleAppNameChange} />
             <AppSlugInput value={appSlug} onChange={handleAppSlugChange} />
             <AppDescriptionInput />
             <GroupSelect />
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button type="button" variant="outline">
+                  Close
+                </Button>
+              </DialogClose>
               <Button type="submit">Create App</Button>
-            </AlertDialogFooter>
+            </DialogFooter>
           </div>
         </form>
-      </AlertDialogContent>
-    </AlertDialog>
+      </DialogContent>
+    </Dialog>
   );
 }

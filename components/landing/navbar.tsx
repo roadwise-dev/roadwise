@@ -7,6 +7,42 @@ import { useState } from "react";
 import { Menu } from "lucide-react";
 import { AuthButtons } from "./auth-buttons";
 
+// Navigation data
+const navigationItems = [
+  { href: "/features", label: "Features", ariaLabel: "View features" },
+  { href: "/customers", label: "Customers", ariaLabel: "View customers" },
+  { href: "/pricing", label: "Pricing", ariaLabel: "View pricing" }
+];
+
+// Desktop Navigation Link Component
+function DesktopNavLink({ item }: { item: typeof navigationItems[0] }) {
+  return (
+    <Link
+      href={item.href}
+      className="text-sm font-semibold text-foreground/80 hover:text-foreground transition-colors px-3 py-1.5 rounded-lg"
+      aria-label={item.ariaLabel}
+    >
+      {item.label}
+    </Link>
+  );
+}
+
+// Mobile Navigation Link Component
+function MobileNavLink({ item, onClose }: { 
+  item: typeof navigationItems[0]; 
+  onClose: () => void; 
+}) {
+  return (
+    <Link
+      href={item.href}
+      className="block px-3 py-2 text-sm text-foreground/70 hover:text-foreground rounded-lg transition-colors"
+      onClick={onClose}
+    >
+      {item.label}
+    </Link>
+  );
+}
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -34,27 +70,9 @@ export default function Navbar() {
 
             {/* Center: Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-4">
-              <Link
-                href="/features"
-                className="text-sm font-semibold text-foreground/80 hover:text-foreground transition-colors px-3 py-1.5 rounded-lg hover:bg-accent/50"
-                aria-label="View features"
-              >
-                Features
-              </Link>
-              <Link
-                href="/customers"
-                className="text-sm font-semibold text-foreground/80 hover:text-foreground transition-colors px-3 py-1.5 rounded-lg hover:bg-accent/50"
-                aria-label="View customers"
-              >
-                Customers
-              </Link>
-              <Link
-                href="/pricing"
-                className="text-sm font-semibold text-foreground/80 hover:text-foreground transition-colors px-3 py-1.5 rounded-lg hover:bg-accent/50"
-                aria-label="View pricing"
-              >
-                Pricing
-              </Link>
+              {navigationItems.map((item) => (
+                <DesktopNavLink key={item.href} item={item} />
+              ))}
             </nav>
 
             {/* Right: Auth buttons and menu */}
@@ -82,27 +100,13 @@ export default function Navbar() {
         <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40 md:hidden">
           <div className="bg-background/90 backdrop-blur-md border border-border/50 rounded-2xl shadow-lg p-4 min-w-[280px]">
             <div className="space-y-2">
-              <Link
-                href="/features"
-                className="block px-3 py-2 text-sm text-foreground/70 hover:text-foreground hover:bg-accent/50 rounded-lg transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Features
-              </Link>
-              <Link
-                href="/customers"
-                className="block px-3 py-2 text-sm text-foreground/70 hover:text-foreground hover:bg-accent/50 rounded-lg transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Customers
-              </Link>
-              <Link
-                href="/pricing"
-                className="block px-3 py-2 text-sm text-foreground/70 hover:text-foreground hover:bg-accent/50 rounded-lg transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Pricing
-              </Link>
+              {navigationItems.map((item) => (
+                <MobileNavLink 
+                  key={item.href} 
+                  item={item} 
+                  onClose={() => setIsMenuOpen(false)} 
+                />
+              ))}
               <div className="pt-2 border-t border-border/50">
                 <AuthButtons />
               </div>

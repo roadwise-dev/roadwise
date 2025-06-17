@@ -32,37 +32,35 @@ export function HowItWorks() {
   ];
 
   return (
-    <section className="py-16 px-4 md:px-6">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-          How Roadwise Works
-        </h2>
-        <p className="text-lg text-center mb-12 mx-auto">
-          Get started with Roadwise in four simple steps and transform your
-          product development process.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {steps.map((step, index) => (
-            <Card
-              key={index}
-              className="border-black/10 shadow-xs hover:shadow-md transition-shadow"
-            >
-              <CardHeader>
-                <div className="flex items-center justify-center">
-                  {step.icon}
-                </div>
-                <CardTitle className="text-xl font-semibold text-center">
-                  {index + 1}. {step.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-center text-sm text-gray-600">
-                  {step.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+    <section className="w-full max-container padding-container">
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+        How Roadwise Works
+      </h2>
+      <p className="text-lg text-center mb-12 mx-auto">
+        Get started with Roadwise in four simple steps and transform your
+        product development process.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {steps.map((step, index) => (
+          <Card
+            key={index}
+            className="border-black/10 shadow-xs hover:shadow-md transition-shadow"
+          >
+            <CardHeader>
+              <div className="flex items-center justify-center">
+                {step.icon}
+              </div>
+              <CardTitle className="text-xl font-semibold text-center">
+                {index + 1}. {step.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-center text-sm text-gray-600">
+                {step.description}
+              </p>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </section>
   );

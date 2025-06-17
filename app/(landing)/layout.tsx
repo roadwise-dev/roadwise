@@ -7,7 +7,7 @@ export default function LandingLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen max-w-[1240px] mx-auto px-4">
+    <div className="min-h-screen">
       <Navbar />
       {children}
       <Footer />

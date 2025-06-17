@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 
 export default function Hero() {
   return (
-    <section className="py-20 mt-30 md:py-32 container px-4 md:px-6">
+    <section className="py-40 w-full max-container padding-container">
       <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
         <Badge variant="outline" className="mb-6 px-4 py-1.5 text-sm font-medium">Alpha version - Try Now</Badge>
 

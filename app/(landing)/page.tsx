@@ -5,7 +5,7 @@ import Hero from "@/components/landing/hero";
 
 export default function HomePage() {
   return (
-    <main className="flex flex-col gap-0 sm:gap-10">
+    <main className="w-full flex flex-col gap-10 sm:gap-20">
       <Hero />
       <HowItWorks />
       <Features />

@@ -17,8 +17,8 @@ export default function Navbar() {
   return (
     <>
       {/* Floating navbar */}
-      <header className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-[1440px] px-4">
-        <div className="bg-background/80 backdrop-blur-md border border-border/50 rounded-2xl shadow-sm px-6 py-3">
+      <header className="w-full max-container padding-container fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
+        <div className="bg-background/60 backdrop-blur-md border border-border/50 rounded-2xl shadow-sm px-6 py-3">
           <div className="flex items-center justify-between space-x-8">
             {/* Left: Logo - compact for floating design */}
             <Link href="/" className="flex items-center space-x-2">

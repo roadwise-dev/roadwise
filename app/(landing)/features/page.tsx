@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function FeaturesPage() {
   return (
-    <div className="flex min-h-screen flex-col w-full max-container padding-container">
+    <div className="flex flex-col w-full max-container padding-container">
       <main className="flex-1">
         {/* Feature Categories */}
         <section className="w-full">

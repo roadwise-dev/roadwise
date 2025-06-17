@@ -46,7 +46,7 @@ export default function PricingPage() {
   ]
 
   return (
-    <div className="flex min-h-screen flex-col mt-48">
+    <div className="w-full max-container padding-container flex flex-col ">
       <main className="flex-1">
         <section className="w-full">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">

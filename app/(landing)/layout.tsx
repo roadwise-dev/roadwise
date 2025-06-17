@@ -9,7 +9,9 @@ export default function LandingLayout({
   return (
     <div className="min-h-screen">
       <Navbar />
-      {children}
+      <div className="pt-40">
+        {children}
+      </div>
       <Footer />
     </div>
   );

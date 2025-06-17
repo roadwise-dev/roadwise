@@ -1,7 +1,6 @@
-import Link from "next/link"
-import { ArrowRight, BarChart3, Bell, Globe, Moon, Users, MessageSquare } from 'lucide-react'
+import { BarChart3, Bell, Globe, MessageSquare, Moon, Users } from 'lucide-react'
 
-import { Button } from "@/components/ui/button"
+import { CallToAction } from "@/components/landing/cta"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Metadata } from "next"
 
@@ -12,7 +11,7 @@ export const metadata: Metadata = {
 export default function FeaturesPage() {
   return (
     <div className="flex flex-col w-full max-container padding-container">
-      <main className="flex-1">
+      <main className="flex flex-col gap-20">
         {/* Feature Categories */}
         <section className="w-full">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -119,33 +118,20 @@ export default function FeaturesPage() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="w-full mt-10 py-12 md:py-20 bg-gray-50 border rounded-2xl">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  Ready to Transform Your Product Development?
-                </h2>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
-                  Join thousands of product teams using Roadwise to build better products.
-                </p>
-              </div>
-              <div className="space-x-4">
-                <Button size="lg" asChild>
-                  <Link href="/pricing">
-                    Start for Free <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button variant="outline" size="lg" asChild>
-                  <Link href="/customers">
-                    See Who Uses Roadwise
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
+        <CallToAction
+          title="Ready to Transform Your Product Development?"
+          description="Join thousands of product teams using Roadwise to build better products."
+          buttons={[
+            {
+              text: "Start for Free",
+              href: "/pricing",
+            },
+            {
+              text: "See Who Uses Roadwise",
+              href: "/customers",
+            }
+          ]}
+        />
       </main>
     </div >
   )

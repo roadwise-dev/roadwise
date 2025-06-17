@@ -1,9 +1,8 @@
-import Link from "next/link"
-import { ArrowRight, Star } from 'lucide-react'
+import { Star } from 'lucide-react'
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { CallToAction } from "@/components/landing/cta"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -160,33 +159,20 @@ export default function CustomersPage() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="w-full py-12 md:py-20 bg-gray-50 border rounded-2xl">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  Join Our Growing Community of Innovators
-                </h2>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
-                  Start collecting valuable user feedback today and build products your users will love.
-                </p>
-              </div>
-              <div className="space-x-4">
-                <Button size="lg" asChild>
-                  <Link href="/pricing">
-                    Start for Free <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button variant="outline" size="lg" asChild>
-                  <Link href="/features">
-                    Explore Features
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
+        <CallToAction
+          title="Join Our Growing Community of Innovators"
+          description="Start collecting valuable user feedback today and build products your users will love."
+          buttons={[
+            {
+              text: "Start for Free",
+              href: "/pricing",
+            },
+            {
+              text: "Explore Features",
+              href: "/features",
+            }
+          ]}
+        />
       </main>
     </div>
   )

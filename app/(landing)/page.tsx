@@ -10,7 +10,17 @@ export default function HomePage() {
       <HowItWorks />
       <Features />
       {/* <Statistics /> */}
-      <CallToAction />
+      <CallToAction
+        title="Ready to get started?"
+        description="Join thousands of product teams using Roadwise to build better products."
+        buttons={[
+          {
+            text: "Sign up for free",
+            href: "/signup",
+            variant: "secondary"
+          }
+        ]}
+      />
     </main>
   );
 }

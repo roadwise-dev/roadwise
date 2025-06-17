@@ -3,6 +3,7 @@ import { Check } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { CallToAction } from "@/components/landing/cta"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -107,24 +108,20 @@ export default function PricingPage() {
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-20 border rounded-2xl">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Ready to Get Started?</h2>
-              <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
-                Join thousands of product teams using Roadwise to build better products.
-              </p>
-            </div>
-            <div className="space-x-4 pt-4">
-              <Button size="lg" asChild>
-                <Link href="/signup">Start for Free</Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link href="/contact">Contact Sales</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+        <CallToAction
+          title="Ready to Get Started?"
+          description="Join thousands of product teams using Roadwise to build better products."
+          buttons={[
+            {
+              text: "Start for Free",
+              href: "/signup",
+            },
+            {
+              text: "Contact Sales",
+              href: "/contact",
+            }
+          ]}
+        />
       </main>
     </div>
   )

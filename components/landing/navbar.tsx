@@ -18,7 +18,7 @@ export default function Navbar() {
     <>
       {/* Floating navbar */}
       <header className="w-full max-container padding-container fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
-        <div className="bg-background/60 backdrop-blur-md border border-border/50 rounded-2xl shadow-sm px-6 py-3">
+        <div className="bg-background/60 backdrop-blur-md border border-border/50 rounded-2xl shadow-sm p-3">
           <div className="flex items-center justify-between space-x-8">
             {/* Left: Logo - compact for floating design */}
             <Link href="/" className="flex items-center space-x-2">
@@ -29,28 +29,28 @@ export default function Navbar() {
                 height={24}
                 className="rounded-sm opacity-90"
               />
-              <span className="text-lg font-bold hidden sm:block">Roadwise</span>
+              <span className="text-lg font-bold ">Roadwise</span>
             </Link>
 
             {/* Center: Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-6">
+            <nav className="hidden md:flex items-center space-x-4">
               <Link
                 href="/features"
-                className="text-sm text-foreground/70 hover:text-foreground transition-colors px-3 py-1.5 rounded-lg hover:bg-accent/50"
+                className="text-sm font-semibold text-foreground/80 hover:text-foreground transition-colors px-3 py-1.5 rounded-lg hover:bg-accent/50"
                 aria-label="View features"
               >
                 Features
               </Link>
               <Link
                 href="/customers"
-                className="text-sm text-foreground/70 hover:text-foreground transition-colors px-3 py-1.5 rounded-lg hover:bg-accent/50"
+                className="text-sm font-semibold text-foreground/80 hover:text-foreground transition-colors px-3 py-1.5 rounded-lg hover:bg-accent/50"
                 aria-label="View customers"
               >
                 Customers
               </Link>
               <Link
                 href="/pricing"
-                className="text-sm text-foreground/70 hover:text-foreground transition-colors px-3 py-1.5 rounded-lg hover:bg-accent/50"
+                className="text-sm font-semibold text-foreground/80 hover:text-foreground transition-colors px-3 py-1.5 rounded-lg hover:bg-accent/50"
                 aria-label="View pricing"
               >
                 Pricing
@@ -58,11 +58,9 @@ export default function Navbar() {
             </nav>
 
             {/* Right: Auth buttons and menu */}
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-2">
               {/* Auth buttons - hidden on mobile in floating nav */}
-              <div className="hidden sm:block">
-                <AuthButtons />
-              </div>
+              <AuthButtons />
 
               {/* Menu button - visible on mobile */}
               <Button

@@ -28,5 +28,5 @@ export default async function Page(props: {
   // Extract features only
   const dbFeatures = dbFeaturesRaw.map((row) => row.feature);
 
-  return <RequestFeatureList features={dbFeatures} />;
+  return <RequestFeatureList features={dbFeatures} appId={dbApp.id} appName={dbApp.name} />;
 }

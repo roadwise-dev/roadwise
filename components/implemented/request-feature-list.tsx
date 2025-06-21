@@ -9,9 +9,10 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
-import { MessageSquare, Plus, Search } from "lucide-react"
+import { MessageSquare, Search } from "lucide-react"
 import { Badge } from "../ui/badge"
 import { useUserData } from "@/hooks/use-user-data"
+import { CreateFeatureDialog } from "@/components/app/create-feature-dialog"
 
 interface Feature {
   id: string;
@@ -25,7 +26,15 @@ interface Feature {
 }
 
 
-export default function RequestFeatureList({ features }: { features: Feature[] }) {
+export default function RequestFeatureList({ 
+  features, 
+  appId, 
+  appName 
+}: { 
+  features: Feature[], 
+  appId: string, 
+  appName: string 
+}) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const appname = "roadwise"
@@ -102,9 +111,7 @@ export default function RequestFeatureList({ features }: { features: Feature[] }
           <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <Input type="text" placeholder="Search features..." className="pl-10" />
         </div>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" /> New Request
-        </Button>
+        <CreateFeatureDialog appId={appId} appName={appName} />
       </div>
 
       {features.length > 0 ? (

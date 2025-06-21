@@ -18,6 +18,7 @@ import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react"
 import { toast } from "sonner";
+import { useUserData } from "@/hooks/use-user-data";
 
 type Feature = {
   id: string;
@@ -38,6 +39,21 @@ export default function UpvoteButton({
   const [isOpen, setIsOpen] = useState(false);
   const [localUpvotes, setLocalUpvotes] = useState(featureInfo.upvotes);
   const [isHovered, setIsHovered] = useState(false)
+  const [email, setEmail] = useState("")
+  const { userData, isLoaded, updateEmail } = useUserData()
+
+  // Update email input when userData loads
+  useEffect(() => {
+    if (isLoaded) {
+      setEmail(userData.email)
+    }
+  }, [isLoaded, userData])
+
+  // Handle email input change and update localStorage
+  const handleEmailChange = (value: string) => {
+    setEmail(value)
+    updateEmail(value)
+  }
 
   useEffect(() => {
     if (state.success) {
@@ -101,6 +117,8 @@ export default function UpvoteButton({
             name="email"
             type="email"
             placeholder="Enter your email"
+            value={email}
+            onChange={(e) => handleEmailChange(e.target.value)}
             required
             className="my-4"
           />

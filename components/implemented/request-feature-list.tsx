@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { MessageSquare, Plus, Search } from "lucide-react"
 import { Badge } from "../ui/badge"
+import { useUserData } from "@/hooks/use-user-data"
 
 interface Feature {
   id: string;
@@ -28,6 +29,12 @@ export default function RequestFeatureList({ features }: { features: Feature[] }
   const router = useRouter()
   const searchParams = useSearchParams()
   const appname = "roadwise"
+  const { userData, isLoaded, updateUserData } = useUserData()
+
+  // Comment form state
+  const [commentName, setCommentName] = useState("")
+  const [commentEmail, setCommentEmail] = useState("")
+  const [commentText, setCommentText] = useState("")
 
   // Get feature ID from URL if present
   const featureIdParam = searchParams.get("id")
@@ -68,6 +75,25 @@ export default function RequestFeatureList({ features }: { features: Feature[] }
       setSelectedFeatureId(featureIdParam);
     }
   }, [featureIdParam]);
+
+  // Update comment form when userData loads
+  useEffect(() => {
+    if (isLoaded) {
+      setCommentName(userData.name)
+      setCommentEmail(userData.email)
+    }
+  }, [isLoaded, userData])
+
+  // Handle comment form input changes and update localStorage
+  const handleNameChange = (value: string) => {
+    setCommentName(value)
+    updateUserData({ name: value })
+  }
+
+  const handleEmailChange = (value: string) => {
+    setCommentEmail(value)
+    updateUserData({ email: value })
+  }
 
   return (
     <div className="flex flex-col">
@@ -194,11 +220,22 @@ export default function RequestFeatureList({ features }: { features: Feature[] }
 
                 <div className="mb-2 space-y-2">
                   <h3 className="text-base font-medium mb-2">Add a comment</h3>
-                  <Input placeholder="Name" />
-                  <Input placeholder="Email" />
+                  <Input 
+                    placeholder="Name" 
+                    value={commentName}
+                    onChange={(e) => handleNameChange(e.target.value)}
+                  />
+                  <Input 
+                    placeholder="Email" 
+                    type="email"
+                    value={commentEmail}
+                    onChange={(e) => handleEmailChange(e.target.value)}
+                  />
                   <Textarea
                     placeholder="Share your thoughts on this feature request..."
                     className="min-h-[80px] mb-2"
+                    value={commentText}
+                    onChange={(e) => setCommentText(e.target.value)}
                   />
                   <Button>Submit Comment</Button>
                 </div>

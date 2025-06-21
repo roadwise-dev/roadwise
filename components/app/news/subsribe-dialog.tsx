@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -22,6 +22,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import Link from "next/link"
 import { subscribeToUpdates } from "@/lib/actions/subscribe-news"
 import { toast } from "sonner"
+import { useUserData } from "@/hooks/use-user-data"
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -35,6 +36,7 @@ const formSchema = z.object({
 export function SubscribeDialog({ appId, appName }: { appId: string, appName: string }) {
   const [open, setOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { userData, isLoaded, updateUserData } = useUserData()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,8 +48,22 @@ export function SubscribeDialog({ appId, appName }: { appId: string, appName: st
     },
   })
 
+  // Update form values when userData loads or changes
+  useEffect(() => {
+    if (isLoaded) {
+      form.setValue("email", userData.email)
+      form.setValue("name", userData.name)
+    }
+  }, [isLoaded, userData, form])
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
+
+    // Update localStorage with the latest values
+    updateUserData({
+      email: values.email,
+      name: values.name
+    })
 
     const result = await subscribeToUpdates(values)
 

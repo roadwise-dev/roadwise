@@ -18,20 +18,31 @@ interface CTAProps {
 export function CallToAction({ title, description, buttons }: CTAProps) {
   return (
     <section className="w-full max-container padding-container">
-      <div className="py-20 bg-foreground text-background rounded-xl">
-        <div className="px-4 text-center">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-6">
+      <div
+        className="relative py-20 rounded-xl overflow-hidden bg-cover bg-center"
+        style={{
+          backgroundImage: 'url(/images/bg-pattern-1.jpg)'
+        }}
+      >
+        {/* Optional overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/20 rounded-xl" />
+
+        <div className="relative px-4 text-center">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-6 text-white">
             {title}
           </h2>
-          <p className="mx-auto max-w-[700px] md:text-xl mb-8">
-            {description}
-          </p>
+          {description && (
+            <p className="mx-auto max-w-[700px] md:text-xl mb-8 text-white">
+              {description}
+            </p>
+          )}
           <div className="space-x-4">
             {buttons.map((button, index) => (
-              <Button 
+              <Button
                 key={index}
-                variant={button.variant || "secondary"} 
-                size="lg" 
+                variant="default"
+                size="lg"
+                className="bg-black text-white hover:bg-gray-800"
                 asChild
               >
                 <Link href={button.href}>

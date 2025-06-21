@@ -19,7 +19,7 @@ function DesktopNavLink({ item }: { item: typeof navigationItems[0] }) {
   return (
     <Link
       href={item.href}
-      className="text-sm font-semibold text-foreground/80 hover:text-foreground transition-colors px-3 py-1.5 rounded-lg"
+      className="font-semibold text-foreground/80 hover:text-foreground transition-colors px-3 py-1.5 rounded-lg"
       aria-label={item.ariaLabel}
     >
       {item.label}
@@ -28,9 +28,9 @@ function DesktopNavLink({ item }: { item: typeof navigationItems[0] }) {
 }
 
 // Mobile Navigation Link Component
-function MobileNavLink({ item, onClose }: { 
-  item: typeof navigationItems[0]; 
-  onClose: () => void; 
+function MobileNavLink({ item, onClose }: {
+  item: typeof navigationItems[0];
+  onClose: () => void;
 }) {
   return (
     <Link
@@ -101,10 +101,10 @@ export default function Navbar() {
           <div className="bg-background/90 backdrop-blur-md border border-border/50 rounded-2xl shadow-lg p-4 min-w-[280px]">
             <div className="space-y-2">
               {navigationItems.map((item) => (
-                <MobileNavLink 
-                  key={item.href} 
-                  item={item} 
-                  onClose={() => setIsMenuOpen(false)} 
+                <MobileNavLink
+                  key={item.href}
+                  item={item}
+                  onClose={() => setIsMenuOpen(false)}
                 />
               ))}
               <div className="pt-2 border-t border-border/50">

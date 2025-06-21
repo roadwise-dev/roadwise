@@ -10,7 +10,7 @@ export default function Navbar() {
 
   const links = [
     { href: "", label: "Roadmap", icon: Map },
-    { href: "feature-request", label: "Feature Request", icon: MessageCircle },
+    { href: "feature-request", label: "Features", icon: MessageCircle },
     { href: "news", label: "News", icon: Newspaper },
   ];
 
@@ -26,15 +26,15 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-10 border-b py-4">
+    <nav className="sticky top-0 z-10 border-b py-3">
       <div className="flex justify-between max-w-[1440px] mx-auto gap-6 px-6 items-center">
-        <div className="flex gap-6">
+        <div className="flex gap-4">
           {links.map((link) => (
             <Link
               key={link.href}
               href={`/app/${basePath}/${link.href}`}
-              className={`text-base transition-colors flex items-center space-x-2 ${isActive(link.href)
-                ? "text-black font-semibold"
+              className={`text-base transition-colors flex items-center space-x-2 rounded px-2 py-1 ${isActive(link.href)
+                ? "bg-muted text-black"
                 : "text-muted-foreground hover:text-primary"
                 }`}
             >

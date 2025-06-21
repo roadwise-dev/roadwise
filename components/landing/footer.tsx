@@ -23,7 +23,7 @@ export default function Footer() {
 
           {/* Navigation links */}
           <nav aria-label="Footer">
-            <div className="flex flex-wrap gap-6">
+            <div className="flex flex-wrap gap-6 h-full items-end">
               <Link
                 href="/features"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"

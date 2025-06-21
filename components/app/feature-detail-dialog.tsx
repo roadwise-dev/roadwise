@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
@@ -70,6 +68,7 @@ export function FeatureDetailDialog({ feature, open, onOpenChange }: FeatureDeta
     if (open && feature && comments.length === 0 && !loadingComments) {
       loadComments(feature.id)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, feature])
 
   // Clear comments when dialog closes

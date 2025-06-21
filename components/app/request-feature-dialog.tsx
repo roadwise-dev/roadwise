@@ -21,7 +21,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
-import { createFeatureRequest } from "@/lib/actions/create-feature-request"
+import { createFeatureRequest } from "@/lib/actions/request-feature"
 import { toast } from "sonner"
 import { useUserData } from "@/hooks/use-user-data"
 
@@ -109,7 +109,7 @@ export function CreateFeatureDialog({ appId, appName }: { appId: string, appName
         appId: appId,
       })
       setTagInput("")
-      
+
       // Refresh the page to show the new feature
       router.refresh()
     } else {
@@ -133,7 +133,7 @@ export function CreateFeatureDialog({ appId, appName }: { appId: string, appName
         <DialogHeader>
           <DialogTitle>Request a Feature</DialogTitle>
           <DialogDescription>
-            Submit a new feature request for {appName}. Describe what you'd like to see implemented.
+            Submit a new feature request for {appName}. Describe what you&apos;d like to see implemented.
           </DialogDescription>
         </DialogHeader>
 
@@ -174,10 +174,10 @@ export function CreateFeatureDialog({ appId, appName }: { appId: string, appName
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Textarea 
+                    <Textarea
                       placeholder="Describe the feature in detail. What problem does it solve? How should it work?"
                       className="min-h-[100px]"
-                      {...field} 
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
@@ -195,9 +195,9 @@ export function CreateFeatureDialog({ appId, appName }: { appId: string, appName
                   onKeyPress={handleTagKeyPress}
                   disabled={watchedTags.length >= 5}
                 />
-                <Button 
-                  type="button" 
-                  variant="outline" 
+                <Button
+                  type="button"
+                  variant="outline"
                   onClick={addTag}
                   disabled={!tagInput.trim() || watchedTags.length >= 5}
                 >
@@ -209,8 +209,8 @@ export function CreateFeatureDialog({ appId, appName }: { appId: string, appName
                   {watchedTags.map((tag) => (
                     <Badge key={tag} variant="secondary" className="flex items-center gap-1">
                       {tag}
-                      <X 
-                        className="h-3 w-3 cursor-pointer" 
+                      <X
+                        className="h-3 w-3 cursor-pointer"
                         onClick={() => removeTag(tag)}
                       />
                     </Badge>

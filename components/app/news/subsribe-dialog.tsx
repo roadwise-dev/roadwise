@@ -33,12 +33,14 @@ const formSchema = z.object({
   }),
 })
 
+type FormValues = z.infer<typeof formSchema>
+
 export function SubscribeDialog({ appId, appName }: { appId: string, appName: string }) {
   const [open, setOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { userData, isLoaded, updateUserData } = useUserData()
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",

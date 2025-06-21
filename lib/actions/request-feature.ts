@@ -4,7 +4,7 @@ import { db } from "../drizzle/db";
 import { feature, board } from "../drizzle/schema";
 import { eq, and } from "drizzle-orm";
 
-interface CreateFeatureRequestData {
+interface RequestFeatureData {
   name: string;
   title: string;
   description: string;
@@ -12,15 +12,7 @@ interface CreateFeatureRequestData {
   appId: string;
 }
 
-interface CreateFeatureRequestResult {
-  success: boolean;
-  error?: string;
-  featureId?: string;
-}
-
-export async function createFeatureRequest(
-  data: CreateFeatureRequestData
-): Promise<CreateFeatureRequestResult> {
+export async function createFeatureRequest(data: RequestFeatureData) {
   try {
     // Validate required fields
     if (!data.name || data.name.trim().length < 2) {
@@ -92,7 +84,8 @@ export async function createFeatureRequest(
     console.error("Error creating feature request:", error);
     return {
       success: false,
-      error: "An error occurred while creating your feature request. Please try again.",
+      error:
+        "An error occurred while creating your feature request. Please try again.",
     };
   }
 }

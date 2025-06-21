@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { MessageSquare, Search } from "lucide-react"
 import { Badge } from "../ui/badge"
 import { useUserData } from "@/hooks/use-user-data"
-import { CreateFeatureDialog } from "@/components/app/create-feature-dialog"
+import { CreateFeatureDialog } from "@/components/app/request-feature-dialog"
 
 interface Feature {
   id: string;
@@ -26,14 +26,14 @@ interface Feature {
 }
 
 
-export default function RequestFeatureList({ 
-  features, 
-  appId, 
-  appName 
-}: { 
-  features: Feature[], 
-  appId: string, 
-  appName: string 
+export default function RequestFeatureList({
+  features,
+  appId,
+  appName
+}: {
+  features: Feature[],
+  appId: string,
+  appName: string
 }) {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -227,13 +227,13 @@ export default function RequestFeatureList({
 
                 <div className="mb-2 space-y-2">
                   <h3 className="text-base font-medium mb-2">Add a comment</h3>
-                  <Input 
-                    placeholder="Name" 
+                  <Input
+                    placeholder="Name"
                     value={commentName}
                     onChange={(e) => handleNameChange(e.target.value)}
                   />
-                  <Input 
-                    placeholder="Email" 
+                  <Input
+                    placeholder="Email"
                     type="email"
                     value={commentEmail}
                     onChange={(e) => handleEmailChange(e.target.value)}

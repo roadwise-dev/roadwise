@@ -8,9 +8,18 @@ type Feature = {
   upvotes: number;
 };
 
-export default function FeatureCard({ feature }: { feature: Feature }) {
+interface FeatureCardProps {
+  feature: Feature;
+  onFeatureClick?: (feature: Feature) => void;
+}
+
+export default function FeatureCard({ feature, onFeatureClick }: FeatureCardProps) {
   return (
-    <Card key={feature.id} className="p-4">
+    <Card 
+      key={feature.id} 
+      className={`p-4 ${onFeatureClick ? 'cursor-pointer hover:shadow-md transition-shadow' : ''}`}
+      onClick={onFeatureClick ? () => onFeatureClick(feature) : undefined}
+    >
       <div className="flex items-start gap-4">
         <UpvoteButton featureInfo={feature} />
         <div className="grow">

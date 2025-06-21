@@ -26,7 +26,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-10 border-b py-3">
+    <nav className="bg-background sticky top-0 z-10 border-b py-3">
       <div className="flex justify-between max-w-[1440px] mx-auto gap-6 px-6 items-center">
         <div className="flex gap-4">
           {links.map((link) => (
@@ -34,8 +34,8 @@ export default function Navbar() {
               key={link.href}
               href={`/app/${basePath}/${link.href}`}
               className={`text-base transition-colors duration-200 flex items-center space-x-2 rounded px-2 py-1 ${isActive(link.href)
-                  ? "bg-muted text-black"
-                  : "text-muted-foreground hover:text-black hover:bg-muted"
+                ? "bg-muted text-black"
+                : "text-muted-foreground hover:text-black hover:bg-muted"
                 }`}
             >
               <link.icon size={18} />

@@ -48,8 +48,10 @@ export function SubscribeDialog({ appId, appName }: { appId: string, appName: st
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
-    try {
-      await subscribeToUpdates(values)
+
+    const result = await subscribeToUpdates(values)
+
+    if (result.success) {
       setOpen(false)
       toast("You successfully subscribed to " + appName, {
         description: "You will now be notified about new announcements",
@@ -59,14 +61,13 @@ export function SubscribeDialog({ appId, appName }: { appId: string, appName: st
         },
       })
       form.reset()
-    } catch (error) {
-      console.error("Subscription failed:", error)
+    } else {
       toast("Subscription failed", {
-        description: "Try again later or contact support",
+        description: result.error
       })
-    } finally {
-      setIsSubmitting(false)
     }
+
+    setIsSubmitting(false)
   }
 
   return (

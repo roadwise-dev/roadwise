@@ -20,10 +20,14 @@ export async function subscribeToUpdates(data: SubscriptionData) {
         error: "You must consent to receive updates",
       };
     }
+
+    // Check if subscription already exists
     const [existingSubscription] = await db
       .select()
       .from(subscribe)
-      .where(and(eq(subscribe.appId, data.appId), eq(subscribe.email, data.email)));
+      .where(
+        and(eq(subscribe.appId, data.appId), eq(subscribe.email, data.email)),
+      );
 
     if (existingSubscription) {
       return {
@@ -41,13 +45,12 @@ export async function subscribeToUpdates(data: SubscriptionData) {
 
     return {
       success: true,
-      message: "Successfully subscribed to updates",
     };
   } catch (error) {
     console.error("Subscription error:", error);
     return {
       success: false,
-      error: "Failed to subscribe. Please try again later.",
+      error: "Server error. Please try again later.",
     };
   }
 }

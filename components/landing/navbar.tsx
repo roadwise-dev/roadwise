@@ -65,7 +65,7 @@ export default function Navbar() {
                 height={24}
                 className="rounded-sm opacity-90"
               />
-              <span className="text-lg font-bold ">Roadwise</span>
+              <span className="text-xl font-bold ">Roadwise</span>
             </Link>
 
             {/* Center: Desktop Navigation */}

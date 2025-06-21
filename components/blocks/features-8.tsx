@@ -4,6 +4,13 @@ import { Shield, Users } from 'lucide-react'
 export function Features() {
   return (
     <section className="w-full max-container padding-container">
+
+      <h2 className="text-3xl font-bold text-center">
+        All the features you need
+      </h2>
+      <p className="text-center text-2xl text-muted-foreground mb-12">
+        Everything you need to build smarter, faster.
+      </p>
       <div className="relative z-10 grid grid-cols-6 gap-3">
         <Card className="relative col-span-full flex overflow-hidden lg:col-span-2">
           <CardContent className="relative m-auto size-fit pt-6">

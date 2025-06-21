@@ -33,12 +33,11 @@ export function HowItWorks() {
 
   return (
     <section className="w-full max-container padding-container">
-      <h2 className="text-3xl font-bold text-center mb-4">
+      <h2 className="text-3xl font-bold text-center">
         How Roadwise Works
       </h2>
-      <p className="text-lg text-center mb-12 mx-auto">
-        Get started with Roadwise in four simple steps and transform your
-        product development process.
+      <p className="text-center text-2xl text-muted-foreground mb-12">
+        From user ideas to product impact - in four simple steps.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {steps.map((step, index) => (

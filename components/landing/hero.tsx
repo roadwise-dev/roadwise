@@ -16,7 +16,10 @@ export default function Hero() {
           <Badge variant="outline" className="mb-6 px-4 py-1.5 text-sm font-medium">Alpha version - Try Now</Badge>
 
           {/* Centered text */}
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">Empower Your Product<br />with User Feedback</h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+            Empower Your Product<br />
+            with <span className="font-medium italic">User Feedback</span>
+          </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             Create feedback boards for your apps and let your users<br />shape the future of your product
           </p>

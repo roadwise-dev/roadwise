@@ -7,12 +7,18 @@ export default function LandingLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      <div className="pt-40">
-        {children}
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Animated background for entire landing page */}
+      <div className="fixed inset-0 bg-gradient-to-br from-gray-50/30 via-transparent to-gray-100/20 dark:from-gray-900/20 dark:via-transparent dark:to-gray-800/10 pointer-events-none"></div>
+      <div className="fixed inset-0 bg-grid-pattern opacity-30 dark:opacity-20 pointer-events-none"></div>
+
+      <div className="relative z-10">
+        <Navbar />
+        <div className="pt-40">
+          {children}
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }

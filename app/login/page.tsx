@@ -4,11 +4,12 @@ import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import LoginForm from "./login-form";
-import Image from "next/image";
+import { ChevronUp } from "lucide-react";
 
 export default async function LoginPage() {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
+
   // If user is already signed in, redirect to dashboard
   if (data?.user) {
     redirect("/dashboard");
@@ -29,10 +30,10 @@ export default async function LoginPage() {
 
           {/* OAuth Buttons */}
           <div className="flex flex-row gap-4 mb-4">
-            <Button className="w-full" variant="outline">
+            <Button disabled className="w-full" variant="outline">
               GitHub
             </Button>
-            <Button className="w-full" variant="outline">
+            <Button disabled className="w-full" variant="outline">
               Google
             </Button>
           </div>
@@ -53,25 +54,15 @@ export default async function LoginPage() {
       </div>
 
       {/* Right side - Background Image */}
-      <div className="flex-1 p-8">
-        <div
-          className="w-full h-full bg-cover bg-center rounded-3xl relative flex items-center justify-center"
-          style={{
-            backgroundImage: 'url(/images/bg-pattern-1.jpg)',
-          }}
-        >
+      <div className="hidden md:flex flex-1 p-8">
+        <div className="w-full h-full bg-[url('/images/bg-pattern-1.jpg')] bg-cover bg-center rounded-3xl relative flex items-center justify-center">
           {/* Optional overlay for aesthetic purposes */}
           <div className="absolute inset-0 bg-black/20 rounded-3xl" />
 
           {/* Roadwise Logo */}
           <div className="relative z-10 text-center">
             <div className="flex items-center justify-center gap-3 mb-2">
-              <Image
-                src="/logo.png"
-                alt="Roadwise Logo"
-                width={40}
-                height={40}
-              />
+              <ChevronUp className="text-white" width={50} height={50} />
               <h1 className="text-4xl font-bold text-white">Roadwise</h1>
             </div>
           </div>

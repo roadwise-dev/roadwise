@@ -1,11 +1,11 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Menu } from "lucide-react";
 import { AuthButtons } from "./auth-buttons";
+import RoadwiseLogo from "../svg/logo";
 
 // Navigation data
 const navigationItems = [
@@ -58,14 +58,11 @@ export default function Navbar() {
           <div className="flex items-center justify-between space-x-8">
             {/* Left: Logo - compact for floating design */}
             <Link href="/" className="flex items-center space-x-2">
-              <Image
-                src="/logo.png"
-                alt="Roadwise app logo"
-                width={24}
-                height={24}
-                className="rounded-sm opacity-90"
+              <RoadwiseLogo
+                width={30}
+                height={30}
               />
-              <span className="text-xl font-bold ">Roadwise</span>
+              <span className="text-xl font-bold">Roadwise</span>
             </Link>
 
             {/* Center: Desktop Navigation */}

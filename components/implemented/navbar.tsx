@@ -35,7 +35,7 @@ export default function Navbar() {
               href={`/app/${basePath}/${link.href}`}
               className={`text-base transition-colors flex items-center space-x-2 rounded px-2 py-1 ${isActive(link.href)
                 ? "bg-muted text-black"
-                : "text-muted-foreground hover:text-primary"
+                : "text-muted-foreground hover:text-black hover:bg-muted"
                 }`}
             >
               <link.icon size={18} />

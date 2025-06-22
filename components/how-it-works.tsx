@@ -33,10 +33,10 @@ export function HowItWorks() {
 
   return (
     <section className="w-full max-container padding-container">
-      <h2 className="text-3xl font-bold text-center">
+      <h2 className="text-2xl sm:text-3xl font-bold text-center">
         How Roadwise Works
       </h2>
-      <p className="text-center text-2xl text-muted-foreground mb-12">
+      <p className="text-center text-xl sm:text-2xl text-muted-foreground mb-12">
         From user ideas to product impact - in four simple steps.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

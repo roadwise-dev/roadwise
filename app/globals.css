@@ -122,11 +122,7 @@
 
 @layer utilities {
   .max-container {
-    @apply max-w-[1400px] mx-auto;
-  }
-  
-  .padding-container {
-    @apply px-5;
+    @apply w-full max-w-[1400px] mx-auto px-5;
   }
 
   .bg-grid-pattern {

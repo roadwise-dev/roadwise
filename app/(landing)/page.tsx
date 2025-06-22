@@ -6,7 +6,7 @@ import Logos from "@/components/landing/logos";
 
 export default function HomePage() {
   return (
-    <main className="w-full flex flex-col gap-10 sm:gap-20">
+    <main className="flex flex-col gap-16 sm:gap-30">
       <Hero />
       <Logos />
       <HowItWorks />

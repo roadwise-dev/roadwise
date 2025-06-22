@@ -14,7 +14,8 @@ export default function LandingLayout({
 
       <div className="relative z-10">
         <Navbar />
-        <div className="pt-40">
+        {/* Navbar takes 20px */}
+        <div className="pt-32 sm:pt-48">
           {children}
         </div>
         <Footer />

@@ -3,8 +3,8 @@ import RoadwiseLogo from "../svg/logo";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-background mt-10">
-      <div className="container mx-auto px-4 py-12 md:px-6 2xl:max-w-[1400px]">
+    <footer className="w-full bg-background my-10 sm:my-16">
+      <div className="w-full max-container padding-container">
         {/* Logo/description and navigation links */}
         <div className="flex flex-col md:flex-row md:justify-between mb-8 gap-8">
           {/* Logo and description */}

@@ -10,9 +10,9 @@ import Image from "next/image"
 
 export default function Hero() {
   return (
-    <section className="py-10 w-full max-container padding-container">
+    <section className="w-full max-container padding-container">
       <div className="flex flex-col items-center text-center">
-        <div className="max-w-4xl mx-auto mb-16">
+        <div className="max-w-4xl mx-auto mb-6">
           <Badge variant="outline" className="mb-6 px-4 py-1.5 text-sm font-medium">Alpha version - Try Now</Badge>
 
           {/* Centered text */}
@@ -36,7 +36,7 @@ export default function Hero() {
         </div>
 
         {/* Big screenshot below */}
-        <div className="w-full">
+        <div >
           <FeatureShowcase />
         </div>
       </div>
@@ -73,7 +73,7 @@ function FeatureShowcase() {
         {tabs.map((tab) => (
           <Button
             key={tab.id}
-            variant={activeTab === tab.id ? "default" : "outline"}
+            variant={activeTab === tab.id ? "secondary" : "outline"}
             size="sm"
             onClick={() => setActiveTab(tab.id)}
             className="px-4 py-2 text-sm font-medium"

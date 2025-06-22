@@ -117,10 +117,10 @@ function MetricCard({ metric }: { metric: typeof metrics[0] }) {
 
 export default function CustomersPage() {
   return (
-    <div className="w-full max-container padding-container flex flex-col ">
+    <div className="flex flex-col ">
       <main className="flex-1">
         {/* Featured Customers */}
-        <section className="w-full py-12 sm:py-24">
+        <section className="max-container padding-container w-full">
           <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
@@ -140,7 +140,7 @@ export default function CustomersPage() {
         </section>
 
         {/* Success Metrics */}
-        <section className="w-full py-12 sm:py-24">
+        <section className="max-container padding-container w-full py-12 sm:py-24">
           <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">

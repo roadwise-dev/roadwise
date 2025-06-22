@@ -15,9 +15,9 @@ export default function Logos() {
   const renderedLogos = [...logos, ...logos, ...logos]
 
   return (
-    <section className="w-full max-container padding-container py-18">
-      <h2 className="text-center text-3xl font-semibold">Powering the  best product teams.</h2>
-      <p className="text-center text-2xl text-muted-foreground mb-12">
+    <section className="max-container">
+      <h2 className="text-center text-2xl sm:text-3xl font-semibold">Powering the  best product teams.</h2>
+      <p className="text-center text-xl sm:text-2xl text-muted-foreground mb-12">
         From next-gen startups to established enterprises.
       </p>
 

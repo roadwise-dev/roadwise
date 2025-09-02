@@ -17,14 +17,14 @@ interface CTAProps {
 
 export function CallToAction({ title, description, buttons }: CTAProps) {
   return (
-    <section className="w-full max-container padding-container">
+    <section>
       <div
         className="relative py-20 rounded-xl overflow-hidden bg-cover bg-center"
         style={{
           backgroundImage: 'url(/images/bg-pattern-1.jpg)'
         }}
       >
-        {/* Optional overlay for better text readability */}
+        {/* Darker overlay for better text readability */}
         <div className="absolute inset-0 bg-black/20 rounded-xl" />
 
         <div className="relative px-4 text-center">
@@ -40,9 +40,8 @@ export function CallToAction({ title, description, buttons }: CTAProps) {
             {buttons.map((button, index) => (
               <Button
                 key={index}
-                variant="default"
+                variant="secondary"
                 size="lg"
-                className="bg-black text-white hover:bg-gray-800"
                 asChild
               >
                 <Link href={button.href}>

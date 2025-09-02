@@ -1,7 +1,7 @@
 "use server";
 
-import { db } from "../drizzle/db";
-import { comment } from "../drizzle/schema";
+import { db } from "../db/db";
+import { comment } from "../db/schema";
 import { eq, desc } from "drizzle-orm";
 
 interface CreateCommentData {

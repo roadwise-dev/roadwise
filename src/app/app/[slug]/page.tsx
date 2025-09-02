@@ -1,8 +1,8 @@
 import FeatureBoard, { FeatureBoardSkeleton } from "@/components/implemented/feature-board";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { db } from "@/lib/drizzle/db";
-import { app, board } from "@/lib/drizzle/schema";
+import { db } from "@/db/db";
+import { app, board } from "@/db/schema";
 import { eq, and, ne } from "drizzle-orm";
 import Link from "next/link";
 import { notFound } from "next/navigation";

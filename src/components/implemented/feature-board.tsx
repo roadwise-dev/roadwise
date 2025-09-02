@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { db } from "@/lib/drizzle/db";
-import { feature } from "@/lib/drizzle/schema";
+import { db } from "@/db/db";
+import { feature } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import FeatureCard from "./feature-card";
 import { Skeleton } from "@/components/ui/skeleton";

@@ -20,7 +20,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import Link from "next/link"
-import { subscribeToUpdates } from "@/lib/actions/subscribe-news"
+import { subscribeToUpdates } from "@/actions/subscribe-news"
 import { toast } from "sonner"
 import { useUserData } from "@/hooks/use-user-data"
 

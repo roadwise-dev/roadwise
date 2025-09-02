@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { createAppAction } from "@/lib/actions/create-app";
 import { useRef, useState } from "react";
 import { AppDescriptionInput } from "./app-description-input";
 import { AppNameInput } from "./app-name-input";
@@ -10,6 +9,7 @@ import { AvatarSection } from "./avatar-selection";
 import { GroupSelect } from "./group-select";
 import { Plus } from "lucide-react";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import { createAppAction } from "@/actions/create-app";
 
 export default function CreateAppButton() {
   const [avatar, setAvatar] = useState<string | null>(null);

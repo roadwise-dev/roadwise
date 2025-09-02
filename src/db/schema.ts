@@ -24,9 +24,7 @@ export const team = sqliteTable("team", {
 // App table
 export const app = sqliteTable("app", {
   id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
-  userId: text("user_id")
-    .references(() => user.id)
-    .notNull(),
+  userId: text("user_id").notNull(), // Remove foreign key constraint for Clerk integration
   name: text("name").notNull(),
   description: text("description"),
   domain: text("domain").notNull(),

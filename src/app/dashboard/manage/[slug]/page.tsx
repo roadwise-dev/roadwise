@@ -2,18 +2,18 @@ import { BoardsList } from "@/components/boards-list";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { db } from "@/lib/drizzle/db";
-import { app } from "@/lib/drizzle/schema";
-import { createClient } from "@/lib/supabase/server";
+import { db } from "@/db/db";
+import { app } from "@/db/schema";
+import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { notFound, redirect } from "next/navigation";
 
 export default async function Page(props: {
   params: Promise<{ slug: string }>;
 }) {
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
+  const { userId } = await auth();
+  
+  if (!userId) {
     redirect("/login");
   }
 

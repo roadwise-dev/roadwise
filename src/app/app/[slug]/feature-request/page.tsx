@@ -1,7 +1,7 @@
 import RequestFeatureList from "@/components/implemented/request-feature-list";
 import { eq, and } from "drizzle-orm";
-import { db } from "@/lib/drizzle/db";
-import { app, board, feature } from "@/lib/drizzle/schema";
+import { db } from "@/db/db";
+import { app, board, feature } from "@/db/schema";
 import { notFound } from "next/navigation";
 
 export default async function Page(props: {

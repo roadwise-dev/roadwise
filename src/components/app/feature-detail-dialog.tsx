@@ -6,7 +6,7 @@ import { MessageSquare } from "lucide-react"
 import { Badge } from "../ui/badge"
 import { CommentsDisplay } from "./comments-display"
 import { CommentForm } from "./comment-form"
-import { getComments } from "@/lib/actions/comments"
+import { getComments } from "@/actions/comments"
 
 interface Feature {
   id: string;

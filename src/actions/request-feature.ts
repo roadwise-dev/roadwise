@@ -1,7 +1,7 @@
 "use server";
 
-import { db } from "../drizzle/db";
-import { feature, board } from "../drizzle/schema";
+import { db } from "../db/db";
+import { feature, board } from "../db/schema";
 import { eq, and } from "drizzle-orm";
 
 interface RequestFeatureData {

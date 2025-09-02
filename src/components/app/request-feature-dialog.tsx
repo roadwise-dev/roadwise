@@ -21,7 +21,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
-import { createFeatureRequest } from "@/lib/actions/request-feature"
+import { createFeatureRequest } from "@/actions/request-feature"
 import { toast } from "sonner"
 import { useUserData } from "@/hooks/use-user-data"
 

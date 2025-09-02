@@ -1,7 +1,7 @@
 "use server";
 
-import { db } from "@/lib/drizzle/db";
-import { subscribe } from "@/lib/drizzle/schema";
+import { db } from "@/db/db";
+import { subscribe } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
 
 interface SubscriptionData {

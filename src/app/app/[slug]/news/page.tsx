@@ -1,8 +1,8 @@
 import { NewsPost } from "@/components/app/news-post"
 import { SubscribeDialog } from "@/components/app/news/subsribe-dialog"
-import { db } from "@/lib/drizzle/db";
+import { db } from "@/db/db";
 import { eq, desc } from "drizzle-orm";
-import { app, news } from "@/lib/drizzle/schema";
+import { app, news } from "@/db/schema";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";

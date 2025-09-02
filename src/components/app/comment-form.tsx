@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { useUserData } from "@/hooks/use-user-data"
-import { createComment } from "@/lib/actions/comments"
+import { createComment } from "@/actions/comments"
 import { toast } from "sonner"
 
 interface CommentFormProps {

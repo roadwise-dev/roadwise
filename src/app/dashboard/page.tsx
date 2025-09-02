@@ -2,20 +2,20 @@ import AppCard from "@/components/dashboard/app-card";
 import CreateAppButton from "@/components/dashboard/create-app";
 import { Search } from "@/components/dashboard/search";
 import { StatsCards } from "@/components/dashboard/stats-cards";
-import { db } from "@/lib/drizzle/db";
-import { app } from "@/lib/drizzle/schema";
-import { createClient } from "@/lib/supabase/server";
+import { db } from "@/db/db";
+import { app } from "@/db/schema";
+import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
+  const { userId } = await auth();
+  
+  if (!userId) {
     redirect("/login");
   }
 
-  const apps = await db.select().from(app).where(eq(app.userId, data.user.id));
+  const apps = await db.select().from(app).where(eq(app.userId, userId));
 
   return (
     <div className="flex flex-col gap-10">

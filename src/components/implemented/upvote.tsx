@@ -1,6 +1,5 @@
 "use client";
 
-import { upvoteWithEmail } from "@/lib/actions/upvote";
 import { ChevronUp } from "lucide-react";
 import { useActionState, useEffect, useState } from "react";
 import {
@@ -19,6 +18,7 @@ import { cn } from "@/lib/utils";
 import { motion } from "motion/react"
 import { toast } from "sonner";
 import { useUserData } from "@/hooks/use-user-data";
+import { upvoteWithEmail } from "@/actions/upvote";
 
 type Feature = {
   id: string;

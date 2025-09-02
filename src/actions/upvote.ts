@@ -1,8 +1,8 @@
 "use server";
 
+import { db } from "@/db/db";
+import { upvote } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
-import { db } from "../drizzle/db";
-import { upvote } from "../drizzle/schema";
 
 export async function upvoteWithEmail(prevState: unknown, formData: FormData) {
   const email = formData.get("email");

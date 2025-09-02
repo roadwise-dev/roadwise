@@ -5,6 +5,7 @@ import FeatureCard from "../implemented/feature-card"
 import { Button } from "../ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 import { useState } from "react"
 import Image from "next/image"
 
@@ -84,16 +85,22 @@ function FeatureShowcase() {
       </div>
 
       {/* Screenshot display */}
-      <div className="shadow-xl rounded-xl overflow-hidden border">
-        <Image
-          src={tabs.find(tab => tab.id === activeTab)?.image || "/images/features.png"}
-          alt={`${tabs.find(tab => tab.id === activeTab)?.label} screenshot`}
-          width={1920}
-          height={1080}
-          className="w-full h-auto"
-          draggable={false}
-          priority
-        />
+      <div className="shadow-xl rounded-xl overflow-hidden border relative">
+        {tabs.map((tab) => (
+          <Image
+            key={tab.id}
+            src={tab.image}
+            alt={`${tab.label} screenshot`}
+            width={1920}
+            height={1080}
+            className={cn(
+              "w-full h-auto transition-opacity duration-300",
+              activeTab === tab.id ? "opacity-100" : "opacity-0 absolute inset-0"
+            )}
+            draggable={false}
+            priority
+          />
+        ))}
       </div>
     </div>
   )

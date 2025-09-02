@@ -55,9 +55,9 @@ export default function Navbar() {
       {/* Floating navbar */}
       <header className="w-full max-container padding-container fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
         <div className="bg-background/60 backdrop-blur-md border border-border/50 rounded-2xl shadow-sm p-3">
-          <div className="flex items-center justify-between space-x-8">
-            {/* Left: Logo - compact for floating design */}
-            <Link href="/" className="flex items-center space-x-2">
+          <div className="relative flex items-center justify-center">
+            {/* Left: Logo - absolute positioned */}
+            <Link href="/" className="absolute left-0 flex items-center space-x-2">
               <RoadwiseLogo
                 width={30}
                 height={30}
@@ -65,17 +65,19 @@ export default function Navbar() {
               <span className="text-xl font-bold">Roadwise</span>
             </Link>
 
-            {/* Center: Desktop Navigation */}
+            {/* Center: Desktop Navigation - stays perfectly centered */}
             <nav className="hidden md:flex items-center space-x-4">
               {navigationItems.map((item) => (
                 <DesktopNavLink key={item.href} item={item} />
               ))}
             </nav>
 
-            {/* Right: Auth buttons and menu */}
-            <div className="flex items-center gap-2">
+            {/* Right: Auth buttons and menu - absolute positioned */}
+            <div className="absolute right-0 flex items-center gap-2">
               {/* Auth buttons - hidden on mobile in floating nav */}
-              <AuthButtons />
+              <div className="min-w-[120px] flex justify-end">
+                <AuthButtons />
+              </div>
 
               {/* Menu button - visible on mobile */}
               <Button

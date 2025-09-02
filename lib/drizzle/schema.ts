@@ -1,104 +1,105 @@
-import { integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { sql } from "drizzle-orm";
 
 // User table
-export const user = pgTable("user", {
-  id: uuid("id").defaultRandom().primaryKey(), // UUID, primary key
-  firstName: text("first_name").notNull(), // First name column
-  lastName: text("last_name").notNull(), // Last name column
-  avatarUrl: text("avatar_url").notNull(), // Avatar URL column
+export const user = sqliteTable("user", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  avatarUrl: text("avatar_url").notNull(),
 });
 
 // Team table
-export const team = pgTable("team", {
-  id: uuid("id").defaultRandom().primaryKey(), // Team's unique ID
-  name: text("name").notNull(), // Team name
-  description: text("description"), // Team description
-  avatarUrl: text("avatar_url"), // Avatar URL of the team (optional)
-  creatorId: uuid("creator_id")
+export const team = sqliteTable("team", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  name: text("name").notNull(),
+  description: text("description"),
+  avatarUrl: text("avatar_url"),
+  creatorId: text("creator_id")
     .references(() => user.id)
-    .notNull(), // Reference to the user who created the team
-  createdAt: timestamp("created_at").defaultNow().notNull(), // Creation timestamp
+    .notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`).notNull(),
 });
 
 // App table
-export const app = pgTable("app", {
-  id: uuid("id").defaultRandom().primaryKey(), // App's unique ID
-  userId: uuid("user_id")
+export const app = sqliteTable("app", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id")
     .references(() => user.id)
-    .notNull(), // Reference to the user
-  name: text("name").notNull(), // Name of the app
-  description: text("description"), // Description of the app
-  domain: text("domain").notNull(), // Domain of the app
-  avatarUrl: text("avatar_url").notNull(), // Avatar URL of the app
-  slug: text("slug").notNull(), // URL-friendly slug
-  createdAt: timestamp("created_at").defaultNow().notNull(), // Creation timestamp
+    .notNull(),
+  name: text("name").notNull(),
+  description: text("description"),
+  domain: text("domain").notNull(),
+  avatarUrl: text("avatar_url").notNull(),
+  slug: text("slug").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`).notNull(),
 });
 
 // Board table
-export const board = pgTable("board", {
-  id: uuid("id").defaultRandom().primaryKey(), // Board's unique ID
-  appId: uuid("app_id")
+export const board = sqliteTable("board", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  appId: text("app_id")
     .references(() => app.id)
-    .notNull(), // Reference to the app
-  name: text("name").notNull(), // Board name (e.g., Implementing, Won't Have)
-  column: integer("column"), // Column number - 0 indexed
-  createdAt: timestamp("created_at").defaultNow().notNull(), // Creation timestamp
+    .notNull(),
+  name: text("name").notNull(),
+  column: integer("column"),
+  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`).notNull(),
 });
 
 // Feature table
-export const feature = pgTable("feature", {
-  id: uuid("id").defaultRandom().primaryKey(), // Feature's unique ID
-  boardId: uuid("board_id")
+export const feature = sqliteTable("feature", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  boardId: text("board_id")
     .references(() => board.id)
-    .notNull(), // Reference to the board
-  title: text("title").notNull(), // Title of the feature
-  description: text("description").notNull(), // Detailed description
-  tags: text("tags").array().notNull().default([]),
-  name: text("name").notNull(), // Authors Name
-  upvotes: integer("upvotes").default(0).notNull(), // Number of upvotes
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(), // Creation timestamp
+    .notNull(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  tags: text("tags", { mode: "json" }).$type<string[]>().notNull().default(sql`'[]'`),
+  name: text("name").notNull(),
+  upvotes: integer("upvotes").default(0).notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`).notNull(),
 });
 
 // Upvote table
-export const upvote = pgTable("upvote", {
-  id: uuid("id").defaultRandom().primaryKey(), // Unique ID for the upvote
-  email: text("email").notNull(), // Email of the user who upvoted
-  featureId: uuid("feature_id")
+export const upvote = sqliteTable("upvote", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  email: text("email").notNull(),
+  featureId: text("feature_id")
     .references(() => feature.id)
-    .notNull(), // Reference to the feature
-  createdAt: timestamp("created_at").defaultNow().notNull(), // Creation timestamp
+    .notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`).notNull(),
 });
 
 // News table
-export const news = pgTable("news", {
-  id: uuid("id").defaultRandom().primaryKey(), // Unique ID for the upvote
-  appId: uuid("app_id")
+export const news = sqliteTable("news", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  appId: text("app_id")
     .references(() => app.id)
-    .notNull(), // Reference to the app
+    .notNull(),
   title: text("title").notNull(),
   content: text("content").notNull(),
   image: text("image"),
-  tags: text("tags").array().notNull().default([]),
-  date: timestamp("date", { withTimezone: true }).defaultNow().notNull(), // News timestamp
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(), // Creation timestamp
+  tags: text("tags", { mode: "json" }).$type<string[]>().notNull().default(sql`'[]'`),
+  date: integer("date", { mode: "timestamp" }).default(sql`(unixepoch())`).notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`).notNull(),
 });
 
-export const comment = pgTable("comment", {
-  id: uuid("id").defaultRandom().primaryKey(), // Unique ID for the comment
-  featureId: uuid("feature_id")
+export const comment = sqliteTable("comment", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  featureId: text("feature_id")
     .references(() => feature.id)
-    .notNull(), // Reference to the feature being commented on
-  name: text("name").notNull(), // Name of the commenter
-  email: text("email").notNull(), // Email of the commenter
-  content: text("content").notNull(), // Content of the comment
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(), // When the comment was created
+    .notNull(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  content: text("content").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`).notNull(),
 });
 
-export const subscribe = pgTable("subscribe", {
-  id: uuid("id").defaultRandom().primaryKey(), // Unique ID for the subscriber
-  appId: uuid("app_id")
+export const subscribe = sqliteTable("subscribe", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  appId: text("app_id")
     .references(() => app.id)
-    .notNull(), // Reference to the app
-  name: text("name").notNull(), // Subscriber name
-  email: text("email").notNull(), // Email of the subscriber
+    .notNull(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
 });

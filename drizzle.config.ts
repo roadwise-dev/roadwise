@@ -5,9 +5,9 @@ config({ path: ".env.local" });
 
 export default defineConfig({
   schema: "./lib/drizzle/schema.ts",
-  out: "./supabase/migrations",
-  dialect: "postgresql",
+  out: "./drizzle/migrations",
+  dialect: "sqlite",
   dbCredentials: {
-    url: process.env.DATABASE_URL!,
+    url: process.env.TURSO_DATABASE_URL!,
   },
 });

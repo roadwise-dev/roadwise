@@ -1,10 +1,10 @@
 import FeatureBoard, { FeatureBoardSkeleton } from "@/components/implemented/feature-board";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { FeatureRequestLink } from "@/components/app/feature-request-link";
 import { db } from "@/db/db";
 import { app, board } from "@/db/schema";
 import { eq, and, ne } from "drizzle-orm";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -58,7 +58,7 @@ export default async function Page(props: {
           </div>
         </div>
         <Button asChild>
-          <Link href={dbApp.slug + "/feature-request"}>Request a feature</Link>
+          <FeatureRequestLink appSlug={dbApp.slug}>Request a feature</FeatureRequestLink>
         </Button>
       </div>
       {/* Use flex-1 to make the grid take up all remaining space */}

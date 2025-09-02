@@ -3,10 +3,24 @@
 import { Map, MessageCircle, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { isSubdomain } from "@/lib/config";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const basePath = pathname.split("/")[2];
+  const [isOnSubdomain, setIsOnSubdomain] = useState(false);
+  
+  // Extract app slug from pathname
+  const pathSegments = pathname.split("/");
+  const basePath = pathSegments[2]; // /app/[slug] -> get [slug]
+
+  useEffect(() => {
+    // Check if we're on a subdomain
+    if (typeof window !== 'undefined') {
+      const hostname = window.location.hostname;
+      setIsOnSubdomain(isSubdomain(hostname));
+    }
+  }, []);
 
   const links = [
     { href: "", label: "Roadmap", icon: Map },
@@ -15,14 +29,32 @@ export default function Navbar() {
   ];
 
   const isActive = (href: string) => {
-    if (
-      href === "" &&
-      (pathname === `/app/${basePath}` || pathname === `/app/${basePath}/`)
-    ) {
-      return true;
+    if (isOnSubdomain) {
+      // On subdomain: check against root path or specific page
+      if (href === "" && (pathname === "/" || pathname === "")) {
+        return true;
+      }
+      return pathname === `/${href}`;
+    } else {
+      // On main domain: check against /app/[slug] paths
+      if (
+        href === "" &&
+        (pathname === `/app/${basePath}` || pathname === `/app/${basePath}/`)
+      ) {
+        return true;
+      }
+      return pathname === `/app/${basePath}/${href}`;
     }
-    if (pathname === `/app/${basePath}/${href}`) return true;
-    return false;
+  };
+
+  const getLinkHref = (href: string) => {
+    if (isOnSubdomain) {
+      // On subdomain: use relative URLs
+      return href === "" ? "/" : `/${href}`;
+    } else {
+      // On main domain: use full /app/[slug] paths
+      return `/app/${basePath}/${href}`;
+    }
   };
 
   return (
@@ -32,7 +64,7 @@ export default function Navbar() {
           {links.map((link) => (
             <Link
               key={link.href}
-              href={`/app/${basePath}/${link.href}`}
+              href={getLinkHref(link.href)}
               className={`text-base transition-colors duration-200 flex items-center space-x-2 rounded px-2 py-1 ${isActive(link.href)
                 ? "bg-muted text-black"
                 : "text-muted-foreground hover:text-black hover:bg-muted"

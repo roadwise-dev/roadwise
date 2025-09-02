@@ -17,7 +17,7 @@ interface CTAProps {
 
 export function CallToAction({ title, description, buttons }: CTAProps) {
   return (
-    <section>
+    <section className="max-container">
       <div
         className="relative py-20 rounded-xl overflow-hidden bg-cover bg-center"
         style={{

@@ -8,6 +8,13 @@
       "when": 1756809137188,
       "tag": "0000_clear_shaman",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1756810567251,
+      "tag": "0001_stiff_stark_industries",
+      "breakpoints": true
     }
   ]
 }

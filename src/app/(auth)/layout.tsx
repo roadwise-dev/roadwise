@@ -1,28 +1,16 @@
-import { SignIn } from "@clerk/nextjs";
+import Logo from "@/components/svg/logo";
 import { ChevronUp } from "lucide-react";
 
-export default function LoginPage() {
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex min-h-screen bg-white">
-      {/* Left side - Login Form */}
+      {/* Left side - Auth Form */}
       <div className="flex-1 flex items-center justify-center p-8">
-        <div className="w-full max-w-md">
-          <SignIn 
-            routing="hash"
-            appearance={{
-              elements: {
-                rootBox: "w-full",
-                card: "w-full shadow-none border-0",
-                headerTitle: "text-xl font-semibold",
-                headerSubtitle: "text-sm text-gray-500",
-                socialButtonsBlockButton: "border border-gray-300 hover:bg-gray-50",
-                formButtonPrimary: "bg-black hover:bg-gray-800 text-white",
-                footerActionLink: "text-black hover:text-gray-700"
-              }
-            }}
-            signUpUrl="/signup"
-          />
-        </div>
+        {children}
       </div>
 
       {/* Right side - Background Image */}
@@ -34,7 +22,7 @@ export default function LoginPage() {
           {/* Roadwise Logo */}
           <div className="relative z-10 text-center">
             <div className="flex items-center justify-center gap-3 mb-2">
-              <ChevronUp className="text-white" width={50} height={50} />
+              <Logo variant="whiteOnBlack" size={50} />
               <h1 className="text-4xl font-bold text-white">Roadwise</h1>
             </div>
           </div>

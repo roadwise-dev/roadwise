@@ -12,11 +12,13 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
+import { LucideIcon } from "lucide-react"
+
 interface NavMainProps {
   items: {
     title: string
     url: string
-    icon: React.ComponentType<any>
+    icon: LucideIcon
     isActive?: boolean
   }[]
 }

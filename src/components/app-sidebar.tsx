@@ -1,6 +1,7 @@
 "use client"
 
 import { Home, BarChart3, Grid3X3, MessageSquare, Settings, Building } from "lucide-react"
+import Link from "next/link"
 
 import { NavMain } from "@/components/nav-main"
 import { NavUser } from "@/components/nav-user"
@@ -87,10 +88,10 @@ export function AppSidebar({ apps, currentApp, user, ...props }: AppSidebarProps
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="/">
+              <Link href="/">
                 <Building className="!size-5" />
                 <span className="text-base font-semibold">Roadwise</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

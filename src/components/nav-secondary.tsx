@@ -11,6 +11,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
+import { LucideIcon } from "lucide-react"
+
 export function NavSecondary({
   items,
   ...props
@@ -18,7 +20,7 @@ export function NavSecondary({
   items: {
     title: string
     url: string
-    icon: React.ComponentType<any>
+    icon: LucideIcon
   }[]
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   return (

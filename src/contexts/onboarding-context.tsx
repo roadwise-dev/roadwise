@@ -67,13 +67,15 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     // Clear related errors when data is updated
     if (updates.appName !== undefined) {
       setErrors(prev => {
-        const { appName, ...rest } = prev;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { appName: _, ...rest } = prev;
         return rest;
       });
     }
     if (updates.appSlug !== undefined) {
       setErrors(prev => {
-        const { appSlug, ...rest } = prev;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { appSlug: _, ...rest } = prev;
         return rest;
       });
     }

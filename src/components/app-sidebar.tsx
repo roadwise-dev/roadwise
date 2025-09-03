@@ -98,13 +98,13 @@ export function AppSidebar({ apps, currentApp, ...props }: AppSidebarProps) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      
+
       <SidebarContent>
         <NavApps apps={apps} currentApp={currentApp} />
         <NavMain items={navMain} />
         <NavSecondary items={navSecondary} className="mt-auto" />
       </SidebarContent>
-      
+
       <SidebarFooter>
         {/* User nav will go here */}
       </SidebarFooter>

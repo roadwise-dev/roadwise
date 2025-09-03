@@ -1,7 +1,7 @@
 "use client"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, Plus } from "lucide-react"
 import Link from "next/link"
 
 import {
@@ -16,6 +16,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -60,7 +61,7 @@ export function NavApps({ apps, currentApp }: NavAppsProps) {
                   <ChevronDown className="ml-auto h-4 w-4" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-[--radix-popper-anchor-width]" align="start">
+              <DropdownMenuContent className="w-[--radix-dropdown-menu-trigger-width]" align="start">
                 <DropdownMenuItem asChild>
                   <Link href="/dashboard" className="flex items-center gap-2">
                     <span>All Apps</span>
@@ -79,6 +80,13 @@ export function NavApps({ apps, currentApp }: NavAppsProps) {
                     </Link>
                   </DropdownMenuItem>
                 ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard/create" className="flex items-center gap-2 font-medium">
+                    <Plus className="h-4 w-4" />
+                    <span>Create App</span>
+                  </Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarMenuItem>

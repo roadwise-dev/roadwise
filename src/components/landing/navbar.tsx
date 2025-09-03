@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu } from "lucide-react";
 import { AuthButtons } from "./auth-buttons";
-import RoadwiseLogo from "../svg/logo";
+import Logo from "../svg/logo";
 
 // Navigation data
 const navigationItems = [
@@ -58,7 +58,8 @@ export default function Navbar() {
           <div className="relative flex items-center justify-center">
             {/* Left: Logo - absolute positioned */}
             <Link href="/" className="absolute left-0 flex items-center space-x-2">
-              <RoadwiseLogo
+              <Logo
+                variant="whiteOnBlack"
                 width={30}
                 height={30}
               />

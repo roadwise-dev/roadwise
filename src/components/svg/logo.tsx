@@ -1,44 +1,54 @@
-import { SVGProps } from "react"
+import React from "react";
 
-const RoadwiseLogo = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 512 512"
-    width={512}
-    height={512}
-    fill="none"
-    stroke="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    strokeWidth={2}
-    className="lucide lucide-chevron-up-icon lucide-chevron-up"
-    {...props}
-  >
-    <rect
-      width={512}
-      height={512}
-      stroke="none"
-      ry={91.733}
-      style={{
-        fill: "#000",
-        fillOpacity: 1,
-        strokeWidth: 0,
-        strokeDasharray: "none",
-        paintOrder: "markers stroke fill",
-        stroke: "none",
-      }}
-    />
-    <path
-      d="M411.177 333.588 256 178.41 100.823 333.588"
-      style={{
-        fill: "none",
-        fillOpacity: 0,
-        stroke: "#fff",
-        strokeWidth: 51.726,
-        strokeOpacity: 1,
-        strokeDasharray: "none",
-      }}
-    />
-  </svg>
-)
-export default RoadwiseLogo
+type LogoVariant =
+  | "blackOnWhite"   // black chevron, white background
+  | "whiteOnBlack"   // white chevron, black background
+  | "black"          // black chevron, no background
+  | "white";         // white chevron, no background
+
+interface LogoProps extends React.SVGProps<SVGSVGElement> {
+  variant?: LogoVariant;
+  size?: number; // convenience: size in px (defaults to 100)
+}
+
+const Logo: React.FC<LogoProps> = ({ variant = "blackOnWhite", size = 100, ...props }) => {
+  // Decide colors based on variant
+  const stroke = variant === "whiteOnBlack" || variant === "white" ? "white" : "black";
+  const background =
+    variant === "blackOnWhite" ? "white" :
+      variant === "whiteOnBlack" ? "black" :
+        "none";
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      {/* Background with rounded corners */}
+      <rect
+        x="0"
+        y="0"
+        width="24"
+        height="24"
+        rx="4"
+        ry="4"
+        fill={background}
+      />
+
+      {/* Chevron */}
+      <path
+        d="m18 15-6-6-6 6"
+        stroke={stroke}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </svg>
+  );
+};
+
+export default Logo;

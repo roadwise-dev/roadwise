@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, BarChart3, Grid3X3, MessageSquare, Settings, Building } from "lucide-react"
+import { Home, BarChart3, Grid3X3, MessageSquare, Settings, Building, Newspaper } from "lucide-react"
 import Link from "next/link"
 
 import { NavMain } from "@/components/nav-main"
@@ -16,6 +16,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { useMemo } from "react"
+import Logo from "./svg/logo"
 
 interface App {
   id: string
@@ -62,6 +63,11 @@ export function AppSidebar({ apps, currentApp, user, ...props }: AppSidebarProps
           icon: MessageSquare,
         },
         {
+          title: "News",
+          url: `/dashboard/${currentApp.slug}/news`,
+          icon: Newspaper,
+        },
+        {
           title: "Settings",
           url: `/dashboard/${currentApp.slug}/settings`,
           icon: Settings,
@@ -89,7 +95,7 @@ export function AppSidebar({ apps, currentApp, user, ...props }: AppSidebarProps
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <Link href="/">
-                <Building className="!size-5" />
+                <Logo width={40} height={40} variant="black" />
                 <span className="text-base font-semibold">Roadwise</span>
               </Link>
             </SidebarMenuButton>

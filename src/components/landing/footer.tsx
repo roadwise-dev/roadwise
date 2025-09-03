@@ -1,5 +1,5 @@
 import Link from "next/link";
-import RoadwiseLogo from "../svg/logo";
+import Logo from "../svg/logo";
 
 export default function Footer() {
   return (
@@ -13,7 +13,7 @@ export default function Footer() {
               href="/"
               className="inline-flex items-center gap-2 mb-3 hover:opacity-80 transition-opacity"
             >
-              <RoadwiseLogo width={28} height={28} />
+              <Logo width={28} height={28} variant="whiteOnBlack" />
               <h2 className="text-lg font-semibold text-foreground">Roadwise</h2>
             </Link>
             <p className="text-sm text-muted-foreground">

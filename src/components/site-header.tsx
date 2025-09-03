@@ -6,13 +6,14 @@ import { SidebarTrigger } from "@/components/ui/sidebar"
 
 export function SiteHeader() {
   const pathname = usePathname()
-  
+
   const getPageTitle = () => {
     if (pathname === "/dashboard") return "All Apps"
     if (pathname.includes("/analytics")) return "Analytics"
     if (pathname.includes("/boards")) return "Boards"
     if (pathname.includes("/feedback")) return "Feedback"
     if (pathname.includes("/settings")) return "Settings"
+    if (pathname.includes("/news")) return "News Managemet"
     if (pathname.includes("/create")) return "Create App"
     if (pathname.match(/\/dashboard\/[^\/]+$/)) return "Overview"
     return "Dashboard"
@@ -26,7 +27,7 @@ export function SiteHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <h1 className="text-base font-medium">{getPageTitle()}</h1>
+        <h1 className="text-base font-semibold">{getPageTitle()}</h1>
         <div className="ml-auto flex items-center gap-2">
           {/* Add any header actions here */}
         </div>

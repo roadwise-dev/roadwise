@@ -8,7 +8,7 @@ import { app, board, feature } from "@/db/schema"
 import { auth } from "@clerk/nextjs/server"
 import { eq, count } from "drizzle-orm"
 import { notFound, redirect } from "next/navigation"
-import { BarChart3, Grid3X3, MessageSquare, Settings, ExternalLink } from "lucide-react"
+import { BarChart3, Grid3X3, MessageSquare, Settings, ExternalLink, Calendar } from "lucide-react"
 import Link from "next/link"
 
 interface PageProps {
@@ -56,6 +56,12 @@ export default async function AppOverviewPage({ params }: PageProps) {
       value: featureCount.count,
       icon: MessageSquare,
       href: `/dashboard/${slug}/feedback`,
+    },
+    {
+      title: "News Posts",
+      value: "Manage",
+      icon: Calendar,
+      href: `/dashboard/${slug}/news`,
     },
     {
       title: "Analytics",
@@ -106,7 +112,7 @@ export default async function AppOverviewPage({ params }: PageProps) {
       <Separator />
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {stats.map((stat) => (
           <Card key={stat.title} className="cursor-pointer hover:shadow-md transition-shadow">
             <Link href={stat.href}>
@@ -152,6 +158,12 @@ export default async function AppOverviewPage({ params }: PageProps) {
               <Link href={`/dashboard/${slug}/feedback`}>
                 <MessageSquare className="w-4 h-4 mr-2" />
                 Review Feedback
+              </Link>
+            </Button>
+            <Button variant="outline" className="w-full justify-start" asChild>
+              <Link href={`/dashboard/${slug}/news`}>
+                <Calendar className="w-4 h-4 mr-2" />
+                Manage News
               </Link>
             </Button>
             <Button variant="outline" className="w-full justify-start" asChild>

@@ -12,6 +12,12 @@ export const app = sqliteTable("app", {
   domain: text("domain").notNull(),
   avatarUrl: text("avatar_url").notNull(),
   slug: text("slug").notNull().unique(), // Add unique constraint
+  onboardingCompleted: integer("onboarding_completed", { mode: "boolean" })
+    .default(false),
+  isPublic: integer("is_public", { mode: "boolean" })
+    .default(true),
+  emailNotifications: integer("email_notifications", { mode: "boolean" })
+    .default(true),
   createdAt: integer("created_at", { mode: "timestamp" })
     .default(sql`(unixepoch())`)
     .notNull(),

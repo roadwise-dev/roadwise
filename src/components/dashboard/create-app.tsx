@@ -1,107 +1,20 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useRef, useState } from "react";
-import { AppDescriptionInput } from "./app-description-input";
-import { AppNameInput } from "./app-name-input";
-import { AppSlugInput } from "./app-slug-input";
-import { AvatarSection } from "./avatar-selection";
-import { GroupSelect } from "./group-select";
 import { Plus } from "lucide-react";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
-import { createAppAction } from "@/actions/create-app";
+import { useRouter } from "next/navigation";
 
 export default function CreateAppButton() {
-  const [avatar, setAvatar] = useState<string | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [appName, setAppName] = useState("");
-  const [appSlug, setAppSlug] = useState("");
-  const [isSlugEdited, setIsSlugEdited] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
-  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => setAvatar(e.target?.result as string);
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const generateSlug = (name: string) => {
-    return name
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
-      .trim()
-      .replace(/\s+/g, "-"); // Replace spaces with hyphens
-  };
-
-  const handleAppNameChange = (value: string) => {
-    setAppName(value);
-    if (!isSlugEdited) {
-      setAppSlug(generateSlug(value));
-    }
-  };
-
-  const handleAppSlugChange = (value: string) => {
-    setAppSlug(value);
-    setIsSlugEdited(true);
-  };
-
-  const resetForm = () => {
-    setAvatar(null);
-    setAppName("");
-    setAppSlug("");
-    setIsSlugEdited(false);
-  };
-
-  const handleDialogChange = (open: boolean) => {
-    if (!open) {
-      resetForm();
-    }
-    setIsOpen(open);
+  const handleCreateApp = () => {
+    router.push("/dashboard/create?step=app");
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={handleDialogChange}>
-      <DialogTrigger asChild>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          Create App
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <form action={createAppAction}>
-          <div className="flex gap-4">
-            <AvatarSection
-              avatar={avatar}
-              onAvatarChange={handleAvatarChange}
-              onAvatarClick={() => fileInputRef.current?.click()}
-              fileInputRef={fileInputRef}
-            />
-            <DialogHeader className="flex flex-col justify-center">
-              <DialogTitle>Create {appName || "New App"}</DialogTitle>
-              <DialogDescription>
-                Click on the avatar to upload a custom image.
-              </DialogDescription>
-            </DialogHeader>
-          </div>
-          <div className="space-y-4 mt-4">
-            <AppNameInput value={appName} onChange={handleAppNameChange} />
-            <AppSlugInput value={appSlug} onChange={handleAppSlugChange} />
-            <AppDescriptionInput />
-            <GroupSelect />
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button type="button" variant="outline">
-                  Close
-                </Button>
-              </DialogClose>
-              <Button type="submit">Create App</Button>
-            </DialogFooter>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <Button onClick={handleCreateApp}>
+      <Plus className="mr-2 h-4 w-4" />
+      Create App
+    </Button>
   );
 }

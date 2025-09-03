@@ -15,13 +15,39 @@ export default function Logos() {
   const renderedLogos = [...logos, ...logos, ...logos]
 
   return (
-    <section className="max-container">
-      <h2 className="text-center text-2xl sm:text-3xl font-semibold">Powering the  best product teams.</h2>
-      <p className="text-center text-xl sm:text-2xl text-muted-foreground mb-12">
+    <motion.section 
+      className="max-container"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+    >
+      <motion.h2 
+        className="text-center text-2xl sm:text-3xl font-semibold"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
+        Powering the best product teams.
+      </motion.h2>
+      <motion.p 
+        className="text-center text-xl sm:text-2xl text-muted-foreground mb-12"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+      >
         From next-gen startups to established enterprises.
-      </p>
+      </motion.p>
 
-      <div className="relative overflow-hidden">
+      <motion.div 
+        className="relative overflow-hidden"
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+      >
         {/* Gradient masks for fade effect */}
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
@@ -55,7 +81,7 @@ export default function Logos() {
             )
           })}
         </motion.div>
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   )
 }

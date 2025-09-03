@@ -14,7 +14,7 @@ interface PageProps {
 
 export default async function BoardsPage({ params }: PageProps) {
   const { userId } = await auth()
-  
+
   if (!userId) {
     redirect("/login")
   }
@@ -36,17 +36,6 @@ export default async function BoardsPage({ params }: PageProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Boards</h1>
-          <p className="text-muted-foreground">Manage your feature request boards</p>
-        </div>
-        <Button>
-          <Plus className="w-4 h-4 mr-2" />
-          Add Board
-        </Button>
-      </div>
-
       {boards.length === 0 ? (
         <Card>
           <CardHeader>

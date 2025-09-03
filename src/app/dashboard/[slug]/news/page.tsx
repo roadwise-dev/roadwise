@@ -35,7 +35,7 @@ async function DeleteNewsForm({ slug, newsId, title }: { slug: string; newsId: s
         <AlertDialogHeader>
           <AlertDialogTitle>Delete News Post</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to delete "{title}"? This action cannot be undone.
+            Are you sure you want to delete &quot;{title}&quot;? This action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -53,7 +53,7 @@ async function DeleteNewsForm({ slug, newsId, title }: { slug: string; newsId: s
 
 export default async function NewsManagementPage({ params }: PageProps) {
   const { userId } = await auth()
-  
+
   if (!userId) {
     redirect("/login")
   }
@@ -82,20 +82,10 @@ export default async function NewsManagementPage({ params }: PageProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">News Management</h1>
-          <p className="text-muted-foreground">Manage news posts for {dbApp.name}</p>
-        </div>
-      </div>
-
-      <Separator />
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-1">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Plus className="w-5 h-5" />
+            <CardTitle className="text-lg">
               Create News Post
             </CardTitle>
             <CardDescription>Add a new news post for your users</CardDescription>
@@ -112,7 +102,7 @@ export default async function NewsManagementPage({ params }: PageProps) {
                   maxLength={200}
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="content">Content</Label>
                 <Textarea
@@ -152,13 +142,17 @@ export default async function NewsManagementPage({ params }: PageProps) {
         </Card>
 
         <div className="lg:col-span-2 space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold">Existing News Posts</h2>
-            <Badge variant="secondary">{dbNews.length} posts</Badge>
-          </div>
 
           {dbNews.length === 0 ? (
             <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">
+                  <div className="flex items-center justify-between">
+                    Existing News Posts
+                    <Badge variant="secondary">{dbNews.length} posts</Badge>
+                  </div>
+                </CardTitle>
+              </CardHeader>
               <CardContent className="py-8 text-center text-muted-foreground">
                 No news posts yet. Create your first news post to get started.
               </CardContent>
@@ -173,18 +167,18 @@ export default async function NewsManagementPage({ params }: PageProps) {
                         <CardTitle className="text-lg">{newsItem.title}</CardTitle>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           <Calendar className="w-4 h-4" />
-                          {newsItem.date.toLocaleDateString("en-US", { 
-                            day: "2-digit", 
-                            month: "short", 
-                            year: "numeric" 
+                          {newsItem.date.toLocaleDateString("en-US", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric"
                           })}
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <DeleteNewsForm 
-                          slug={slug} 
-                          newsId={newsItem.id} 
-                          title={newsItem.title} 
+                        <DeleteNewsForm
+                          slug={slug}
+                          newsId={newsItem.id}
+                          title={newsItem.title}
                         />
                       </div>
                     </div>
@@ -193,7 +187,7 @@ export default async function NewsManagementPage({ params }: PageProps) {
                     <p className="text-sm text-muted-foreground line-clamp-3">
                       {newsItem.content}
                     </p>
-                    
+
                     {newsItem.image && (
                       <div className="text-xs text-muted-foreground">
                         📷 Image: {newsItem.image}

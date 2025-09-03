@@ -58,7 +58,7 @@ export default async function AnalyticsPage() {
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
-            We&apos;re working on comprehensive analytics including user engagement, 
+            We&apos;re working on comprehensive analytics including user engagement,
             feature request trends, and detailed performance metrics.
           </p>
         </CardContent>

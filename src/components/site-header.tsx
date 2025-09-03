@@ -1,9 +1,10 @@
 "use client"
 
 import { usePathname } from "next/navigation"
+import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { 
+import {
   Breadcrumb,
   BreadcrumbList,
   BreadcrumbItem,
@@ -11,6 +12,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { ExternalLink } from "lucide-react"
 import Link from "next/link"
 
 interface App {
@@ -43,7 +45,7 @@ export function SiteHeader({ apps = [] }: SiteHeaderProps) {
   const getCurrentApp = () => {
     const slugMatch = pathname.match(/\/dashboard\/([^\/]+)/)
     const currentSlug = slugMatch?.[1]
-    
+
     if (currentSlug && currentSlug !== "create" && currentSlug !== "manage") {
       return apps.find(a => a.slug === currentSlug)
     }
@@ -76,7 +78,7 @@ export function SiteHeader({ apps = [] }: SiteHeaderProps) {
 
     if (currentApp) {
       const isOverview = pathname.match(/\/dashboard\/[^\/]+$/)
-      
+
       return (
         <>
           <BreadcrumbItem>
@@ -123,7 +125,17 @@ export function SiteHeader({ apps = [] }: SiteHeaderProps) {
           </BreadcrumbList>
         </Breadcrumb>
         <div className="ml-auto flex items-center gap-2">
-          {/* Add any header actions here */}
+          {currentApp && (
+            <Button variant="ghost" size="sm" asChild>
+              <a
+                href={`https://${currentApp.slug}.roadwiseapp.com`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View App
+              </a>
+            </Button>
+          )}
         </div>
       </div>
     </header>

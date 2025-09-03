@@ -4,8 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { Trash2, Plus, Calendar } from "lucide-react"
+import { Trash2, Calendar } from "lucide-react"
 import { db } from "@/db/db"
 import { app, news } from "@/db/schema"
 import { auth } from "@clerk/nextjs/server"
@@ -19,7 +18,7 @@ interface PageProps {
 }
 
 async function DeleteNewsForm({ slug, newsId, title }: { slug: string; newsId: string; title: string }) {
-  async function deleteNews(formData: FormData) {
+  async function deleteNews() {
     "use server"
     return deleteNewsAction(slug, newsId)
   }

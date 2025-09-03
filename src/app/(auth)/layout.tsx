@@ -1,5 +1,4 @@
 import Logo from "@/components/svg/logo";
-import { ChevronUp } from "lucide-react";
 
 export default function AuthLayout({
   children,

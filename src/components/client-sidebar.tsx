@@ -1,6 +1,7 @@
 "use client"
 
 import { usePathname } from "next/navigation"
+import { useUser } from "@clerk/nextjs"
 import { AppSidebar } from "./app-sidebar"
 
 interface App {
@@ -17,6 +18,7 @@ interface ClientSidebarProps {
 
 export function ClientSidebar({ apps }: ClientSidebarProps) {
   const pathname = usePathname()
+  const { user } = useUser()
   
   // Extract current app slug from pathname
   const slugMatch = pathname.match(/\/dashboard\/([^\/]+)/)
@@ -26,5 +28,12 @@ export function ClientSidebar({ apps }: ClientSidebarProps) {
     ? apps.find(a => a.slug === currentSlug)
     : undefined
 
-  return <AppSidebar variant="inset" apps={apps} currentApp={currentApp} />
+  // Create user data for the sidebar
+  const userData = {
+    name: user?.fullName || user?.username || "User",
+    email: user?.emailAddresses[0]?.emailAddress || "",
+    avatar: user?.imageUrl || "",
+  }
+
+  return <AppSidebar variant="inset" apps={apps} currentApp={currentApp} user={userData} />
 }

@@ -1,10 +1,9 @@
 "use client"
 
-import * as React from "react"
-import { Home, BarChart3, Grid3X3, MessageSquare, Settings, HelpCircle, Building } from "lucide-react"
+import { Home, BarChart3, Grid3X3, MessageSquare, Settings, Building } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
+import { NavUser } from "@/components/nav-user"
 import { NavApps } from "@/components/nav-apps"
 import {
   Sidebar,
@@ -15,6 +14,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { useMemo } from "react"
 
 interface App {
   id: string
@@ -27,11 +27,16 @@ interface App {
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   apps: App[]
   currentApp?: App
+  user: {
+    name: string
+    email: string
+    avatar: string
+  }
 }
 
-export function AppSidebar({ apps, currentApp, ...props }: AppSidebarProps) {
+export function AppSidebar({ apps, currentApp, user, ...props }: AppSidebarProps) {
   // Main navigation - changes based on context
-  const navMain = React.useMemo(() => {
+  const navMain = useMemo(() => {
     if (currentApp) {
       // App-specific navigation
       return [
@@ -73,14 +78,6 @@ export function AppSidebar({ apps, currentApp, ...props }: AppSidebarProps) {
     }
   }, [currentApp])
 
-  const navSecondary = [
-    {
-      title: "Help & Support",
-      url: "#",
-      icon: HelpCircle,
-    },
-  ]
-
   return (
     <Sidebar variant="inset" collapsible="icon" {...props}>
       <SidebarHeader>
@@ -102,11 +99,10 @@ export function AppSidebar({ apps, currentApp, ...props }: AppSidebarProps) {
       <SidebarContent>
         <NavApps apps={apps} currentApp={currentApp} />
         <NavMain items={navMain} />
-        <NavSecondary items={navSecondary} className="mt-auto" />
       </SidebarContent>
 
       <SidebarFooter>
-        {/* User nav will go here */}
+        <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
   )

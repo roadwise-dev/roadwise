@@ -24,6 +24,11 @@ export default async function Page(props: {
     notFound();
   }
 
+  // Critical security fix: Verify app ownership
+  if (dbApp.userId !== userId) {
+    notFound(); // Return 404 instead of revealing the app exists
+  }
+
   return (
     <div className="container mx-auto space-y-6">
       {/* App Overview Section */}

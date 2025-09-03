@@ -3,30 +3,46 @@
 import { db } from "@/db/db";
 import { upvote } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
+import { z } from "zod";
 
-export async function upvoteWithEmail(prevState: unknown, formData: FormData) {
-  const email = formData.get("email");
-  const featureId = formData.get("feature-id");
+// Input validation schema
+const upvoteSchema = z.object({
+  email: z.string()
+    .min(1, "Email is required")
+    .max(254, "Email is too long")
+    .email("Please enter a valid email address")
+    .transform(val => val.trim().toLowerCase()),
+  featureId: z.string()
+    .min(1, "Feature ID is required")
+    .transform(val => val.trim())
+});
 
-  if (!email || !featureId) {
-    return {
-      message: "Missing email or feature ID",
-      success: false,
-    };
-  }
-
-  const data = {
-    email: email.toString(),
-    featureId: featureId.toString(),
-  };
-
+export async function upvoteWithEmail(_prevState: unknown, formData: FormData) {
   try {
+    // Validate input data
+    const result = upvoteSchema.safeParse({
+      email: formData.get("email"),
+      featureId: formData.get("feature-id")
+    });
+
+    if (!result.success) {
+      const errors = result.error.issues.map(issue => issue.message).join(", ");
+      return {
+        message: errors,
+        success: false,
+      };
+    }
+
+    const { email, featureId } = result.data;
+
+    // Check for existing upvote
     const existingUpvote = await db
       .select()
       .from(upvote)
       .where(
-        and(eq(upvote.email, data.email), eq(upvote.featureId, data.featureId)),
+        and(eq(upvote.email, email), eq(upvote.featureId, featureId)),
       );
+    
     if (existingUpvote.length > 0) {
       return {
         message: "You have already upvoted this feature.",
@@ -34,7 +50,11 @@ export async function upvoteWithEmail(prevState: unknown, formData: FormData) {
       };
     }
 
-    await db.insert(upvote).values(data);
+    // Insert upvote
+    await db.insert(upvote).values({
+      email,
+      featureId
+    });
 
     return {
       message: "",
@@ -43,8 +63,7 @@ export async function upvoteWithEmail(prevState: unknown, formData: FormData) {
   } catch (error) {
     console.error("Error inserting upvote:", error);
     return {
-      message:
-        "An error occurred while processing your vote. Please try again.",
+      message: "An error occurred while processing your vote. Please try again.",
       success: false,
     };
   }

@@ -15,6 +15,13 @@
       "when": 1756810567251,
       "tag": "0001_stiff_stark_industries",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1756884277095,
+      "tag": "0002_spotty_wolf_cub",
+      "breakpoints": true
     }
   ]
 }

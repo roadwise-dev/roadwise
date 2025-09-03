@@ -132,6 +132,7 @@ export function SiteHeader({ apps = [] }: SiteHeaderProps) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                <ExternalLink className="w-4 h-4 mr-2" />
                 View App
               </a>
             </Button>

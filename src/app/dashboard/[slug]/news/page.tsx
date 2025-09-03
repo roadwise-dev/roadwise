@@ -4,11 +4,11 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
-import { Trash2, Calendar } from "lucide-react"
+import { Trash2, Calendar, Users, Mail } from "lucide-react"
 import { db } from "@/db/db"
-import { app, news } from "@/db/schema"
+import { app, news, subscribe } from "@/db/schema"
 import { auth } from "@clerk/nextjs/server"
-import { eq, desc } from "drizzle-orm"
+import { eq, desc, count } from "drizzle-orm"
 import { notFound, redirect } from "next/navigation"
 import { createNewsAction, deleteNewsAction } from "@/actions/news"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
@@ -73,6 +73,22 @@ export default async function NewsManagementPage({ params }: PageProps) {
     .from(news)
     .where(eq(news.appId, dbApp.id))
     .orderBy(desc(news.date))
+
+  // Get subscribers count and list
+  const [subscribersCount] = await db
+    .select({ count: count() })
+    .from(subscribe)
+    .where(eq(subscribe.appId, dbApp.id))
+
+  const subscribers = await db
+    .select({
+      id: subscribe.id,
+      name: subscribe.name,
+      email: subscribe.email
+    })
+    .from(subscribe)
+    .where(eq(subscribe.appId, dbApp.id))
+    .limit(50) // Limit to 50 most recent subscribers
 
   async function createNews(formData: FormData) {
     "use server"
@@ -158,6 +174,10 @@ export default async function NewsManagementPage({ params }: PageProps) {
             </Card>
           ) : (
             <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">Existing News Posts</h3>
+                <Badge variant="secondary">{dbNews.length} posts</Badge>
+              </div>
               {dbNews.map((newsItem) => (
                 <Card key={newsItem.id}>
                   <CardHeader>
@@ -209,6 +229,50 @@ export default async function NewsManagementPage({ params }: PageProps) {
           )}
         </div>
       </div>
+
+      {/* Subscribers Overview - Moved to bottom */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Users className="w-5 h-5" />
+            News Subscribers
+            <Badge variant="secondary">{subscribersCount.count}</Badge>
+          </CardTitle>
+          <CardDescription>People who subscribed to receive news updates</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {subscribers.length > 0 ? (
+            <div className="space-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {subscribers.slice(0, 9).map((subscriber) => (
+                  <div key={subscriber.id} className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Mail className="w-4 h-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium truncate">{subscriber.name}</p>
+                      <p className="text-xs text-muted-foreground truncate">{subscriber.email}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {subscribers.length > 9 && (
+                <div className="text-center pt-2">
+                  <p className="text-sm text-muted-foreground">
+                    And {subscribers.length - 9} more subscribers...
+                  </p>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="text-center py-8 text-muted-foreground">
+              <Users className="w-8 h-8 mx-auto mb-2 opacity-50" />
+              <p className="text-sm">No subscribers yet</p>
+              <p className="text-xs">Users can subscribe to news on your public app</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   )
 }

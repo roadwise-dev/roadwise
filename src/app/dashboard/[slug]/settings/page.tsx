@@ -17,7 +17,7 @@ interface PageProps {
 
 export default async function SettingsPage({ params }: PageProps) {
   const { userId } = await auth()
-  
+
   if (!userId) {
     redirect("/login")
   }
@@ -36,11 +36,6 @@ export default async function SettingsPage({ params }: PageProps) {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
-        <p className="text-muted-foreground">Configure your app settings and preferences</p>
-      </div>
-
       <Card>
         <CardHeader>
           <CardTitle>App Information</CardTitle>
@@ -80,7 +75,7 @@ export default async function SettingsPage({ params }: PageProps) {
                 <Label htmlFor="visibility-toggle" className="text-sm font-medium">
                   App Visibility
                 </Label>
-                <Badge variant={dbApp.isPublic ? "default" : "secondary"}>
+                <Badge variant={dbApp.isPublic ? "outline" : "secondary"}>
                   {dbApp.isPublic ? (
                     <>
                       <Eye className="w-3 h-3 mr-1" />
@@ -95,7 +90,7 @@ export default async function SettingsPage({ params }: PageProps) {
                 </Badge>
               </div>
               <p className="text-sm text-muted-foreground">
-                {dbApp.isPublic 
+                {dbApp.isPublic
                   ? "Your app is visible to everyone and can be accessed by anyone"
                   : "Your app is private and only accessible to you"
                 }
@@ -112,7 +107,7 @@ export default async function SettingsPage({ params }: PageProps) {
         </CardContent>
       </Card>
 
-      <Card className="border-destructive">
+      <Card className="border-destructive/50 shadow-destructive/20">
         <CardHeader>
           <CardTitle className="text-destructive">Danger Zone</CardTitle>
           <CardDescription>Irreversible and destructive actions</CardDescription>
@@ -127,7 +122,7 @@ export default async function SettingsPage({ params }: PageProps) {
             </div>
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive" size="sm">
+                <Button variant="destructive" size="sm" className="text-white">
                   <Trash2 className="w-4 h-4 mr-2" />
                   Delete App
                 </Button>
@@ -136,7 +131,7 @@ export default async function SettingsPage({ params }: PageProps) {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete the app &quot;{dbApp.name}&quot; 
+                    This action cannot be undone. This will permanently delete the app &quot;{dbApp.name}&quot;
                     and remove all associated data including:
                     <br />
                     <br />

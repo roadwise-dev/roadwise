@@ -3,8 +3,29 @@
 import { usePathname } from "next/navigation"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
+import { 
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import Link from "next/link"
 
-export function SiteHeader() {
+interface App {
+  id: string
+  name: string
+  slug: string
+  description: string | null
+  avatarUrl: string | null
+}
+
+interface SiteHeaderProps {
+  apps?: App[]
+}
+
+export function SiteHeader({ apps = [] }: SiteHeaderProps) {
   const pathname = usePathname()
 
   const getPageTitle = () => {
@@ -13,10 +34,79 @@ export function SiteHeader() {
     if (pathname.includes("/boards")) return "Boards"
     if (pathname.includes("/feedback")) return "Feedback"
     if (pathname.includes("/settings")) return "Settings"
-    if (pathname.includes("/news")) return "News Managemet"
+    if (pathname.includes("/news")) return "News Management"
     if (pathname.includes("/create")) return "Create App"
     if (pathname.match(/\/dashboard\/[^\/]+$/)) return "Overview"
     return "Dashboard"
+  }
+
+  const getCurrentApp = () => {
+    const slugMatch = pathname.match(/\/dashboard\/([^\/]+)/)
+    const currentSlug = slugMatch?.[1]
+    
+    if (currentSlug && currentSlug !== "create" && currentSlug !== "manage") {
+      return apps.find(a => a.slug === currentSlug)
+    }
+    return undefined
+  }
+
+  const currentApp = getCurrentApp()
+  const pageTitle = getPageTitle()
+
+  const renderBreadcrumbs = () => {
+    if (pathname === "/dashboard") {
+      return (
+        <BreadcrumbPage>Dashboard</BreadcrumbPage>
+      )
+    }
+
+    if (pathname.includes("/create")) {
+      return (
+        <>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href="/dashboard">Dashboard</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbPage>Create App</BreadcrumbPage>
+        </>
+      )
+    }
+
+    if (currentApp) {
+      const isOverview = pathname.match(/\/dashboard\/[^\/]+$/)
+      
+      return (
+        <>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href="/dashboard">Dashboard</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href={`/dashboard/${currentApp.slug}`}>{currentApp.name}</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          {!isOverview && (
+            <>
+              <BreadcrumbSeparator />
+              <BreadcrumbPage>{pageTitle}</BreadcrumbPage>
+            </>
+          )}
+          {isOverview && (
+            <>
+              <BreadcrumbSeparator />
+              <BreadcrumbPage>Overview</BreadcrumbPage>
+            </>
+          )}
+        </>
+      )
+    }
+
+    return <BreadcrumbPage>{pageTitle}</BreadcrumbPage>
   }
 
   return (
@@ -27,7 +117,11 @@ export function SiteHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <h1 className="text-base font-semibold">{getPageTitle()}</h1>
+        <Breadcrumb>
+          <BreadcrumbList>
+            {renderBreadcrumbs()}
+          </BreadcrumbList>
+        </Breadcrumb>
         <div className="ml-auto flex items-center gap-2">
           {/* Add any header actions here */}
         </div>

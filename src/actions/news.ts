@@ -1,192 +1,195 @@
-"use server";
+"use server"
 
-import { eq, desc } from "drizzle-orm";
-import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
-import { z } from "zod";
-import { db } from "../db/db";
-import { app, news } from "../db/schema";
+import { eq, desc } from "drizzle-orm"
+import { redirect } from "next/navigation"
+import { auth } from "@clerk/nextjs/server"
+import { z } from "zod"
+import { db } from "@/db/db"
+import { app, news } from "@/db/schema"
+import { revalidatePath } from "next/cache"
 
 const createNewsSchema = z.object({
   title: z.string()
     .min(1, "Title is required")
-    .max(200, "Title must be less than 200 characters")
+    .max(100, "Title must be less than 100 characters")
     .transform(val => val.trim()),
   content: z.string()
     .min(1, "Content is required")
     .max(5000, "Content must be less than 5000 characters")
     .transform(val => val.trim()),
-  image: z.string().optional(),
+  image: z.string()
+    .optional()
+    .or(z.literal(""))
+    .transform(val => val === "" ? undefined : val),
   tags: z.string()
-    .default("")
-    .transform(val => val.split(",").map(tag => tag.trim()).filter(tag => tag.length > 0)),
-});
+    .transform(val => {
+      if (!val.trim()) return []
+      return val.split(",").map(tag => tag.trim()).filter(tag => tag.length > 0)
+    })
+    .default(() => [])
+})
 
 const updateNewsSchema = createNewsSchema.extend({
-  id: z.string().min(1, "News ID is required"),
-});
+  id: z.string().min(1, "News ID is required")
+})
 
 export async function createNewsAction(appSlug: string, formData: FormData) {
   try {
-    const { userId } = await auth();
+    const { userId } = await auth()
     if (!userId) {
-      return redirect("/login");
+      return redirect("/login")
     }
 
-    const [dbApp] = await db.select().from(app).where(eq(app.slug, appSlug));
-    if (!dbApp) {
-      return "App not found";
+    // Get app and verify ownership
+    const [dbApp] = await db.select().from(app).where(eq(app.slug, appSlug))
+    if (!dbApp || dbApp.userId !== userId) {
+      return "App not found or access denied"
     }
 
-    if (dbApp.userId !== userId) {
-      return "Unauthorized";
-    }
-
+    // Validate input data
     const result = createNewsSchema.safeParse({
       title: formData.get("title"),
       content: formData.get("content"),
       image: formData.get("image"),
-      tags: formData.get("tags"),
-    });
+      tags: formData.get("tags")
+    })
 
     if (!result.success) {
-      const errors = result.error.issues.map(issue => issue.message).join(", ");
-      return `Validation error: ${errors}`;
+      const errors = result.error.issues.map(issue => issue.message).join(", ")
+      return `Validation error: ${errors}`
     }
 
-    const { title, content, image, tags } = result.data;
+    const { title, content, image, tags } = result.data
 
+    // Insert new news into the database
     await db.insert(news).values({
       appId: dbApp.id,
       title,
       content,
       image: image || null,
-      tags,
-    });
+      tags
+    })
 
-    return redirect(`/dashboard/${appSlug}/news`);
+    revalidatePath(`/dashboard/${appSlug}/news`)
+    revalidatePath(`/app/${appSlug}/news`)
+    
+    return null // Success
   } catch (error) {
-    console.error("Error creating news:", error);
-    return "An unexpected error occurred. Please try again.";
+    console.error("Error creating news:", error)
+    return "An unexpected error occurred. Please try again."
   }
 }
 
 export async function updateNewsAction(appSlug: string, formData: FormData) {
   try {
-    const { userId } = await auth();
+    const { userId } = await auth()
     if (!userId) {
-      return redirect("/login");
+      return redirect("/login")
     }
 
-    const [dbApp] = await db.select().from(app).where(eq(app.slug, appSlug));
-    if (!dbApp) {
-      return "App not found";
+    // Get app and verify ownership
+    const [dbApp] = await db.select().from(app).where(eq(app.slug, appSlug))
+    if (!dbApp || dbApp.userId !== userId) {
+      return "App not found or access denied"
     }
 
-    if (dbApp.userId !== userId) {
-      return "Unauthorized";
-    }
-
+    // Validate input data
     const result = updateNewsSchema.safeParse({
       id: formData.get("id"),
       title: formData.get("title"),
       content: formData.get("content"),
       image: formData.get("image"),
-      tags: formData.get("tags"),
-    });
+      tags: formData.get("tags")
+    })
 
     if (!result.success) {
-      const errors = result.error.issues.map(issue => issue.message).join(", ");
-      return `Validation error: ${errors}`;
+      const errors = result.error.issues.map(issue => issue.message).join(", ")
+      return `Validation error: ${errors}`
     }
 
-    const { id, title, content, image, tags } = result.data;
+    const { id, title, content, image, tags } = result.data
 
-    const [existingNews] = await db
-      .select()
-      .from(news)
-      .where(eq(news.id, id));
-
+    // Verify news belongs to this app
+    const [existingNews] = await db.select().from(news).where(eq(news.id, id))
     if (!existingNews || existingNews.appId !== dbApp.id) {
-      return "News not found or unauthorized";
+      return "News not found or access denied"
     }
 
-    await db
-      .update(news)
+    // Update news
+    await db.update(news)
       .set({
         title,
         content,
         image: image || null,
-        tags,
+        tags
       })
-      .where(eq(news.id, id));
+      .where(eq(news.id, id))
 
-    return redirect(`/dashboard/${appSlug}/news`);
+    revalidatePath(`/dashboard/${appSlug}/news`)
+    revalidatePath(`/app/${appSlug}/news`)
+    
+    return null // Success
   } catch (error) {
-    console.error("Error updating news:", error);
-    return "An unexpected error occurred. Please try again.";
+    console.error("Error updating news:", error)
+    return "An unexpected error occurred. Please try again."
   }
 }
 
 export async function deleteNewsAction(appSlug: string, newsId: string) {
   try {
-    const { userId } = await auth();
+    const { userId } = await auth()
     if (!userId) {
-      return redirect("/login");
+      return redirect("/login")
     }
 
-    const [dbApp] = await db.select().from(app).where(eq(app.slug, appSlug));
-    if (!dbApp) {
-      return "App not found";
+    // Get app and verify ownership
+    const [dbApp] = await db.select().from(app).where(eq(app.slug, appSlug))
+    if (!dbApp || dbApp.userId !== userId) {
+      return "App not found or access denied"
     }
 
-    if (dbApp.userId !== userId) {
-      return "Unauthorized";
-    }
-
-    const [existingNews] = await db
-      .select()
-      .from(news)
-      .where(eq(news.id, newsId));
-
+    // Verify news belongs to this app
+    const [existingNews] = await db.select().from(news).where(eq(news.id, newsId))
     if (!existingNews || existingNews.appId !== dbApp.id) {
-      return "News not found or unauthorized";
+      return "News not found or access denied"
     }
 
-    await db.delete(news).where(eq(news.id, newsId));
+    // Delete news
+    await db.delete(news).where(eq(news.id, newsId))
 
-    return null; // Success
+    revalidatePath(`/dashboard/${appSlug}/news`)
+    revalidatePath(`/app/${appSlug}/news`)
+    
+    return null // Success
   } catch (error) {
-    console.error("Error deleting news:", error);
-    return "An unexpected error occurred. Please try again.";
+    console.error("Error deleting news:", error)
+    return "An unexpected error occurred. Please try again."
   }
 }
 
 export async function getNewsForApp(appSlug: string) {
   try {
-    const { userId } = await auth();
+    const { userId } = await auth()
     if (!userId) {
-      return { error: "Unauthorized" };
+      return null
     }
 
-    const [dbApp] = await db.select().from(app).where(eq(app.slug, appSlug));
-    if (!dbApp) {
-      return { error: "App not found" };
+    // Get app and verify ownership
+    const [dbApp] = await db.select().from(app).where(eq(app.slug, appSlug))
+    if (!dbApp || dbApp.userId !== userId) {
+      return null
     }
 
-    if (dbApp.userId !== userId) {
-      return { error: "Unauthorized" };
-    }
-
+    // Get all news for this app
     const dbNews = await db
       .select()
       .from(news)
       .where(eq(news.appId, dbApp.id))
-      .orderBy(desc(news.date));
+      .orderBy(desc(news.date))
 
-    return { news: dbNews };
+    return { app: dbApp, news: dbNews }
   } catch (error) {
-    console.error("Error fetching news:", error);
-    return { error: "An unexpected error occurred" };
+    console.error("Error fetching news:", error)
+    return null
   }
 }

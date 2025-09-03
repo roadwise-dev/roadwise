@@ -9,20 +9,26 @@ import { app } from "../db/schema";
 
 // Input validation schema
 const createAppSchema = z.object({
-  appName: z.string()
+  appName: z
+    .string()
     .min(1, "App name is required")
     .max(50, "App name must be less than 50 characters")
-    .transform(val => val.trim()),
-  appSlug: z.string()
+    .transform((val) => val.trim()),
+  appSlug: z
+    .string()
     .min(1, "App slug is required")
     .max(30, "App slug must be less than 30 characters")
-    .regex(/^[a-z0-9-]+$/, "App slug can only contain lowercase letters, numbers, and hyphens")
-    .transform(val => val.trim()),
-  appDescription: z.string()
+    .regex(
+      /^[a-z0-9-]+$/,
+      "App slug can only contain lowercase letters, numbers, and hyphens",
+    )
+    .transform((val) => val.trim()),
+  appDescription: z
+    .string()
     .max(200, "Description must be less than 200 characters")
-    .transform(val => val.trim())
+    .transform((val) => val.trim())
     .optional()
-    .default("")
+    .default(""),
 });
 
 export async function createAppAction(formData: FormData) {
@@ -37,11 +43,13 @@ export async function createAppAction(formData: FormData) {
     const result = createAppSchema.safeParse({
       appName: formData.get("app-name"),
       appSlug: formData.get("app-slug"),
-      appDescription: formData.get("app-description")
+      appDescription: formData.get("app-description"),
     });
 
     if (!result.success) {
-      const errors = result.error.issues.map(issue => issue.message).join(", ");
+      const errors = result.error.issues
+        .map((issue) => issue.message)
+        .join(", ");
       return `Validation error: ${errors}`;
     }
 
@@ -66,7 +74,7 @@ export async function createAppAction(formData: FormData) {
       avatarUrl: "",
     });
 
-    return redirect(`/dashboard/manage/${appSlug}`);
+    return redirect(`/dashboard/${appSlug}`);
   } catch (error) {
     console.error("Error creating app:", error);
     return "An unexpected error occurred. Please try again.";

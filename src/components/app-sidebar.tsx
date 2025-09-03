@@ -88,23 +88,12 @@ export function AppSidebar({ apps, currentApp, user, ...props }: AppSidebarProps
   return (
     <Sidebar variant="inset" collapsible="icon" {...props}>
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
-            >
-              <Link href="/">
-                <Logo width={40} height={40} variant="black" />
-                <span className="text-base font-semibold">Roadwise</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+
+        <NavApps apps={apps} currentApp={currentApp} />
+
       </SidebarHeader>
 
       <SidebarContent>
-        <NavApps apps={apps} currentApp={currentApp} />
         <NavMain items={navMain} />
       </SidebarContent>
 

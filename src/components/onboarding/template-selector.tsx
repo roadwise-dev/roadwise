@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, ClipboardList, RotateCcw, Rocket, Sparkles } from "lucide-react";
 import { useOnboarding } from "@/contexts/onboarding-context";
 
 const templates = [
@@ -9,28 +9,28 @@ const templates = [
     name: 'Simple Workflow',
     description: 'Perfect for getting started quickly',
     boards: ['Requested', 'In Progress', 'Completed'],
-    icon: '📋'
+    icon: ClipboardList
   },
   {
     id: 'kanban', 
     name: 'Kanban Style',
     description: 'Classic project management approach',
     boards: ['Backlog', 'To Do', 'In Progress', 'Done'],
-    icon: '🔄'
+    icon: RotateCcw
   },
   {
     id: 'product',
     name: 'Product Development', 
     description: 'Ideal for product teams and roadmaps',
     boards: ['Ideas', 'Planned', 'In Development', 'Released'],
-    icon: '🚀'
+    icon: Rocket
   },
   {
     id: 'custom',
     name: 'Custom Setup',
     description: 'Create your own board structure',
     boards: ['Design your own...'],
-    icon: '✨'
+    icon: Sparkles
   }
 ] as const;
 
@@ -51,7 +51,7 @@ function TemplateCard({ template, isSelected, onSelect }: TemplateCardProps) {
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-2xl">{template.icon}</span>
+            <template.icon className="h-6 w-6 text-muted-foreground" />
             <div>
               <CardTitle className="text-lg">{template.name}</CardTitle>
               <CardDescription>{template.description}</CardDescription>
@@ -103,30 +103,6 @@ export function TemplateSelector() {
           />
         ))}
       </div>
-
-      {/* Selected Template Preview */}
-      {data.template && (
-        <Card className="bg-muted/50">
-          <CardHeader>
-            <CardTitle className="text-sm">Selected Template</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center gap-2 text-sm">
-              <span>{templates.find(t => t.id === data.template)?.icon}</span>
-              <span className="font-medium">
-                {templates.find(t => t.id === data.template)?.name}
-              </span>
-            </div>
-            <div className="flex flex-wrap gap-1 mt-2">
-              {templates.find(t => t.id === data.template)?.boards.map((board, index) => (
-                <Badge key={index} variant="outline" className="text-xs">
-                  {board}
-                </Badge>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
     </div>
   );
 }

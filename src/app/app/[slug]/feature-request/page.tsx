@@ -1,8 +1,8 @@
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq, isNull } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import RequestFeatureList from "@/components/implemented/request-feature-list";
 import { db } from "@/db/db";
-import { app, board, feature } from "@/db/schema";
+import { app, feature } from "@/db/schema";
 
 export default async function Page(props: {
 	params: Promise<{ slug: string }>;
@@ -14,14 +14,11 @@ export default async function Page(props: {
 		notFound();
 	}
 
-	const dbFeaturesRaw = await db
+	const dbFeatures = await db
 		.select()
 		.from(feature)
-		.innerJoin(board, eq(feature.boardId, board.id))
-		.where(and(eq(board.appId, dbApp.id), eq(board.name, "Unassigned")));
-
-	// Extract features only
-	const dbFeatures = dbFeaturesRaw.map((row) => row.feature);
+		.where(and(eq(feature.appId, dbApp.id), isNull(feature.boardId)))
+		.orderBy(desc(feature.upvotes));
 
 	return (
 		<RequestFeatureList

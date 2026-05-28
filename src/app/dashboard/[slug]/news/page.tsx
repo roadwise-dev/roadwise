@@ -64,7 +64,11 @@ async function DeleteNewsForm({
 				</AlertDialogHeader>
 				<AlertDialogFooter>
 					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<form action={async () => { await deleteNews(); }}>
+					<form
+						action={async () => {
+							await deleteNews();
+						}}
+					>
 						<AlertDialogAction
 							type="submit"
 							className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
@@ -134,7 +138,12 @@ export default async function NewsManagementPage({ params }: PageProps) {
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<form action={async (formData) => { await createNews(formData); }} className="space-y-4">
+						<form
+							action={async (formData) => {
+								await createNews(formData);
+							}}
+							className="space-y-4"
+						>
 							<div className="space-y-2">
 								<Label htmlFor="title">Title</Label>
 								<Input

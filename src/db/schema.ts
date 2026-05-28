@@ -66,9 +66,12 @@ export const feature = sqliteTable(
 		id: text("id")
 			.primaryKey()
 			.$defaultFn(() => crypto.randomUUID()),
-		boardId: text("board_id")
-			.references(() => board.id, { onDelete: "cascade" }) // Add cascade delete
+		appId: text("app_id")
+			.references(() => app.id, { onDelete: "cascade" })
 			.notNull(),
+		boardId: text("board_id").references(() => board.id, {
+			onDelete: "set null",
+		}),
 		title: text("title").notNull(),
 		description: text("description").notNull(),
 		tags: text("tags", { mode: "json" })
@@ -82,6 +85,7 @@ export const feature = sqliteTable(
 			.notNull(),
 	},
 	(table) => ({
+		appIdIdx: index("feature_app_id_idx").on(table.appId),
 		boardIdIdx: index("feature_board_id_idx").on(table.boardId),
 	}),
 );

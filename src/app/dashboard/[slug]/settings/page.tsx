@@ -119,7 +119,11 @@ export default async function SettingsPage({ params }: PageProps) {
 									: "Your app is private and only accessible to you"}
 							</p>
 						</div>
-						<form action={async (formData) => { await updateAppVisibilityAction(formData); }}>
+						<form
+							action={async (formData) => {
+								await updateAppVisibilityAction(formData);
+							}}
+						>
 							<input type="hidden" name="slug" value={dbApp.slug} />
 							<input
 								type="hidden"
@@ -175,7 +179,12 @@ export default async function SettingsPage({ params }: PageProps) {
 								<AlertDialogFooter>
 									<AlertDialogCancel>Cancel</AlertDialogCancel>
 									<AlertDialogAction asChild>
-										<form action={async (formData) => { await deleteAppAction(formData); }} className="inline">
+										<form
+											action={async (formData) => {
+												await deleteAppAction(formData);
+											}}
+											className="inline"
+										>
 											<input type="hidden" name="slug" value={dbApp.slug} />
 											<Button type="submit" variant="destructive">
 												Yes, delete app permanently

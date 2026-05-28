@@ -1,8 +1,7 @@
 "use server";
 
-import { and, eq } from "drizzle-orm";
 import { db } from "../db/db";
-import { board, feature } from "../db/schema";
+import { feature } from "../db/schema";
 
 interface RequestFeatureData {
 	name: string;
@@ -43,20 +42,6 @@ export async function createFeatureRequest(data: RequestFeatureData) {
 			};
 		}
 
-		// Find the "Unassigned" board for this app
-		const [unassignedBoard] = await db
-			.select()
-			.from(board)
-			.where(and(eq(board.appId, data.appId), eq(board.name, "Unassigned")))
-			.limit(1);
-
-		if (!unassignedBoard) {
-			return {
-				success: false,
-				error: "No unassigned board found for this app",
-			};
-		}
-
 		// Clean and validate tags
 		const cleanTags = data.tags
 			.filter((tag) => tag.trim().length > 0)
@@ -67,7 +52,8 @@ export async function createFeatureRequest(data: RequestFeatureData) {
 		const [newFeature] = await db
 			.insert(feature)
 			.values({
-				boardId: unassignedBoard.id,
+				appId: data.appId,
+				boardId: null,
 				title: data.title.trim(),
 				description: data.description.trim(),
 				tags: cleanTags,

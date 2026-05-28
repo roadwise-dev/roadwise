@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1779953331970,
+      "tag": "0000_feature_app_id_nullable_board",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1779963971869,
+      "tag": "0001_baseline_current_schema",
+      "breakpoints": true
+    }
+  ]
+}

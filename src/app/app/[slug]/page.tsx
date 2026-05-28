@@ -1,4 +1,4 @@
-import { and, eq, ne } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { FeatureRequestLink } from "@/components/app/feature-request-link";
@@ -37,7 +37,7 @@ export default async function Page(props: {
 	const dbBoards = await db
 		.select()
 		.from(board)
-		.where(and(eq(board.appId, dbApp.id), ne(board.name, "Unassigned")))
+		.where(eq(board.appId, dbApp.id))
 		.orderBy(board.column);
 
 	return (

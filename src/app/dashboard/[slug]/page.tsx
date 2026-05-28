@@ -57,8 +57,7 @@ export default async function AppOverviewPage({ params }: PageProps) {
 	const [featureCount] = await db
 		.select({ count: count() })
 		.from(feature)
-		.innerJoin(board, eq(feature.boardId, board.id))
-		.where(eq(board.appId, dbApp.id));
+		.where(eq(feature.appId, dbApp.id));
 
 	const [newsCount] = await db
 		.select({ count: count() })
@@ -69,22 +68,21 @@ export default async function AppOverviewPage({ params }: PageProps) {
 	const [recentFeatures] = await db
 		.select({ count: count() })
 		.from(feature)
-		.innerJoin(board, eq(feature.boardId, board.id))
-		.where(and(eq(board.appId, dbApp.id), gte(feature.createdAt, oneWeekAgo)));
+		.where(
+			and(eq(feature.appId, dbApp.id), gte(feature.createdAt, oneWeekAgo)),
+		);
 
 	const [totalUpvotes] = await db
 		.select({ count: count() })
 		.from(upvote)
 		.innerJoin(feature, eq(upvote.featureId, feature.id))
-		.innerJoin(board, eq(feature.boardId, board.id))
-		.where(eq(board.appId, dbApp.id));
+		.where(eq(feature.appId, dbApp.id));
 
 	const [recentUpvotes] = await db
 		.select({ count: count() })
 		.from(upvote)
 		.innerJoin(feature, eq(upvote.featureId, feature.id))
-		.innerJoin(board, eq(feature.boardId, board.id))
-		.where(and(eq(board.appId, dbApp.id), gte(upvote.createdAt, oneWeekAgo)));
+		.where(and(eq(feature.appId, dbApp.id), gte(upvote.createdAt, oneWeekAgo)));
 
 	// Top requested features
 	const topFeatures = await db
@@ -95,8 +93,8 @@ export default async function AppOverviewPage({ params }: PageProps) {
 			boardName: board.name,
 		})
 		.from(feature)
-		.innerJoin(board, eq(feature.boardId, board.id))
-		.where(eq(board.appId, dbApp.id))
+		.leftJoin(board, eq(feature.boardId, board.id))
+		.where(eq(feature.appId, dbApp.id))
 		.orderBy(desc(feature.upvotes))
 		.limit(3);
 
@@ -111,8 +109,7 @@ export default async function AppOverviewPage({ params }: PageProps) {
 		})
 		.from(upvote)
 		.innerJoin(feature, eq(upvote.featureId, feature.id))
-		.innerJoin(board, eq(feature.boardId, board.id))
-		.where(eq(board.appId, dbApp.id))
+		.where(eq(feature.appId, dbApp.id))
 		.orderBy(desc(upvote.createdAt))
 		.limit(5);
 
@@ -124,8 +121,7 @@ export default async function AppOverviewPage({ params }: PageProps) {
 		})
 		.from(upvote)
 		.innerJoin(feature, eq(upvote.featureId, feature.id))
-		.innerJoin(board, eq(feature.boardId, board.id))
-		.where(eq(board.appId, dbApp.id))
+		.where(eq(feature.appId, dbApp.id))
 		.groupBy(upvote.email)
 		.orderBy(desc(count()))
 		.limit(5);

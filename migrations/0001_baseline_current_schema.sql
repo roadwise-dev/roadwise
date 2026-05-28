@@ -1,0 +1,2 @@
+-- Baseline snapshot for Drizzle Kit metadata after applying 0000_feature_app_id_nullable_board.sql.
+-- Intentionally empty: this project started with an existing production database.

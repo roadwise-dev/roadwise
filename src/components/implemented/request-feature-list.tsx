@@ -17,7 +17,8 @@ import { Badge } from "../ui/badge";
 
 interface Feature {
 	id: string;
-	boardId: string;
+	appId: string;
+	boardId: string | null;
 	title: string;
 	description: string;
 	tags: string[];

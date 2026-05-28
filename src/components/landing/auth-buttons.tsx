@@ -26,7 +26,7 @@ export function AuthButtons() {
 					<Button
 						asChild
 						variant="outline"
-						className="rounded-lg text-sm hidden sm:block"
+						className="hidden rounded-lg text-sm sm:inline-flex"
 					>
 						<Link href="/login" aria-label="Log in to your account">
 							Sign in

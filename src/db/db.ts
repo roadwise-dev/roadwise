@@ -5,24 +5,24 @@ config({ path: ".env.local" });
 
 // Validate required environment variables
 const requiredEnvVars = {
-  TURSO_DATABASE_URL: process.env.TURSO_DATABASE_URL,
-  TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN,
+	TURSO_DATABASE_URL: process.env.TURSO_DATABASE_URL,
+	TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN,
 } as const;
 
 // Check for missing environment variables
 const missingEnvVars = Object.entries(requiredEnvVars)
-  .filter(([, value]) => !value)
-  .map(([key]) => key);
+	.filter(([, value]) => !value)
+	.map(([key]) => key);
 
 if (missingEnvVars.length > 0) {
-  throw new Error(
-    `Missing required environment variables: ${missingEnvVars.join(", ")}`
-  );
+	throw new Error(
+		`Missing required environment variables: ${missingEnvVars.join(", ")}`,
+	);
 }
 
 export const db = drizzle({
-  connection: {
-    url: requiredEnvVars.TURSO_DATABASE_URL!,
-    authToken: requiredEnvVars.TURSO_AUTH_TOKEN!,
-  },
+	connection: {
+		url: requiredEnvVars.TURSO_DATABASE_URL!,
+		authToken: requiredEnvVars.TURSO_AUTH_TOKEN!,
+	},
 });

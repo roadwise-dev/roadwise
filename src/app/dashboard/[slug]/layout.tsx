@@ -1,32 +1,32 @@
-import { db } from "@/db/db"
-import { app } from "@/db/schema"
-import { auth } from "@clerk/nextjs/server"
-import { eq } from "drizzle-orm"
-import { notFound, redirect } from "next/navigation"
+import { auth } from "@clerk/nextjs/server";
+import { eq } from "drizzle-orm";
+import { notFound, redirect } from "next/navigation";
+import { db } from "@/db/db";
+import { app } from "@/db/schema";
 
 interface AppLayoutProps {
-  children: React.ReactNode
-  params: Promise<{ slug: string }>
+	children: React.ReactNode;
+	params: Promise<{ slug: string }>;
 }
 
 export default async function AppLayout({ children, params }: AppLayoutProps) {
-  const { userId } = await auth()
-  
-  if (!userId) {
-    redirect("/login")
-  }
+	const { userId } = await auth();
 
-  const { slug } = await params
-  const [dbApp] = await db.select().from(app).where(eq(app.slug, slug))
+	if (!userId) {
+		redirect("/login");
+	}
 
-  if (!dbApp) {
-    notFound()
-  }
+	const { slug } = await params;
+	const [dbApp] = await db.select().from(app).where(eq(app.slug, slug));
 
-  // Verify app ownership
-  if (dbApp.userId !== userId) {
-    notFound()
-  }
+	if (!dbApp) {
+		notFound();
+	}
 
-  return <>{children}</>
+	// Verify app ownership
+	if (dbApp.userId !== userId) {
+		notFound();
+	}
+
+	return <>{children}</>;
 }

@@ -30,10 +30,25 @@ export function NavUser({
 	};
 }) {
 	const { isMobile } = useSidebar();
-	const { signOut } = useClerk();
+	const { openUserProfile, signOut } = useClerk();
+
+	const handleAccount = () => {
+		openUserProfile({
+			appearance: {
+				elements: {
+					rootBox: "w-full",
+					card: "w-full shadow-none border-0",
+					headerTitle: "text-xl font-semibold",
+					headerSubtitle: "text-sm text-gray-500",
+					formButtonPrimary: "bg-black hover:bg-gray-800 text-white",
+					footerActionLink: "text-black hover:text-gray-700",
+				},
+			},
+		});
+	};
 
 	const handleSignOut = () => {
-		signOut();
+		signOut({ redirectUrl: "/login" });
 	};
 
 	return (
@@ -101,15 +116,15 @@ export function NavUser({
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<DropdownMenuItem>
+							<DropdownMenuItem onClick={handleAccount}>
 								<User className="mr-2 h-4 w-4" />
 								Account
 							</DropdownMenuItem>
-							<DropdownMenuItem>
+							<DropdownMenuItem disabled>
 								<CreditCard className="mr-2 h-4 w-4" />
 								Billing
 							</DropdownMenuItem>
-							<DropdownMenuItem>
+							<DropdownMenuItem disabled>
 								<Bell className="mr-2 h-4 w-4" />
 								Notifications
 							</DropdownMenuItem>

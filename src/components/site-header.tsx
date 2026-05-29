@@ -36,7 +36,7 @@ export function SiteHeader({ apps = [] }: SiteHeaderProps) {
 		if (pathname.includes("/boards")) return "Boards";
 		if (pathname.includes("/feedback")) return "Feedback";
 		if (pathname.includes("/settings")) return "Settings";
-		if (pathname.includes("/news")) return "News Management";
+		if (pathname.includes("/news")) return "News";
 		if (pathname.includes("/create")) return "Create App";
 		if (pathname.match(/\/dashboard\/[^/]+$/)) return "Overview";
 		return "Dashboard";

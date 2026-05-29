@@ -8,7 +8,7 @@ const allowedContentTypes = [
 	"image/webp",
 	"image/svg+xml",
 ];
-const maxLogoSizeBytes = 2 * 1024 * 1024;
+const maxUploadSizeBytes = 5 * 1024 * 1024; // 5MB
 
 export async function POST(request: Request) {
 	const { userId } = await auth();
@@ -23,13 +23,16 @@ export async function POST(request: Request) {
 			body,
 			request,
 			onBeforeGenerateToken: async (pathname) => {
-				if (!pathname.startsWith(`app-logos/${userId}/`)) {
+				if (
+					!pathname.startsWith(`app-logos/${userId}/`) &&
+					!pathname.startsWith(`news-images/${userId}/`)
+				) {
 					throw new Error("Invalid upload path");
 				}
 
 				return {
 					allowedContentTypes,
-					maximumSizeInBytes: maxLogoSizeBytes,
+					maximumSizeInBytes: maxUploadSizeBytes,
 					addRandomSuffix: false,
 					tokenPayload: JSON.stringify({ userId }),
 				};

@@ -2,10 +2,8 @@ import { auth } from "@clerk/nextjs/server";
 import { count, desc, eq } from "drizzle-orm";
 import { Calendar, Mail, Trash2, Users } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
-import {
-	submitCreateNewsFormAction,
-	submitDeleteNewsFormAction,
-} from "@/actions/news";
+import { submitDeleteNewsFormAction } from "@/actions/news";
+import { CreateNewsDialog } from "@/components/dashboard/create-news-dialog";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -119,144 +117,89 @@ export default async function NewsManagementPage({ params }: PageProps) {
 		.limit(50); // Limit to 50 most recent subscribers
 
 	return (
-		<div className="space-y-6">
-			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-				<Card className="lg:col-span-1">
-					<CardHeader>
-						<CardTitle className="text-lg">Create News Post</CardTitle>
-						<CardDescription>
-							Add a new news post for your users
-						</CardDescription>
-					</CardHeader>
-					<CardContent>
-						<form action={submitCreateNewsFormAction} className="space-y-4">
-							<input type="hidden" name="slug" value={slug} />
-							<div className="space-y-2">
-								<Label htmlFor="title">Title</Label>
-								<Input
-									id="title"
-									name="title"
-									placeholder="Enter news title"
-									required
-									maxLength={200}
-								/>
-							</div>
-
-							<div className="space-y-2">
-								<Label htmlFor="content">Content</Label>
-								<Textarea
-									id="content"
-									name="content"
-									placeholder="Write your news content..."
-									required
-									maxLength={5000}
-									rows={8}
-								/>
-							</div>
-
-							<div className="space-y-2">
-								<Label htmlFor="image">Image URL (optional)</Label>
-								<Input
-									id="image"
-									name="image"
-									type="url"
-									placeholder="https://example.com/image.jpg"
-								/>
-							</div>
-
-							<div className="space-y-2">
-								<Label htmlFor="tags">Tags (comma-separated)</Label>
-								<Input
-									id="tags"
-									name="tags"
-									placeholder="Feature, Update, Bug Fix"
-								/>
-							</div>
-
-							<Button type="submit" className="w-full">
-								Create News Post
-							</Button>
-						</form>
-					</CardContent>
-				</Card>
-
-				<div className="lg:col-span-2 space-y-4">
-					{dbNews.length === 0 ? (
-						<Card>
-							<CardHeader>
-								<CardTitle className="text-lg">
-									<div className="flex items-center justify-between">
+		<div className="space-y-6 max-w-5xl mx-auto">
+			<div className="space-y-4">
+				{dbNews.length === 0 ? (
+					<Card>
+						<CardHeader>
+							<CardTitle className="text-lg">
+								<div className="flex items-center justify-between">
+									<div className="flex items-center gap-2">
 										Existing News Posts
 										<Badge variant="secondary">{dbNews.length} posts</Badge>
 									</div>
-								</CardTitle>
-							</CardHeader>
-							<CardContent className="py-8 text-center text-muted-foreground">
-								No news posts yet. Create your first news post to get started.
-							</CardContent>
-						</Card>
-					) : (
-						<div className="space-y-4">
-							<div className="flex items-center justify-between">
+									<CreateNewsDialog slug={slug} />
+								</div>
+							</CardTitle>
+						</CardHeader>
+						<CardContent className="py-8 text-center text-muted-foreground">
+							No news posts yet. Create your first news post to get started.
+						</CardContent>
+					</Card>
+				) : (
+					<div className="space-y-4">
+						<div className="flex items-center justify-between">
+							<div className="flex items-center gap-2">
 								<h3 className="text-lg font-semibold">Existing News Posts</h3>
 								<Badge variant="secondary">{dbNews.length} posts</Badge>
 							</div>
-							{dbNews.map((newsItem) => (
-								<Card key={newsItem.id}>
-									<CardHeader>
-										<div className="flex items-start justify-between">
-											<div className="space-y-1">
-												<CardTitle className="text-lg">
-													{newsItem.title}
-												</CardTitle>
-												<div className="flex items-center gap-2 text-sm text-muted-foreground">
-													<Calendar className="w-4 h-4" />
-													{newsItem.date.toLocaleDateString("en-US", {
-														day: "2-digit",
-														month: "short",
-														year: "numeric",
-													})}
-												</div>
-											</div>
-											<div className="flex items-center gap-2">
-												<DeleteNewsForm
-													slug={slug}
-													newsId={newsItem.id}
-													title={newsItem.title}
-												/>
+							<CreateNewsDialog slug={slug} />
+						</div>
+						{dbNews.map((newsItem) => (
+							<Card key={newsItem.id}>
+								<CardHeader>
+									<div className="flex items-start justify-between">
+										<div className="space-y-1">
+											<CardTitle className="text-lg">
+												{newsItem.title}
+											</CardTitle>
+											<div className="flex items-center gap-2 text-sm text-muted-foreground">
+												<Calendar className="w-4 h-4" />
+												{newsItem.date.toLocaleDateString("en-US", {
+													day: "2-digit",
+													month: "short",
+													year: "numeric",
+												})}
 											</div>
 										</div>
-									</CardHeader>
-									<CardContent className="space-y-3">
-										<p className="text-sm text-muted-foreground line-clamp-3">
-											{newsItem.content}
-										</p>
+										<div className="flex items-center gap-2">
+											<DeleteNewsForm
+												slug={slug}
+												newsId={newsItem.id}
+												title={newsItem.title}
+											/>
+										</div>
+									</div>
+								</CardHeader>
+								<CardContent className="space-y-3">
+									<p className="text-sm text-muted-foreground line-clamp-3">
+										{newsItem.content}
+									</p>
 
-										{newsItem.image && (
-											<div className="text-xs text-muted-foreground">
-												📷 Image: {newsItem.image}
-											</div>
-										)}
+									{newsItem.image && (
+										<div className="text-xs text-muted-foreground">
+											📷 Image: {newsItem.image}
+										</div>
+									)}
 
-										{newsItem.tags.length > 0 && (
-											<div className="flex flex-wrap gap-1">
-												{newsItem.tags.map((tag) => (
-													<Badge
-														key={tag}
-														variant="secondary"
-														className="text-xs"
-													>
-														{tag}
-													</Badge>
-												))}
-											</div>
-										)}
-									</CardContent>
-								</Card>
-							))}
-						</div>
-					)}
-				</div>
+									{newsItem.tags.length > 0 && (
+										<div className="flex flex-wrap gap-1">
+											{newsItem.tags.map((tag) => (
+												<Badge
+													key={tag}
+													variant="secondary"
+													className="text-xs"
+												>
+													{tag}
+												</Badge>
+											))}
+										</div>
+									)}
+								</CardContent>
+							</Card>
+						))}
+					</div>
+				)}
 			</div>
 
 			{/* Subscribers Overview - Moved to bottom */}

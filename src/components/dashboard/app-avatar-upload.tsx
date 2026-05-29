@@ -85,7 +85,7 @@ export function AppAvatarUpload({
 			const pathname = `app-logos/${user.id}/${crypto.randomUUID()}-${filename}`;
 			const blob = await upload(pathname, file, {
 				access: "public",
-				handleUploadUrl: "/api/app-logo/upload",
+				handleUploadUrl: "/api/upload",
 				contentType: file.type,
 			});
 

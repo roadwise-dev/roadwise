@@ -62,13 +62,14 @@ export default async function SettingsPage({ params }: PageProps) {
 				<CardHeader>
 					<CardTitle>App Information</CardTitle>
 					<CardDescription>
-						Update the basic information shown in your dashboard and public portal.
+						Update the basic information shown in your dashboard and public
+						portal.
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<form 
+					<form
 						key={`${dbApp.name}-${dbApp.domain}-${dbApp.description}`}
-						action={submitUpdateAppDetailsFormAction} 
+						action={submitUpdateAppDetailsFormAction}
 						className="space-y-4"
 					>
 						<input type="hidden" name="slug" value={dbApp.slug} />
@@ -113,7 +114,9 @@ export default async function SettingsPage({ params }: PageProps) {
 								variant="settings"
 							/>
 						</div>
-						<Button type="submit">Save Changes</Button>
+						<div className="flex justify-end">
+							<Button type="submit">Save Changes</Button>
+						</div>
 					</form>
 				</CardContent>
 			</Card>

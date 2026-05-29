@@ -7,19 +7,17 @@ import { Button } from "@/components/ui/button";
 import Logo from "../svg/logo";
 import { AuthButtons } from "./auth-buttons";
 
-// Navigation data
 const navigationItems = [
 	{ href: "/features", label: "Features", ariaLabel: "View features" },
 	{ href: "/customers", label: "Customers", ariaLabel: "View customers" },
 	{ href: "/pricing", label: "Pricing", ariaLabel: "View pricing" },
 ];
 
-// Desktop Navigation Link Component
 function DesktopNavLink({ item }: { item: (typeof navigationItems)[0] }) {
 	return (
 		<Link
 			href={item.href}
-			className="font-semibold text-foreground/80 hover:text-foreground transition-colors px-3 py-1.5 rounded-lg"
+			className="text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground px-4 py-2"
 			aria-label={item.ariaLabel}
 		>
 			{item.label}
@@ -27,7 +25,6 @@ function DesktopNavLink({ item }: { item: (typeof navigationItems)[0] }) {
 	);
 }
 
-// Mobile Navigation Link Component
 function MobileNavLink({
 	item,
 	onClose,
@@ -55,52 +52,39 @@ export default function Navbar() {
 
 	return (
 		<>
-			{/* Floating navbar */}
-			<header className="w-full max-w-[1120px] mx-auto px-5 fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
-				<div className="bg-background/60 backdrop-blur-md border border-border rounded-xl p-3">
-					<div className="relative flex items-center justify-center">
-						{/* Left: Logo - absolute positioned */}
-						<Link
-							href="/"
-							className="absolute left-1 flex items-center space-x-2"
-						>
-							<Logo variant="whiteOnBlack" width={30} height={30} />
-							<span className="text-xl font-bold">Roadwise</span>
-						</Link>
-
-						{/* Center: Desktop Navigation - stays perfectly centered */}
-						<nav className="hidden md:flex items-center space-x-4">
-							{navigationItems.map((item) => (
-								<DesktopNavLink key={item.href} item={item} />
-							))}
-						</nav>
-
-						{/* Right: Auth buttons and menu - absolute positioned */}
-						<div className="absolute right-0 flex items-center gap-2">
-							{/* Auth buttons - hidden on mobile in floating nav */}
-							<div className="min-w-[120px] flex justify-end">
-								<AuthButtons />
-							</div>
-
-							{/* Menu button - visible on mobile */}
-							<Button
-								variant="ghost"
-								size="icon"
-								className="md:hidden h-8 w-8"
-								onClick={toggleMenu}
-								aria-label="Toggle menu"
-							>
-								<Menu className="h-4 w-4" />
-							</Button>
-						</div>
+			<header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-max px-4">
+				<div className="flex items-center gap-6 rounded-full border border-border bg-background/80 backdrop-blur-md px-6 py-3">
+					<Link href="/" className="flex items-center gap-2 pr-2">
+						<Logo variant="whiteOnBlack" width={24} height={24} />
+						<span className="text-base font-bold tracking-tight">Roadwise</span>
+					</Link>
+					
+					<nav className="hidden md:flex items-center gap-2">
+						{navigationItems.map((item) => (
+							<DesktopNavLink key={item.href} item={item} />
+						))}
+					</nav>
+					
+					<div className="hidden md:flex pl-2">
+						<AuthButtons />
 					</div>
+					
+					<Button
+						variant="ghost"
+						size="icon"
+						className="md:hidden size-8 rounded-full"
+						onClick={toggleMenu}
+						aria-label="Toggle menu"
+					>
+						<Menu className="size-4" />
+					</Button>
 				</div>
 			</header>
 
 			{/* Mobile menu - floating dropdown */}
 			{isMenuOpen && (
-				<div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40 md:hidden">
-					<div className="bg-background/90 backdrop-blur-md border border-border/50 rounded-2xl shadow-lg p-4 min-w-[280px]">
+				<div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-40 md:hidden w-[90%] max-w-[300px]">
+					<div className="bg-background/90 backdrop-blur-md border border-border rounded-2xl p-4">
 						<div className="space-y-2">
 							{navigationItems.map((item) => (
 								<MobileNavLink
@@ -109,7 +93,7 @@ export default function Navbar() {
 									onClose={() => setIsMenuOpen(false)}
 								/>
 							))}
-							<div className="pt-2 border-t border-border/50">
+							<div className="pt-2 mt-2 border-t border-border">
 								<AuthButtons />
 							</div>
 						</div>

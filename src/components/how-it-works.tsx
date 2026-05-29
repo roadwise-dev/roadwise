@@ -46,7 +46,7 @@ const steps = [
 function CaptureVisual() {
 	return (
 		<div className="flex h-full w-full flex-col items-center justify-center p-6">
-			<div className="w-full max-w-sm rounded-xl border border-border bg-background p-5 shadow-sm">
+			<div className="w-full max-w-sm rounded-2xl border border-border bg-background p-5">
 				<h4 className="mb-4 text-sm font-semibold text-foreground">
 					Suggest a feature
 				</h4>
@@ -82,9 +82,9 @@ function MeasureVisual() {
 					<div
 						key={i}
 						className={cn(
-							"flex items-center gap-4 rounded-xl border p-3",
+							"flex items-center gap-4 rounded-2xl border p-3",
 							item.active
-								? "border-foreground bg-background shadow-sm"
+								? "border-foreground bg-background"
 								: "border-border bg-muted/20",
 						)}
 					>
@@ -137,11 +137,11 @@ function DecideVisual() {
 						<div className="size-2 rounded-full bg-muted-foreground" />
 						<div className="h-3 w-16 rounded bg-muted-foreground/50" />
 					</div>
-					<div className="rounded border border-border bg-background p-3 shadow-sm">
+					<div className="rounded border border-border bg-background p-3">
 						<div className="mb-2 h-2.5 w-3/4 rounded bg-foreground/80" />
 						<div className="h-2 w-1/2 rounded bg-muted-foreground/40" />
 					</div>
-					<div className="rounded border border-border bg-background p-3 shadow-sm opacity-50">
+					<div className="rounded border border-border bg-background p-3 opacity-50">
 						<div className="mb-2 h-2.5 w-2/3 rounded bg-foreground/80" />
 						<div className="h-2 w-1/3 rounded bg-muted-foreground/40" />
 					</div>
@@ -153,7 +153,7 @@ function DecideVisual() {
 						<div className="h-3 w-20 rounded bg-foreground" />
 					</div>
 					<motion.div
-						className="rounded border-2 border-foreground bg-background p-3 shadow-md"
+						className="rounded border-2 border-foreground bg-background p-3"
 						layoutId="decide-card"
 						initial={{ y: 20, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
@@ -175,7 +175,7 @@ function DecideVisual() {
 function AnnounceVisual() {
 	return (
 		<div className="flex h-full w-full items-center justify-center p-6">
-			<div className="w-full max-w-sm overflow-hidden rounded-xl border border-border bg-background shadow-sm">
+			<div className="w-full max-w-sm overflow-hidden rounded-2xl border border-border bg-background">
 				<div className="border-b border-border bg-muted/20 px-5 py-4">
 					<div className="flex items-center gap-2 mb-3">
 						<Sparkles className="size-4 text-foreground" />
@@ -246,9 +246,9 @@ export function HowItWorks() {
 								key={step.id}
 								onClick={() => setActiveStep(step.id)}
 								className={cn(
-									"group flex flex-col items-start gap-2 rounded-xl border p-5 text-left transition-all",
+									"group flex flex-col items-start gap-2 rounded-2xl border p-5 text-left transition-all",
 									isActive
-										? "border-foreground bg-background shadow-sm"
+										? "border-foreground bg-background"
 										: "border-transparent hover:bg-muted/30",
 								)}
 							>
@@ -291,7 +291,7 @@ export function HowItWorks() {
 				</div>
 
 				{/* Right: Visual Mockup Area */}
-				<div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-border bg-muted/10 sm:aspect-[4/3] lg:aspect-auto lg:h-[500px]">
+				<div className="relative aspect-square w-full overflow-hidden rounded-3xl border border-border bg-muted/10 sm:aspect-[4/3] lg:aspect-auto lg:h-[500px]">
 					<AnimatePresence mode="wait">
 						<motion.div
 							key={activeStep}

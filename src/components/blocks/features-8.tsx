@@ -42,7 +42,7 @@ export function Features() {
 			</div>
 
 			<div className="mt-12 grid grid-cols-1 gap-3 lg:grid-cols-6">
-				<Card className="relative overflow-hidden lg:col-span-4">
+				<Card className="rounded-3xl shadow-none relative overflow-hidden lg:col-span-4">
 					<CardContent className="grid gap-8 p-6 lg:grid-cols-[0.85fr_1.15fr] lg:p-8">
 						<div className="flex flex-col justify-between gap-8">
 							<div>
@@ -64,8 +64,8 @@ export function Features() {
 							</div>
 						</div>
 
-						<div className="rounded-lg border bg-muted/30 p-3">
-							<div className="rounded-md border bg-background">
+						<div className="rounded-2xl border bg-muted/30 p-3">
+							<div className="rounded-xl border bg-background">
 								<div className="flex items-center justify-between border-b px-4 py-3">
 									<div>
 										<p className="text-sm font-semibold">Roadwise feedback</p>
@@ -104,7 +104,7 @@ export function Features() {
 					</CardContent>
 				</Card>
 
-				<Card className="lg:col-span-2">
+				<Card className="rounded-3xl shadow-none lg:col-span-2">
 					<CardContent className="flex h-full flex-col justify-between gap-8 p-6 lg:p-8">
 						<div>
 							<p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">
@@ -139,7 +139,7 @@ export function Features() {
 					</CardContent>
 				</Card>
 
-				<Card className="lg:col-span-2">
+				<Card className="rounded-3xl shadow-none lg:col-span-2">
 					<CardContent className="flex h-full flex-col justify-between gap-8 p-6 lg:p-8">
 						<div>
 							<p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">
@@ -164,7 +164,7 @@ export function Features() {
 					</CardContent>
 				</Card>
 
-				<Card className="lg:col-span-4">
+				<Card className="rounded-3xl shadow-none lg:col-span-4">
 					<CardContent className="grid gap-8 p-6 lg:grid-cols-[0.95fr_1.05fr] lg:p-8">
 						<div>
 							<p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">
@@ -178,8 +178,8 @@ export function Features() {
 								users already follow feedback.
 							</p>
 						</div>
-						<div className="rounded-lg border bg-muted/30 p-4">
-							<article className="rounded-md border bg-background p-4">
+						<div className="rounded-2xl border bg-muted/30 p-4">
+							<article className="rounded-xl border bg-background p-4">
 								<div className="flex items-center justify-between gap-4">
 									<span className="rounded-full border px-2.5 py-1 text-xs font-medium">
 										Shipped
@@ -204,7 +204,7 @@ export function Features() {
 					</CardContent>
 				</Card>
 
-				<Card className="lg:col-span-3">
+				<Card className="rounded-3xl shadow-none lg:col-span-3">
 					<CardContent className="grid h-full gap-8 p-6 sm:grid-cols-[0.9fr_1.1fr] lg:p-8">
 						<div>
 							<p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">
@@ -232,7 +232,7 @@ export function Features() {
 					</CardContent>
 				</Card>
 
-				<Card className="lg:col-span-3">
+				<Card className="rounded-3xl shadow-none lg:col-span-3">
 					<CardContent className="grid h-full gap-8 p-6 sm:grid-cols-[0.9fr_1.1fr] lg:p-8">
 						<div>
 							<p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">
@@ -246,8 +246,8 @@ export function Features() {
 								feels native, not bolted on.
 							</p>
 						</div>
-						<div className="rounded-lg border bg-muted/30 p-4">
-							<div className="rounded-md border bg-background p-4">
+						<div className="rounded-2xl border bg-muted/30 p-4">
+							<div className="rounded-xl border bg-background p-4">
 								<div className="flex items-center gap-3">
 									<div className="flex size-10 items-center justify-center rounded-lg bg-foreground text-sm font-semibold text-background">
 										R

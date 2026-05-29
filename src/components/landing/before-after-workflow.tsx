@@ -11,10 +11,10 @@ import {
 
 function ChaosVisual() {
 	return (
-		<div className="relative h-[340px] w-full overflow-hidden rounded-2xl border border-border bg-muted/20 p-4 sm:h-[400px]">
+		<div className="relative h-[340px] w-full overflow-hidden rounded-3xl border border-border bg-muted/20 p-4 sm:h-[400px]">
 			{/* Slack-like message */}
 			<motion.div
-				className="absolute left-[5%] top-[10%] w-[80%] -rotate-2 rounded-xl border border-border bg-background/90 p-4 shadow-sm backdrop-blur-sm"
+				className="absolute left-[5%] top-[10%] w-[80%] -rotate-2 rounded-2xl border border-border bg-background/90 p-4 backdrop-blur-sm"
 				initial={{ opacity: 0, x: -20, y: 10, rotate: -8 }}
 				whileInView={{ opacity: 0.8, x: 0, y: 0, rotate: -2 }}
 				viewport={{ once: true, margin: "-50px" }}
@@ -32,7 +32,7 @@ function ChaosVisual() {
 
 			{/* Email-like message */}
 			<motion.div
-				className="absolute right-[5%] top-[35%] w-[85%] rotate-3 rounded-xl border border-border bg-background/90 p-4 shadow-sm backdrop-blur-sm"
+				className="absolute right-[5%] top-[35%] w-[85%] rotate-3 rounded-2xl border border-border bg-background/90 p-4 backdrop-blur-sm"
 				initial={{ opacity: 0, x: 20, y: 10, rotate: 8 }}
 				whileInView={{ opacity: 0.8, x: 0, y: 0, rotate: 3 }}
 				viewport={{ once: true, margin: "-50px" }}
@@ -51,7 +51,7 @@ function ChaosVisual() {
 
 			{/* Notes-like message */}
 			<motion.div
-				className="absolute bottom-[10%] left-[10%] w-[75%] -rotate-1 rounded-xl border border-border bg-background/90 p-4 shadow-sm backdrop-blur-sm"
+				className="absolute bottom-[10%] left-[10%] w-[75%] -rotate-1 rounded-2xl border border-border bg-background/90 p-4 backdrop-blur-sm"
 				initial={{ opacity: 0, y: 20 }}
 				whileInView={{ opacity: 0.8, y: 0, rotate: -1 }}
 				viewport={{ once: true, margin: "-50px" }}
@@ -74,7 +74,7 @@ function ChaosVisual() {
 
 function ClarityVisual() {
 	return (
-		<div className="relative flex h-[340px] w-full flex-col overflow-hidden rounded-2xl border border-border bg-background p-5 shadow-sm sm:h-[400px]">
+		<div className="relative flex h-[340px] w-full flex-col overflow-hidden rounded-3xl border border-border bg-background p-5 sm:h-[400px]">
 			<div className="mb-4 flex items-center justify-between border-b border-border pb-4">
 				<div className="flex items-center gap-2">
 					<div className="size-6 rounded bg-foreground" />
@@ -91,10 +91,8 @@ function ClarityVisual() {
 				].map((item, i) => (
 					<motion.div
 						key={i}
-						className={`flex items-center justify-between rounded-xl border p-3 transition-colors ${
-							item.active
-								? "border-foreground shadow-sm"
-								: "border-border bg-muted/10"
+						className={`flex items-center justify-between rounded-2xl border p-3 transition-colors ${
+							item.active ? "border-foreground" : "border-border bg-muted/10"
 						}`}
 						initial={{ opacity: 0, y: 10 }}
 						whileInView={{ opacity: 1, y: 0 }}

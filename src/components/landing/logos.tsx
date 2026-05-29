@@ -48,7 +48,7 @@ export default function Logos() {
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true, margin: "-80px" }}
 						transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
-						className="group relative flex flex-col items-center overflow-hidden rounded-2xl border border-border bg-background p-8 text-center transition-colors hover:border-foreground/30"
+						className="group relative flex flex-col items-center overflow-hidden rounded-3xl border border-border bg-background p-8 text-center transition-colors hover:border-foreground/30"
 					>
 						<div className="mb-6 flex size-14 items-center justify-center rounded-full border border-border bg-muted/50 transition-colors group-hover:bg-foreground group-hover:text-background">
 							<point.icon className="size-6 transition-transform duration-300 group-hover:scale-110" />

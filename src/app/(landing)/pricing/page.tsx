@@ -65,7 +65,7 @@ export default function PricingPage() {
 					</div>
 
 					{/* Pro Plan (Premium) */}
-					<div className="relative flex flex-col rounded-3xl border border-foreground bg-foreground p-8 sm:p-10 text-background shadow-2xl">
+					<div className="relative flex flex-col rounded-3xl border border-foreground bg-foreground p-8 sm:p-10 text-background">
 						<div className="absolute -top-4 right-8 inline-flex items-center rounded-full bg-background px-3 py-1 text-xs font-semibold text-foreground">
 							Coming Soon
 						</div>

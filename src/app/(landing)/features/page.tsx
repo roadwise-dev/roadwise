@@ -48,12 +48,12 @@ export default function FeaturesPage() {
 								upvote the features they care about most.
 							</p>
 						</div>
-						<div className="relative h-48 w-full translate-y-8 translate-x-8 rounded-tl-xl border border-border bg-muted/20 shadow-sm transition-transform duration-500 group-hover:translate-y-4 group-hover:translate-x-4">
+						<div className="relative h-48 w-full translate-y-8 translate-x-8 rounded-tl-xl border border-border bg-muted/20 transition-transform duration-500 group-hover:translate-y-4 group-hover:translate-x-4">
 							<div className="absolute inset-0 p-6 space-y-4">
 								{[1, 2].map((i) => (
 									<div
 										key={i}
-										className="flex items-center gap-4 rounded-xl border border-border bg-background p-4 shadow-sm"
+										className="flex items-center gap-4 rounded-xl border border-border bg-background p-4"
 									>
 										<div className="flex flex-col items-center justify-center rounded-md border border-border bg-muted/30 p-2">
 											<ChevronUp className="size-4 text-muted-foreground" />
@@ -116,7 +116,7 @@ export default function FeaturesPage() {
 								votes.
 							</p>
 						</div>
-						<div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[85%] rounded-lg border border-border bg-background p-4 shadow-lg transition-transform duration-500 group-hover:-translate-y-2">
+						<div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[85%] rounded-lg border border-border bg-background p-4 transition-transform duration-500 group-hover:-translate-y-2">
 							<div className="flex gap-3">
 								<div className="mt-0.5 size-2 rounded-full bg-foreground" />
 								<div>
@@ -173,7 +173,7 @@ export default function FeaturesPage() {
 							{[1, 2, 3, 4].map((i) => (
 								<div
 									key={i}
-									className="flex size-14 items-center justify-center rounded-full border-4 border-background bg-muted text-lg font-medium text-muted-foreground shadow-sm transition-transform duration-300 hover:-translate-y-2 hover:z-10"
+									className="flex size-14 items-center justify-center rounded-full border-4 border-background bg-muted text-lg font-medium text-muted-foreground transition-transform duration-300 hover:-translate-y-2 hover:z-10"
 								>
 									T{i}
 								</div>

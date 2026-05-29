@@ -12,8 +12,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 export default function Hero() {
 	return (
-		<section className="w-full max-w-[1120px] mx-auto px-5 padding-container">
-			<div className="flex flex-col items-center text-center">
+		<section className="relative w-full max-w-[1120px] mx-auto px-5 padding-container pb-24">
+			{/* Subtle Dot Background */}
+			<div className="absolute inset-0 -z-10 h-full w-full bg-background bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] dark:bg-[radial-gradient(#262626_1px,transparent_1px)]" />
+
+			<div className="flex flex-col items-center text-center pt-20">
 				<motion.div
 					className="max-w-4xl mx-auto mb-6"
 					initial={{ opacity: 0, y: 30 }}
@@ -63,14 +66,25 @@ export default function Hero() {
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.6, delay: 0.5 }}
 					>
-						<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-							<Button className="w-full sm:w-auto rounded-lg text-md" size="lg">
+						<motion.div
+							whileHover={{ scale: 1.02 }}
+							whileTap={{ scale: 0.98 }}
+							transition={{ type: "spring", stiffness: 400, damping: 17 }}
+						>
+							<Button
+								className="w-full sm:w-auto rounded-xl text-base px-8 py-6"
+								size="lg"
+							>
 								<Link href="/signup">Start for free</Link>
 							</Button>
 						</motion.div>
-						<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+						<motion.div
+							whileHover={{ scale: 1.02 }}
+							whileTap={{ scale: 0.98 }}
+							transition={{ type: "spring", stiffness: 400, damping: 17 }}
+						>
 							<Button
-								className="w-full sm:w-auto rounded-lg text-md"
+								className="w-full sm:w-auto rounded-xl text-base px-8 py-6"
 								variant="outline"
 								size="lg"
 							>
@@ -134,14 +148,15 @@ function FeatureShowcase() {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-						whileHover={{ scale: 1.05 }}
-						whileTap={{ scale: 0.95 }}
+						whileHover={{ scale: 1.02 }}
+						whileTap={{ scale: 0.98 }}
+						transition={{ type: "spring", stiffness: 400, damping: 17 }}
 					>
 						<Button
 							variant={activeTab === tab.id ? "secondary" : "outline"}
 							size="sm"
 							onClick={() => setActiveTab(tab.id)}
-							className="px-4 py-2 text-sm font-medium"
+							className="px-5 py-2.5 text-sm font-medium rounded-lg"
 						>
 							{tab.label}
 						</Button>
@@ -151,7 +166,7 @@ function FeatureShowcase() {
 
 			{/* Screenshot display */}
 			<motion.div
-				className="shadow-xl rounded-xl overflow-hidden border relative"
+				className="rounded-3xl overflow-hidden border border-border relative bg-muted/10 p-2"
 				initial={{ opacity: 0, y: 30 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.6, delay: 0.4 }}
@@ -174,7 +189,7 @@ function FeatureShowcase() {
 							alt={`${tab.label} screenshot`}
 							width={1920}
 							height={1080}
-							className="w-full h-auto"
+							className="w-full h-auto rounded-2xl border border-border/50"
 							draggable={false}
 							priority
 						/>

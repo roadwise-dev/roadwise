@@ -8,6 +8,7 @@ import {
 	ChevronUp,
 } from "lucide-react";
 import type { Metadata } from "next";
+import { CallToAction } from "@/components/landing/cta";
 
 export const metadata: Metadata = {
 	title: "Features",
@@ -203,6 +204,15 @@ export default function FeaturesPage() {
 					</div>
 				</div>
 			</section>
+
+			<CallToAction
+				title="Ready to transform your product loop?"
+				description="Join forward-thinking product teams using Roadwise to build better products."
+				buttons={[
+					{ text: "Start for Free", href: "/signup" },
+					{ text: "See Pricing", href: "/pricing" },
+				]}
+			/>
 		</main>
 	);
 }

@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { Features } from "@/components/blocks/features-8";
 import { HowItWorks } from "@/components/how-it-works";
 import { BeforeAfterWorkflow } from "@/components/landing/before-after-workflow";
+import { CallToAction } from "@/components/landing/cta";
 import Hero from "@/components/landing/hero";
 import Logos from "@/components/landing/logos";
 
@@ -14,6 +15,22 @@ export default function HomePage() {
 		{ id: "before-after", component: <BeforeAfterWorkflow />, delay: 0.15 },
 		{ id: "workflow", component: <HowItWorks />, delay: 0.2 },
 		{ id: "features", component: <Features />, delay: 0.25 },
+		{
+			id: "cta",
+			component: (
+				<CallToAction
+					title="Start collecting better feedback"
+					description="Create a Roadwise board for your product and give users a clear place to request, vote, and follow progress."
+					buttons={[
+						{
+							text: "Start for free",
+							href: "/signup",
+						},
+					]}
+				/>
+			),
+			delay: 0.3,
+		},
 	];
 
 	return (

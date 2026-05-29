@@ -2,6 +2,7 @@
 
 import { Menu } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Logo from "../svg/logo";
@@ -14,10 +15,17 @@ const navigationItems = [
 ];
 
 function DesktopNavLink({ item }: { item: (typeof navigationItems)[0] }) {
+	const pathname = usePathname();
+	const isActive = pathname === item.href;
+
 	return (
 		<Link
 			href={item.href}
-			className="text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground px-4 py-2"
+			className={`text-sm font-semibold transition-colors px-4 py-2 ${
+				isActive
+					? "text-foreground"
+					: "text-muted-foreground hover:text-foreground"
+			}`}
 			aria-label={item.ariaLabel}
 		>
 			{item.label}
@@ -32,10 +40,17 @@ function MobileNavLink({
 	item: (typeof navigationItems)[0];
 	onClose: () => void;
 }) {
+	const pathname = usePathname();
+	const isActive = pathname === item.href;
+
 	return (
 		<Link
 			href={item.href}
-			className="block px-3 py-2 text-sm text-foreground/70 hover:text-foreground rounded-lg transition-colors"
+			className={`block px-3 py-2 text-sm rounded-lg transition-colors ${
+				isActive
+					? "text-foreground bg-muted/50 font-medium"
+					: "text-foreground/70 hover:text-foreground hover:bg-muted/30"
+			}`}
 			onClick={onClose}
 		>
 			{item.label}
@@ -58,17 +73,17 @@ export default function Navbar() {
 						<Logo variant="whiteOnBlack" width={24} height={24} />
 						<span className="text-base font-bold tracking-tight">Roadwise</span>
 					</Link>
-					
+
 					<nav className="hidden md:flex items-center gap-2">
 						{navigationItems.map((item) => (
 							<DesktopNavLink key={item.href} item={item} />
 						))}
 					</nav>
-					
+
 					<div className="hidden md:flex pl-2">
 						<AuthButtons />
 					</div>
-					
+
 					<Button
 						variant="ghost"
 						size="icon"

@@ -1,6 +1,7 @@
 import { Check } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CallToAction } from "@/components/landing/cta";
 
 export const metadata: Metadata = {
 	title: "Pricing",
@@ -111,6 +112,12 @@ export default function PricingPage() {
 					</div>
 				</div>
 			</section>
+
+			<CallToAction
+				title="Ready to transform your product loop?"
+				description="Join forward-thinking product teams using Roadwise to build better products."
+				buttons={[{ text: "Start for Free", href: "/signup" }]}
+			/>
 		</main>
 	);
 }

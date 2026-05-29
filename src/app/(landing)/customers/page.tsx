@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { CallToAction } from "@/components/landing/cta";
 
 // Customer data
 const customers = [
@@ -154,6 +155,12 @@ export default function CustomersPage() {
 					<div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent" />
 				</div>
 			</section>
+
+			<CallToAction
+				title="Join our growing community."
+				description="Start collecting valuable user feedback today and build products your users will love."
+				buttons={[{ text: "Start for Free", href: "/pricing" }]}
+			/>
 		</main>
 	);
 }

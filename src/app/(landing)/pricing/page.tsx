@@ -1,139 +1,116 @@
 import { Check } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CallToAction } from "@/components/landing/cta";
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
 
 export const metadata: Metadata = {
 	title: "Pricing",
 };
 
 export default function PricingPage() {
-	const plans = [
-		{
-			name: "Standard",
-			description: "Perfect for indie developers",
-			price: "Free",
-			features: [
-				"Up to 3 apps",
-				"Unlimited feedback submissions",
-				"Unlimited news updates",
-				"Basic analytics dashboard",
-				"Email support",
-			],
-			cta: "Get Started",
-			ctaLink: "/signup",
-			disabled: false,
-		},
-		{
-			name: "Pro (Coming Soon!)",
-			description: "For teams serious about user-driven development",
-			price: "$5",
-			interval: "per month",
-			features: [
-				"All Standard features",
-				"Unlimited apps",
-				"Custom domain",
-				"Widget for your website",
-				"Advanced analytics",
-				"Priority support",
-			],
-			cta: "Coming Soon",
-			ctaLink: "/",
-			disabled: true,
-		},
-	];
-
 	return (
-		<main>
-			<section className="max-contianer padding-container w-full">
+		<main className="flex flex-col w-full max-container padding-container pb-24">
+			<section className="w-full pt-16 pb-20">
 				<div className="flex flex-col items-center justify-center space-y-4 text-center">
-					<div className="space-y-2">
-						<h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-							Simple, Transparent Pricing
+					<div className="space-y-4">
+						<h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+							Simple, transparent pricing.
 						</h1>
-						<p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
-							Choose the plan that best fits your needs and start gathering
-							valuable user feedback today.
+						<p className="mx-auto max-w-[600px] text-lg text-muted-foreground sm:text-xl">
+							Start gathering valuable user feedback today. No hidden fees, no
+							surprises.
 						</p>
 					</div>
 				</div>
 			</section>
 
-			<section className="max-container padding-container w-full py-12 md:py-24">
-				<div className="container">
-					<div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-						{plans.map((plan, index) => (
-							<Card
-								key={index}
-								className={`flex flex-col ${index === 1 ? "border-primary shadow-lg" : "border-gray-200"}`}
-							>
-								<CardHeader>
-									<CardTitle className="text-2xl font-bold">
-										{plan.name}
-									</CardTitle>
-									<CardDescription>{plan.description}</CardDescription>
-								</CardHeader>
-								<CardContent className="grow">
-									<div className="mb-6">
-										<span className="text-4xl font-bold">{plan.price}</span>
-										{plan.interval && (
-											<span className="text-gray-600 ml-2">
-												{plan.interval}
-											</span>
-										)}
-									</div>
-									<ul className="space-y-3">
-										{plan.features.map((feature, featureIndex) => (
-											<li key={featureIndex} className="flex items-center">
-												<Check className="h-5 w-5 mr-3 text-primary" />
-												<span>{feature}</span>
-											</li>
-										))}
-									</ul>
-								</CardContent>
-								<CardFooter>
-									<Button
-										className="w-full"
-										variant={index === 1 ? "default" : "outline"}
-										asChild={!plan.disabled}
-										disabled={plan.disabled}
-									>
-										{plan.disabled ? (
-											<span>{plan.cta}</span>
-										) : (
-											<Link href={plan.ctaLink}>{plan.cta}</Link>
-										)}
-									</Button>
-								</CardFooter>
-							</Card>
-						))}
+			<section className="w-full max-w-5xl mx-auto px-5">
+				<div className="grid md:grid-cols-2 gap-8 items-stretch">
+					{/* Standard Plan (Free) */}
+					<div className="flex flex-col rounded-3xl border border-border bg-background p-8 sm:p-10 transition-colors hover:border-foreground/30">
+						<div className="mb-8">
+							<h3 className="text-2xl font-medium tracking-tight text-foreground">
+								Standard
+							</h3>
+							<p className="mt-2 text-sm text-muted-foreground">
+								Perfect for indie developers starting out.
+							</p>
+						</div>
+						<div className="mb-8 flex items-baseline">
+							<span className="text-6xl font-bold tracking-tighter text-foreground">
+								Free
+							</span>
+						</div>
+						<ul className="mb-10 space-y-4 flex-1">
+							{[
+								"Up to 3 apps",
+								"Unlimited feedback submissions",
+								"Unlimited news updates",
+								"Basic analytics dashboard",
+								"Email support",
+							].map((feature, i) => (
+								<li key={i} className="flex items-start gap-3 text-sm">
+									<Check className="size-5 shrink-0 text-foreground" />
+									<span className="text-muted-foreground leading-relaxed">
+										{feature}
+									</span>
+								</li>
+							))}
+						</ul>
+						<Link
+							href="/signup"
+							className="flex h-12 w-full items-center justify-center rounded-xl border border-border bg-transparent text-sm font-medium text-foreground transition-colors hover:bg-muted"
+						>
+							Get Started
+						</Link>
+					</div>
+
+					{/* Pro Plan (Premium) */}
+					<div className="relative flex flex-col rounded-3xl border border-foreground bg-foreground p-8 sm:p-10 text-background shadow-2xl">
+						<div className="absolute -top-4 right-8 inline-flex items-center rounded-full bg-background px-3 py-1 text-xs font-semibold text-foreground">
+							Coming Soon
+						</div>
+						<div className="mb-8">
+							<h3 className="text-2xl font-medium tracking-tight text-background">
+								Pro
+							</h3>
+							<p className="mt-2 text-sm text-background/70">
+								For teams serious about user-driven development.
+							</p>
+						</div>
+						<div className="mb-8 flex items-baseline">
+							<span className="text-6xl font-bold tracking-tighter text-background">
+								$5
+							</span>
+							<span className="ml-2 text-sm font-medium text-background/70">
+								/ month
+							</span>
+						</div>
+						<ul className="mb-10 space-y-4 flex-1">
+							{[
+								"All Standard features",
+								"Unlimited apps",
+								"Custom domain support",
+								"Widget for your website",
+								"Advanced analytics",
+								"Priority support",
+							].map((feature, i) => (
+								<li key={i} className="flex items-start gap-3 text-sm">
+									<Check className="size-5 shrink-0 text-background" />
+									<span className="text-background/80 leading-relaxed">
+										{feature}
+									</span>
+								</li>
+							))}
+						</ul>
+						<button
+							disabled
+							className="flex h-12 w-full items-center justify-center rounded-xl bg-background/10 text-sm font-medium text-background/50 cursor-not-allowed"
+						>
+							Coming Soon
+						</button>
 					</div>
 				</div>
 			</section>
-
-			<CallToAction
-				title="Ready to Get Started?"
-				description="Join thousands of product teams using Roadwise to build better products."
-				buttons={[
-					{
-						text: "Start for Free",
-						href: "/signup",
-					},
-					{
-						text: "Contact Sales",
-						href: "/contact",
-					},
-				]}
-			/>
 		</main>
 	);
 }

@@ -27,7 +27,7 @@ export default function Hero() {
 					>
 						<Badge
 							variant="outline"
-							className="mb-6 px-4 py-1.5 text-sm font-medium"
+							className="mb-6 px-4 py-3 text-sm font-medium"
 						>
 							Alpha version - Try Now
 						</Badge>

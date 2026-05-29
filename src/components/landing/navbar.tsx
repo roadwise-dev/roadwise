@@ -57,12 +57,12 @@ export default function Navbar() {
 		<>
 			{/* Floating navbar */}
 			<header className="w-full max-w-[1120px] mx-auto px-5 fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
-				<div className="bg-background/60 backdrop-blur-md border border-border/50 rounded-2xl shadow-sm p-3">
+				<div className="bg-background/60 backdrop-blur-md border border-border rounded-xl p-3">
 					<div className="relative flex items-center justify-center">
 						{/* Left: Logo - absolute positioned */}
 						<Link
 							href="/"
-							className="absolute left-0 flex items-center space-x-2"
+							className="absolute left-1 flex items-center space-x-2"
 						>
 							<Logo variant="whiteOnBlack" width={30} height={30} />
 							<span className="text-xl font-bold">Roadwise</span>

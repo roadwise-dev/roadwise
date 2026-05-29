@@ -85,7 +85,7 @@ function MeasureVisual() {
 							"flex items-center gap-4 rounded-xl border p-3",
 							item.active
 								? "border-foreground bg-background shadow-sm"
-								: "border-border bg-muted/20"
+								: "border-border bg-muted/20",
 						)}
 					>
 						<div
@@ -93,19 +93,19 @@ function MeasureVisual() {
 								"flex flex-col items-center justify-center rounded-lg border p-2",
 								item.active
 									? "border-border bg-muted/50"
-									: "border-transparent bg-transparent"
+									: "border-transparent bg-transparent",
 							)}
 						>
 							<ChevronUp
 								className={cn(
 									"size-4",
-									item.active ? "text-foreground" : "text-muted-foreground"
+									item.active ? "text-foreground" : "text-muted-foreground",
 								)}
 							/>
 							<span
 								className={cn(
 									"mt-1 text-sm font-semibold",
-									item.active ? "text-foreground" : "text-muted-foreground"
+									item.active ? "text-foreground" : "text-muted-foreground",
 								)}
 							>
 								{item.votes}
@@ -115,7 +115,7 @@ function MeasureVisual() {
 							<div
 								className={cn(
 									"h-3 w-3/4 rounded",
-									item.active ? "bg-foreground" : "bg-muted-foreground/50"
+									item.active ? "bg-foreground" : "bg-muted-foreground/50",
 								)}
 							/>
 							<div className="h-2 w-1/2 rounded bg-muted-foreground/20" />
@@ -249,7 +249,7 @@ export function HowItWorks() {
 									"group flex flex-col items-start gap-2 rounded-xl border p-5 text-left transition-all",
 									isActive
 										? "border-foreground bg-background shadow-sm"
-										: "border-transparent hover:bg-muted/30"
+										: "border-transparent hover:bg-muted/30",
 								)}
 							>
 								<div className="flex w-full items-center justify-between">
@@ -258,7 +258,7 @@ export function HowItWorks() {
 											"text-lg font-semibold transition-colors",
 											isActive
 												? "text-foreground"
-												: "text-muted-foreground group-hover:text-foreground/80"
+												: "text-muted-foreground group-hover:text-foreground/80",
 										)}
 									>
 										{step.title}
@@ -268,7 +268,7 @@ export function HowItWorks() {
 											"size-5 transition-colors",
 											isActive
 												? "text-foreground"
-												: "text-muted-foreground/50 group-hover:text-muted-foreground"
+												: "text-muted-foreground/50 group-hover:text-muted-foreground",
 										)}
 									/>
 								</div>

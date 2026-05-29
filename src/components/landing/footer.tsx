@@ -4,7 +4,7 @@ import Logo from "../svg/logo";
 export default function Footer() {
 	return (
 		<footer className="w-full bg-background my-10 sm:my-16">
-			<div className="w-full max-container padding-container">
+			<div className="w-full max-w-[1120px] mx-auto px-5 padding-container">
 				{/* Logo/description and navigation links */}
 				<div className="flex flex-col md:flex-row md:justify-between mb-8 gap-8">
 					{/* Logo and description */}

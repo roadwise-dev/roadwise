@@ -56,7 +56,7 @@ export default function Navbar() {
 	return (
 		<>
 			{/* Floating navbar */}
-			<header className="w-full max-container padding-container fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
+			<header className="w-full max-w-[1120px] mx-auto px-5 padding-container fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
 				<div className="bg-background/60 backdrop-blur-md border border-border/50 rounded-2xl shadow-sm p-3">
 					<div className="relative flex items-center justify-center">
 						{/* Left: Logo - absolute positioned */}

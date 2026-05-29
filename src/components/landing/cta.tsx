@@ -27,7 +27,7 @@ interface CTAProps {
 export function CallToAction({ title, description, buttons }: CTAProps) {
 	return (
 		<motion.section
-			className="max-container"
+			className="w-full max-w-[1120px] mx-auto px-5"
 			initial={{ opacity: 0, y: 30 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			viewport={{ once: true }}
@@ -76,7 +76,7 @@ export function CallToAction({ title, description, buttons }: CTAProps) {
 					>
 						{buttons.map((button, index) => (
 							<motion.div
-								key={index}
+								key={`${button.href}-${button.text}`}
 								initial={{ opacity: 0, scale: 0.8 }}
 								whileInView={{ opacity: 1, scale: 1 }}
 								viewport={{ once: true }}

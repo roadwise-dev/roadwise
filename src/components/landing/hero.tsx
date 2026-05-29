@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 export default function Hero() {
 	return (
-		<section className="w-full max-container padding-container">
+		<section className="w-full max-w-[1120px] mx-auto px-5 padding-container">
 			<div className="flex flex-col items-center text-center">
 				<motion.div
 					className="max-w-4xl mx-auto mb-6"
@@ -162,9 +162,8 @@ function FeatureShowcase() {
 						initial={{ opacity: 0 }}
 						animate={{
 							opacity: activeTab === tab.id ? 1 : 0,
-							scale: activeTab === tab.id ? 1 : 0.95,
 						}}
-						transition={{ duration: 0.3 }}
+						transition={{ duration: 0.18, ease: "easeOut" }}
 						className={cn(
 							"w-full h-auto",
 							activeTab === tab.id ? "relative" : "absolute inset-0",

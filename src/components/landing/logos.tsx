@@ -1,89 +1,43 @@
 "use client";
 
-import { Cpu, Link, PencilRuler, ShieldCheck } from "lucide-react";
 import { motion } from "motion/react";
 
+const proofPoints = [
+	"Collect requests",
+	"Prioritize by demand",
+	"Close the loop",
+];
+
 export default function Logos() {
-	const logos = [
-		{ name: "Bring2Gather", icon: Link },
-		{ name: "Mirai T&S", icon: Cpu },
-		{ name: "SketchybarEditor", icon: PencilRuler },
-		{ name: "SafeScan", icon: ShieldCheck },
-	];
-
-	// Triple the logos for seamless infinite scroll
-	const renderedLogos = [...logos, ...logos, ...logos];
-
 	return (
 		<motion.section
-			className="max-container"
-			initial={{ opacity: 0, y: 30 }}
+			className="w-full max-w-[1120px] mx-auto px-5"
+			initial={{ opacity: 0, y: 24 }}
 			whileInView={{ opacity: 1, y: 0 }}
-			viewport={{ once: true }}
-			transition={{ duration: 0.6 }}
+			viewport={{ once: true, margin: "-80px" }}
+			transition={{ duration: 0.5, ease: "easeOut" }}
 		>
-			<motion.h2
-				className="text-center text-2xl sm:text-3xl font-semibold"
-				initial={{ opacity: 0, y: 20 }}
-				whileInView={{ opacity: 1, y: 0 }}
-				viewport={{ once: true }}
-				transition={{ duration: 0.6, delay: 0.2 }}
-			>
-				Powering the best product teams.
-			</motion.h2>
-			<motion.p
-				className="text-center text-xl sm:text-2xl text-muted-foreground mb-12"
-				initial={{ opacity: 0, y: 20 }}
-				whileInView={{ opacity: 1, y: 0 }}
-				viewport={{ once: true }}
-				transition={{ duration: 0.6, delay: 0.3 }}
-			>
-				From next-gen startups to established enterprises.
-			</motion.p>
+			<div className="mx-auto max-w-3xl text-center">
+				<h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+					Built for teams that want feedback they can actually use.
+				</h2>
+				<p className="mt-5 text-lg leading-8 text-muted-foreground sm:text-xl">
+					Roadwise gives your users one clear place to request features, vote on
+					priorities, and follow what changed, so product decisions stop
+					disappearing into chat threads and support tickets.
+				</p>
 
-			<motion.div
-				className="relative overflow-hidden"
-				initial={{ opacity: 0, scale: 0.95 }}
-				whileInView={{ opacity: 1, scale: 1 }}
-				viewport={{ once: true }}
-				transition={{ duration: 0.6, delay: 0.4 }}
-			>
-				{/* Gradient masks for fade effect */}
-				<div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-				<div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-
-				{/* Scrolling container */}
-				<motion.div
-					className="flex"
-					animate={{
-						x: [0, -280 * logos.length], // Updated to match new width
-					}}
-					transition={{
-						repeat: Number.POSITIVE_INFINITY,
-						repeatType: "loop",
-						ease: "linear",
-						duration: logos.length * 3, // 2 seconds per logo
-					}}
-					style={{ width: `${280 * renderedLogos.length}px` }}
-				>
-					{renderedLogos.map((logo, index) => {
-						const IconComponent = logo.icon;
-						return (
-							<div
-								key={`${logo.name}-${index}`}
-								className="flex items-center justify-center min-w-[280px] h-20 px-8 flex-shrink-0"
-							>
-								<div className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors duration-300">
-									<IconComponent className="h-6 w-6" />
-									<span className="font-medium text-2xl whitespace-nowrap">
-										{logo.name}
-									</span>
-								</div>
-							</div>
-						);
-					})}
-				</motion.div>
-			</motion.div>
+				<div className="mt-10 grid overflow-hidden rounded-lg border border-border sm:grid-cols-3">
+					{proofPoints.map((point) => (
+						<div
+							key={point}
+							className="border-b border-border px-5 py-4 text-sm font-medium text-foreground last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0"
+						>
+							{point}
+						</div>
+					))}
+				</div>
+			</div>
 		</motion.section>
 	);
 }

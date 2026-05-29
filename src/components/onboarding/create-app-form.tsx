@@ -1,10 +1,19 @@
 import { useUser } from "@clerk/nextjs";
 import { upload } from "@vercel/blob/client";
-import { ArrowLeft, Upload } from "lucide-react";
+import {
+	ArrowLeft,
+	CheckCircle2,
+	Loader2,
+	Upload,
+	XCircle,
+} from "lucide-react";
 import Link from "next/link";
 import type { ChangeEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { createAppWithOnboardingAction } from "@/actions/create-app-with-onboarding";
+import {
+	createAppWithOnboardingAction,
+	validateSlugAction,
+} from "@/actions/create-app-with-onboarding";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,6 +46,13 @@ type CreateAppData = {
 	emailNotifications: boolean;
 };
 
+type SlugAvailabilityStatus =
+	| "idle"
+	| "checking"
+	| "available"
+	| "unavailable"
+	| "error";
+
 const initialData: CreateAppData = {
 	appName: "",
 	appSlug: "",
@@ -47,11 +63,36 @@ const initialData: CreateAppData = {
 	emailNotifications: true,
 };
 
+function getSlugValidationError(slug: string) {
+	if (slug.length > 30) {
+		return "App slug must be less than 30 characters";
+	}
+
+	if (slug && !/^[a-z0-9-]+$/.test(slug)) {
+		return "Slug can only contain lowercase letters, numbers, and hyphens";
+	}
+
+	return null;
+}
+
+function isNextRedirectError(error: unknown) {
+	return (
+		typeof error === "object" &&
+		error !== null &&
+		"digest" in error &&
+		typeof error.digest === "string" &&
+		error.digest.startsWith("NEXT_REDIRECT")
+	);
+}
+
 export function CreateAppForm() {
 	const { user } = useUser();
 	const fileInputRef = useRef<HTMLInputElement>(null);
+	const slugCheckIdRef = useRef(0);
 	const [data, setData] = useState<CreateAppData>(initialData);
 	const [errors, setErrors] = useState<Record<string, string>>({});
+	const [slugAvailability, setSlugAvailability] =
+		useState<SlugAvailabilityStatus>("idle");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [submitError, setSubmitError] = useState<string | null>(null);
 	const [isUploadingLogo, setIsUploadingLogo] = useState(false);
@@ -150,11 +191,9 @@ export function CreateAppForm() {
 			nextErrors.appName = "App name must be less than 50 characters";
 		}
 
-		if (data.appSlug.length > 30) {
-			nextErrors.appSlug = "App slug must be less than 30 characters";
-		} else if (data.appSlug && !/^[a-z0-9-]+$/.test(data.appSlug)) {
-			nextErrors.appSlug =
-				"Slug can only contain lowercase letters, numbers, and hyphens";
+		const slugError = getSlugValidationError(data.appSlug);
+		if (slugError) {
+			nextErrors.appSlug = slugError;
 		}
 
 		if (data.appDescription.length > 200) {
@@ -165,12 +204,54 @@ export function CreateAppForm() {
 		setErrors(nextErrors);
 	}, [data.appName, data.appSlug, data.appDescription]);
 
+	useEffect(() => {
+		const slug = data.appSlug.trim();
+		const slugError = getSlugValidationError(slug);
+
+		if (!slug || slugError) {
+			slugCheckIdRef.current += 1;
+			setSlugAvailability("idle");
+			return;
+		}
+
+		const checkId = slugCheckIdRef.current + 1;
+		slugCheckIdRef.current = checkId;
+		setSlugAvailability("checking");
+
+		const timeoutId = window.setTimeout(async () => {
+			const result = await validateSlugAction(slug);
+
+			if (slugCheckIdRef.current !== checkId) {
+				return;
+			}
+
+			if (result.available) {
+				setSlugAvailability("available");
+				return;
+			}
+
+			const isTaken = result.error === "This slug is already taken";
+			setSlugAvailability(isTaken ? "unavailable" : "error");
+		}, 400);
+
+		return () => window.clearTimeout(timeoutId);
+	}, [data.appSlug]);
+
 	const canSubmit =
-		data.appName.trim() &&
-		data.appSlug.trim() &&
+		Boolean(data.appName.trim()) &&
+		Boolean(data.appSlug.trim()) &&
 		Object.keys(errors).length === 0 &&
+		slugAvailability === "available" &&
 		!isSubmitting &&
 		!isUploadingLogo;
+
+	const slugErrorMessage =
+		errors.appSlug ||
+		(slugAvailability === "unavailable"
+			? "This app slug is already taken"
+			: slugAvailability === "error"
+				? "Could not check slug availability. Try again."
+				: null);
 
 	const handleSubmit = async () => {
 		if (!canSubmit) {
@@ -191,9 +272,17 @@ export function CreateAppForm() {
 
 			const result = await createAppWithOnboardingAction(formData);
 			if (typeof result === "string") {
+				if (result === "This app slug is already taken") {
+					setErrors((current) => ({ ...current, appSlug: result }));
+					setSlugAvailability("unavailable");
+				}
 				setSubmitError(result);
 			}
 		} catch (error) {
+			if (isNextRedirectError(error)) {
+				return;
+			}
+
 			console.error("Error creating app:", error);
 			setSubmitError("An unexpected error occurred. Please try again.");
 		} finally {
@@ -271,20 +360,35 @@ export function CreateAppForm() {
 					<div className="space-y-2">
 						<Label htmlFor="app-slug">URL Slug</Label>
 						<div className="flex h-8">
-							<Input
-								id="app-slug"
-								value={data.appSlug}
-								onChange={(event) => handleSlugChange(event.target.value)}
-								className={`h-full rounded-r-none border-r-0 ${
-									errors.appSlug ? "border-destructive" : ""
-								}`}
-							/>
+							<div className="relative min-w-0 flex-1">
+								<Input
+									id="app-slug"
+									value={data.appSlug}
+									onChange={(event) => handleSlugChange(event.target.value)}
+									className={`h-full rounded-r-none border-r-0 pr-8 ${
+										slugErrorMessage ? "border-destructive" : ""
+									}`}
+								/>
+								<div className="pointer-events-none absolute inset-y-0 right-2 flex items-center">
+									{slugAvailability === "checking" && (
+										<Loader2 className="size-3.5 animate-spin text-muted-foreground" />
+									)}
+									{slugAvailability === "available" && (
+										<CheckCircle2 className="size-3.5 text-muted-foreground" />
+									)}
+									{(errors.appSlug ||
+										slugAvailability === "unavailable" ||
+										slugAvailability === "error") && (
+										<XCircle className="size-3.5 text-destructive" />
+									)}
+								</div>
+							</div>
 							<div className="flex h-full shrink-0 items-center rounded-r-lg border border-l-0 border-input bg-muted px-3 text-sm text-muted-foreground">
 								.roadwiseapp.com
 							</div>
 						</div>
-						{errors.appSlug && (
-							<p className="text-sm text-destructive">{errors.appSlug}</p>
+						{slugErrorMessage && (
+							<p className="text-sm text-destructive">{slugErrorMessage}</p>
 						)}
 					</div>
 

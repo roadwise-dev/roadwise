@@ -2,7 +2,8 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
-import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+import { redirect, unstable_rethrow } from "next/navigation";
 import { z } from "zod";
 import { db } from "../db/db";
 import { app } from "../db/schema";
@@ -74,8 +75,10 @@ export async function createAppAction(formData: FormData) {
 			avatarUrl: "",
 		});
 
+		revalidatePath("/dashboard", "layout");
 		return redirect(`/dashboard/${appSlug}`);
 	} catch (error) {
+		unstable_rethrow(error);
 		console.error("Error creating app:", error);
 		return "An unexpected error occurred. Please try again.";
 	}

@@ -71,7 +71,7 @@ export function GlobalAppCard({ app }: GlobalAppCardProps) {
 							{!app.isPublic && (
 								<Lock
 									className="size-4 shrink-0 text-muted-foreground"
-									title="Private"
+									aria-label="Private"
 								/>
 							)}
 						</div>

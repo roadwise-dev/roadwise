@@ -7,37 +7,9 @@ import { redirect, unstable_rethrow } from "next/navigation";
 import { z } from "zod";
 import { db } from "@/db/db";
 import { app, board } from "@/db/schema";
+import { createAppSchema } from "@/lib/validations";
 
 const DEFAULT_BOARD_NAMES = ["Requested", "In Progress", "Completed"];
-
-const createAppSchema = z.object({
-	// App details
-	appName: z
-		.string()
-		.min(1, "App name is required")
-		.max(50, "App name must be less than 50 characters")
-		.transform((val) => val.trim()),
-	appSlug: z
-		.string()
-		.min(1, "App slug is required")
-		.max(30, "App slug must be less than 30 characters")
-		.regex(
-			/^[a-z0-9-]+$/,
-			"App slug can only contain lowercase letters, numbers, and hyphens",
-		)
-		.transform((val) => val.trim()),
-	appDescription: z
-		.string()
-		.max(200, "Description must be less than 200 characters")
-		.transform((val) => val.trim())
-		.optional()
-		.default(""),
-	avatarUrl: z.string().optional().default(""),
-
-	// Settings
-	isPublic: z.boolean().default(true),
-	emailNotifications: z.boolean().default(true),
-});
 
 export async function createAppWithOnboardingAction(formData: FormData) {
 	try {

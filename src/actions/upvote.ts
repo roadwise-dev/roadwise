@@ -4,20 +4,7 @@ import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/db/db";
 import { upvote } from "@/db/schema";
-
-// Input validation schema
-const upvoteSchema = z.object({
-	email: z
-		.string()
-		.min(1, "Email is required")
-		.max(254, "Email is too long")
-		.email("Please enter a valid email address")
-		.transform((val) => val.trim().toLowerCase()),
-	featureId: z
-		.string()
-		.min(1, "Feature ID is required")
-		.transform((val) => val.trim()),
-});
+import { upvoteSchema } from "@/lib/validations";
 
 export async function upvoteWithEmail(_prevState: unknown, formData: FormData) {
 	try {

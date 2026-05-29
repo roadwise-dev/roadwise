@@ -187,3 +187,26 @@ export const subscribe = sqliteTable(
 		appIdIdx: index("subscribe_app_id_idx").on(table.appId),
 	}),
 );
+
+// Type Exports
+export type App = typeof app.$inferSelect;
+export type InsertApp = typeof app.$inferInsert;
+
+export type Board = typeof board.$inferSelect;
+export type InsertBoard = typeof board.$inferInsert;
+
+export type Feature = typeof feature.$inferSelect;
+export type InsertFeature = typeof feature.$inferInsert;
+
+export type Upvote = typeof upvote.$inferSelect;
+export type InsertUpvote = typeof upvote.$inferInsert;
+
+export type News = typeof news.$inferSelect;
+export type InsertNews = typeof news.$inferInsert;
+
+export type Comment = typeof comment.$inferSelect;
+export type InsertComment = typeof comment.$inferInsert;
+
+export type Subscribe = typeof subscribe.$inferSelect;
+export type InsertSubscribe = typeof subscribe.$inferInsert;
+

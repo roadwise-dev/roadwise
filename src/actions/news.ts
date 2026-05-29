@@ -7,46 +7,12 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { db } from "@/db/db";
 import { app, news } from "@/db/schema";
-
-const createNewsSchema = z.object({
-	title: z
-		.string()
-		.min(1, "Title is required")
-		.max(100, "Title must be less than 100 characters")
-		.transform((val) => val.trim()),
-	content: z
-		.string()
-		.min(1, "Content is required")
-		.max(5000, "Content must be less than 5000 characters")
-		.transform((val) => val.trim()),
-	image: z
-		.string()
-		.optional()
-		.or(z.literal(""))
-		.transform((val) => (val === "" ? undefined : val)),
-	tags: z
-		.string()
-		.transform((val) => {
-			if (!val.trim()) return [];
-			return val
-				.split(",")
-				.map((tag) => tag.trim())
-				.filter((tag) => tag.length > 0);
-		})
-		.default(() => []),
-});
-
-const updateNewsSchema = createNewsSchema.extend({
-	id: z.string().min(1, "News ID is required"),
-});
-
-const newsSlugSchema = z.object({
-	slug: z.string().min(1, "App slug is required"),
-});
-
-const deleteNewsFormSchema = newsSlugSchema.extend({
-	newsId: z.string().min(1, "News ID is required"),
-});
+import {
+	createNewsSchema,
+	deleteNewsFormSchema,
+	newsSlugSchema,
+	updateNewsSchema,
+} from "@/lib/validations";
 
 export async function createNewsAction(appSlug: string, formData: FormData) {
 	try {
@@ -110,9 +76,7 @@ export async function createNewsFromFormAction(formData: FormData) {
 	return createNewsAction(result.data.slug, formData);
 }
 
-export async function submitCreateNewsFormAction(formData: FormData) {
-	await createNewsFromFormAction(formData);
-}
+
 
 export async function updateNewsAction(appSlug: string, formData: FormData) {
 	try {
@@ -221,9 +185,7 @@ export async function deleteNewsFromFormAction(formData: FormData) {
 	return deleteNewsAction(result.data.slug, result.data.newsId);
 }
 
-export async function submitDeleteNewsFormAction(formData: FormData) {
-	await deleteNewsFromFormAction(formData);
-}
+
 
 export async function getNewsForApp(appSlug: string) {
 	try {
@@ -250,4 +212,12 @@ export async function getNewsForApp(appSlug: string) {
 		console.error("Error fetching news:", error);
 		return null;
 	}
+}
+
+export async function submitCreateNewsFormAction(formData: FormData) {
+	await createNewsFromFormAction(formData);
+}
+
+export async function submitDeleteNewsFormAction(formData: FormData) {
+	await deleteNewsFromFormAction(formData);
 }

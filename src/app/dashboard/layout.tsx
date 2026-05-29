@@ -1,8 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
-import { ClientSidebar } from "@/components/client-sidebar";
-import { SiteHeader } from "@/components/site-header";
+import { ClientSidebar } from "@/components/navigation/client-sidebar";
+import { SiteHeader } from "@/components/navigation/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { db } from "@/db/db";
 import { app } from "@/db/schema";

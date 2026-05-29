@@ -10,9 +10,9 @@ import {
 	Settings,
 } from "lucide-react";
 import { useMemo } from "react";
-import { NavApps } from "@/components/nav-apps";
-import { NavMain } from "@/components/nav-main";
-import { NavUser } from "@/components/nav-user";
+import { NavApps } from "@/components/navigation/nav-apps";
+import { NavMain } from "@/components/navigation/nav-main";
+import { NavUser } from "@/components/navigation/nav-user";
 import {
 	Sidebar,
 	SidebarContent,

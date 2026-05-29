@@ -7,28 +7,11 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { db } from "@/db/db";
 import { app, board } from "@/db/schema";
-
-const boardFormSchema = z.object({
-	slug: z.string().min(1, "App slug is required"),
-	name: z
-		.string()
-		.min(1, "Board name is required")
-		.max(60, "Board name must be less than 60 characters")
-		.transform((val) => val.trim()),
-	column: z.coerce
-		.number()
-		.int("Column must be a whole number")
-		.min(0, "Column must be zero or greater"),
-});
-
-const boardMutationSchema = boardFormSchema.extend({
-	boardId: z.string().min(1, "Board ID is required"),
-});
-
-const deleteBoardSchema = z.object({
-	slug: z.string().min(1, "App slug is required"),
-	boardId: z.string().min(1, "Board ID is required"),
-});
+import {
+	boardFormSchema,
+	boardMutationSchema,
+	deleteBoardSchema,
+} from "@/lib/validations";
 
 async function getOwnedApp(slug: string) {
 	const { userId } = await auth();
@@ -93,9 +76,7 @@ export async function createBoardAction(formData: FormData) {
 	}
 }
 
-export async function submitCreateBoardFormAction(formData: FormData) {
-	await createBoardAction(formData);
-}
+
 
 export async function updateBoardAction(formData: FormData) {
 	try {
@@ -143,9 +124,7 @@ export async function updateBoardAction(formData: FormData) {
 	}
 }
 
-export async function submitUpdateBoardFormAction(formData: FormData) {
-	await updateBoardAction(formData);
-}
+
 
 export async function deleteBoardAction(formData: FormData) {
 	try {
@@ -181,6 +160,16 @@ export async function deleteBoardAction(formData: FormData) {
 	}
 }
 
+export async function submitCreateBoardFormAction(formData: FormData) {
+	await createBoardAction(formData);
+}
+
+export async function submitUpdateBoardFormAction(formData: FormData) {
+	await updateBoardAction(formData);
+}
+
 export async function submitDeleteBoardFormAction(formData: FormData) {
 	await deleteBoardAction(formData);
 }
+
+

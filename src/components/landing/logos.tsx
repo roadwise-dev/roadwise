@@ -1,7 +1,7 @@
 "use client";
 
+import { BarChart3, Inbox, RefreshCcw } from "lucide-react";
 import { motion } from "motion/react";
-import { Inbox, BarChart3, RefreshCcw } from "lucide-react";
 
 const proofPoints = [
 	{

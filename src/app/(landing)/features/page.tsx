@@ -1,11 +1,11 @@
 import {
 	BarChart3,
 	Bell,
+	ChevronUp,
 	Globe,
 	MessageSquare,
 	Moon,
 	Users,
-	ChevronUp,
 } from "lucide-react";
 import type { Metadata } from "next";
 import { CallToAction } from "@/components/landing/cta";

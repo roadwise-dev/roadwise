@@ -7,6 +7,7 @@ import {
 	submitUpdateAppDetailsFormAction,
 	submitUpdateAppVisibilityFormAction,
 } from "@/actions/app-settings";
+import { AppAvatarUpload } from "@/components/dashboard/app-avatar-upload";
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -129,12 +130,12 @@ export default async function SettingsPage({ params }: PageProps) {
 							/>
 						</div>
 						<div className="space-y-2">
-							<Label htmlFor="avatarUrl">Avatar URL</Label>
-							<Input
-								id="avatarUrl"
-								name="avatarUrl"
-								defaultValue={dbApp.avatarUrl}
-								maxLength={2048}
+							<Label>App Icon</Label>
+							<AppAvatarUpload
+								slug={dbApp.slug}
+								currentAvatarUrl={dbApp.avatarUrl}
+								appName={dbApp.name}
+								variant="settings"
 							/>
 						</div>
 						<Button type="submit">Save Changes</Button>

@@ -1,15 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import {
-	Send,
 	ChevronUp,
 	Layout,
 	Megaphone,
 	Search,
+	Send,
 	Sparkles,
 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const steps = [

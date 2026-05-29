@@ -203,3 +203,34 @@ export async function deleteAppAction(formData: FormData) {
 export async function submitDeleteAppFormAction(formData: FormData) {
 	await deleteAppAction(formData);
 }
+
+export async function updateAppAvatarAction(slug: string, avatarUrl: string) {
+	try {
+		const { userId } = await auth();
+		if (!userId) {
+			return { error: "Unauthorized" };
+		}
+
+		const [existingApp] = await db.select().from(app).where(eq(app.slug, slug));
+		if (!existingApp) {
+			return { error: "App not found" };
+		}
+
+		if (existingApp.userId !== userId) {
+			return {
+				error: "Unauthorized: You don't have permission to modify this app",
+			};
+		}
+
+		await db.update(app).set({ avatarUrl }).where(eq(app.slug, slug));
+
+		revalidatePath(`/dashboard/${slug}`);
+		revalidatePath(`/dashboard/${slug}/settings`);
+		revalidatePath(`/app/${slug}`);
+
+		return { success: true };
+	} catch (error) {
+		console.error("Error updating app avatar:", error);
+		return { error: "An unexpected error occurred. Please try again." };
+	}
+}

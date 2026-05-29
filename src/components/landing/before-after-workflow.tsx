@@ -1,13 +1,13 @@
 "use client";
 
-import { motion } from "motion/react";
 import {
-	MessageSquare,
-	Mail,
-	FileText,
-	ChevronUp,
 	CheckCircle2,
+	ChevronUp,
+	FileText,
+	Mail,
+	MessageSquare,
 } from "lucide-react";
+import { motion } from "motion/react";
 
 function ChaosVisual() {
 	return (

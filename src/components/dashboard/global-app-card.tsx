@@ -1,21 +1,14 @@
 import {
 	ExternalLink,
 	Heart,
+	Lock,
 	MessageSquare,
 	Newspaper,
 	Users,
 } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export type AppOverviewCardData = {
 	id: string;
@@ -60,57 +53,58 @@ export function GlobalAppCard({ app }: GlobalAppCardProps) {
 	];
 
 	return (
-		<Card className="transition-shadow hover:shadow-md">
+		<Card className="relative gap-3 overflow-hidden transition-all hover:shadow-md hover:border-primary/50 group">
+			<Link href={`/dashboard/${app.slug}`} className="absolute inset-0 z-0">
+				<span className="sr-only">Open dashboard for {app.name}</span>
+			</Link>
 			<CardHeader className="gap-3">
-				<div className="flex items-start justify-between gap-3">
-					<div className="flex min-w-0 items-center gap-3">
-						<Avatar className="size-11 rounded-lg">
-							<AvatarImage src={app.avatarUrl || ""} alt={app.name} />
-							<AvatarFallback className="rounded-lg text-base font-semibold">
-								{app.name.charAt(0).toUpperCase()}
-							</AvatarFallback>
-						</Avatar>
-						<div className="min-w-0">
+				<div className="flex min-w-0 items-start gap-3">
+					<Avatar className="size-11 shrink-0 rounded-lg">
+						<AvatarImage src={app.avatarUrl || ""} alt={app.name} />
+						<AvatarFallback className="rounded-lg text-base font-semibold">
+							{app.name.charAt(0).toUpperCase()}
+						</AvatarFallback>
+					</Avatar>
+					<div className="min-w-0 flex-1">
+						<div className="flex items-center gap-2">
 							<CardTitle className="truncate text-lg">{app.name}</CardTitle>
-							<p className="truncate text-sm text-muted-foreground">
-								{app.domain}
-							</p>
+							{!app.isPublic && (
+								<Lock
+									className="size-4 shrink-0 text-muted-foreground"
+									title="Private"
+								/>
+							)}
 						</div>
+						<Link
+							href={`/app/${app.slug}`}
+							className="relative z-10 flex min-w-0 items-center gap-1 text-sm text-muted-foreground hover:text-primary hover:underline"
+							title="View live"
+						>
+							<span className="truncate">{app.domain}</span>
+							<ExternalLink className="size-3 shrink-0" />
+						</Link>
 					</div>
-					<Badge variant={app.isPublic ? "default" : "secondary"}>
-						{app.isPublic ? "Public" : "Private"}
-					</Badge>
 				</div>
-				<p className="line-clamp-2 min-h-10 text-sm text-muted-foreground">
+				<p className="line-clamp-2 text-sm text-muted-foreground mt-1">
 					{app.description || "No description yet."}
 				</p>
 			</CardHeader>
 			<CardContent>
-				<div className="grid grid-cols-2 gap-3">
+				<div className="flex flex-wrap items-center gap-5 text-sm">
 					{metrics.map((metric) => (
-						<div key={metric.label} className="rounded-lg border p-3">
-							<div className="flex items-center gap-2 text-xs text-muted-foreground">
-								<metric.icon className="size-3.5" />
-								{metric.label}
-							</div>
-							<div className="mt-1 text-lg font-semibold">
+						<div
+							key={metric.label}
+							className="flex items-center gap-1.5 text-muted-foreground"
+							title={metric.label}
+						>
+							<metric.icon className="size-4" />
+							<span className="font-medium text-foreground">
 								{metric.value.toLocaleString()}
-							</div>
+							</span>
 						</div>
 					))}
 				</div>
 			</CardContent>
-			<CardFooter className="justify-between gap-2">
-				<Button asChild>
-					<Link href={`/dashboard/${app.slug}`}>Open dashboard</Link>
-				</Button>
-				<Button asChild variant="ghost">
-					<Link href={`/app/${app.slug}`}>
-						<ExternalLink className="size-4" />
-						View live
-					</Link>
-				</Button>
-			</CardFooter>
 		</Card>
 	);
 }

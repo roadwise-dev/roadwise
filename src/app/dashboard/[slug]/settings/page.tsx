@@ -61,41 +61,16 @@ export default async function SettingsPage({ params }: PageProps) {
 			<Card>
 				<CardHeader>
 					<CardTitle>App Information</CardTitle>
-					<CardDescription>Basic information about your app</CardDescription>
-				</CardHeader>
-				<CardContent className="space-y-4">
-					<div className="grid grid-cols-2 gap-4">
-						<div>
-							<Label className="text-sm font-medium">App Name</Label>
-							<p className="text-sm text-muted-foreground">{dbApp.name}</p>
-						</div>
-						<div>
-							<Label className="text-sm font-medium">App Slug</Label>
-							<p className="text-sm text-muted-foreground">{dbApp.slug}</p>
-						</div>
-					</div>
-					<div>
-						<Label className="text-sm font-medium">Description</Label>
-						<p className="text-sm text-muted-foreground">
-							{dbApp.description || "No description provided"}
-						</p>
-					</div>
-					<div>
-						<Label className="text-sm font-medium">Domain</Label>
-						<p className="text-sm text-muted-foreground">{dbApp.domain}</p>
-					</div>
-				</CardContent>
-			</Card>
-
-			<Card>
-				<CardHeader>
-					<CardTitle>Edit App Details</CardTitle>
 					<CardDescription>
-						Update the information shown in your dashboard and public portal.
+						Update the basic information shown in your dashboard and public portal.
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<form action={submitUpdateAppDetailsFormAction} className="space-y-4">
+					<form 
+						key={`${dbApp.name}-${dbApp.domain}-${dbApp.description}`}
+						action={submitUpdateAppDetailsFormAction} 
+						className="space-y-4"
+					>
 						<input type="hidden" name="slug" value={dbApp.slug} />
 						<div className="grid gap-4 md:grid-cols-2">
 							<div className="space-y-2">
@@ -193,9 +168,9 @@ export default async function SettingsPage({ params }: PageProps) {
 				</CardContent>
 			</Card>
 
-			<Card className="border-destructive/50 shadow-destructive/20">
+			<Card className="ring-1 ring-destructive shadow-sm">
 				<CardHeader>
-					<CardTitle className="text-destructive">Danger Zone</CardTitle>
+					<CardTitle>Danger Zone</CardTitle>
 					<CardDescription>
 						Irreversible and destructive actions
 					</CardDescription>
@@ -211,7 +186,11 @@ export default async function SettingsPage({ params }: PageProps) {
 						</div>
 						<AlertDialog>
 							<AlertDialogTrigger asChild>
-								<Button variant="destructive" size="sm" className="text-white">
+								<Button
+									variant="destructive"
+									size="sm"
+									className="bg-destructive text-white hover:bg-destructive/90"
+								>
 									<Trash2 className="w-4 h-4 mr-2" />
 									Delete App
 								</Button>

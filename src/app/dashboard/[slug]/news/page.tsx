@@ -2,7 +2,10 @@ import { auth } from "@clerk/nextjs/server";
 import { count, desc, eq } from "drizzle-orm";
 import { Calendar, Mail, Trash2, Users } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
-import { createNewsAction, deleteNewsAction } from "@/actions/news";
+import {
+	submitCreateNewsFormAction,
+	submitDeleteNewsFormAction,
+} from "@/actions/news";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -42,11 +45,6 @@ async function DeleteNewsForm({
 	newsId: string;
 	title: string;
 }) {
-	async function deleteNews() {
-		"use server";
-		return deleteNewsAction(slug, newsId);
-	}
-
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger asChild>
@@ -64,11 +62,9 @@ async function DeleteNewsForm({
 				</AlertDialogHeader>
 				<AlertDialogFooter>
 					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<form
-						action={async () => {
-							await deleteNews();
-						}}
-					>
+					<form action={submitDeleteNewsFormAction}>
+						<input type="hidden" name="slug" value={slug} />
+						<input type="hidden" name="newsId" value={newsId} />
 						<AlertDialogAction
 							type="submit"
 							className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
@@ -122,11 +118,6 @@ export default async function NewsManagementPage({ params }: PageProps) {
 		.where(eq(subscribe.appId, dbApp.id))
 		.limit(50); // Limit to 50 most recent subscribers
 
-	async function createNews(formData: FormData) {
-		"use server";
-		return createNewsAction(slug, formData);
-	}
-
 	return (
 		<div className="space-y-6">
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -138,12 +129,8 @@ export default async function NewsManagementPage({ params }: PageProps) {
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<form
-							action={async (formData) => {
-								await createNews(formData);
-							}}
-							className="space-y-4"
-						>
+						<form action={submitCreateNewsFormAction} className="space-y-4">
+							<input type="hidden" name="slug" value={slug} />
 							<div className="space-y-2">
 								<Label htmlFor="title">Title</Label>
 								<Input

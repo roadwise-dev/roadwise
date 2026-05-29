@@ -40,6 +40,14 @@ const updateNewsSchema = createNewsSchema.extend({
 	id: z.string().min(1, "News ID is required"),
 });
 
+const newsSlugSchema = z.object({
+	slug: z.string().min(1, "App slug is required"),
+});
+
+const deleteNewsFormSchema = newsSlugSchema.extend({
+	newsId: z.string().min(1, "News ID is required"),
+});
+
 export async function createNewsAction(appSlug: string, formData: FormData) {
 	try {
 		const { userId } = await auth();
@@ -87,6 +95,23 @@ export async function createNewsAction(appSlug: string, formData: FormData) {
 		console.error("Error creating news:", error);
 		return "An unexpected error occurred. Please try again.";
 	}
+}
+
+export async function createNewsFromFormAction(formData: FormData) {
+	const result = newsSlugSchema.safeParse({
+		slug: formData.get("slug"),
+	});
+
+	if (!result.success) {
+		const errors = result.error.issues.map((issue) => issue.message).join(", ");
+		return `Validation error: ${errors}`;
+	}
+
+	return createNewsAction(result.data.slug, formData);
+}
+
+export async function submitCreateNewsFormAction(formData: FormData) {
+	await createNewsFromFormAction(formData);
 }
 
 export async function updateNewsAction(appSlug: string, formData: FormData) {
@@ -180,6 +205,24 @@ export async function deleteNewsAction(appSlug: string, newsId: string) {
 		console.error("Error deleting news:", error);
 		return "An unexpected error occurred. Please try again.";
 	}
+}
+
+export async function deleteNewsFromFormAction(formData: FormData) {
+	const result = deleteNewsFormSchema.safeParse({
+		slug: formData.get("slug"),
+		newsId: formData.get("newsId"),
+	});
+
+	if (!result.success) {
+		const errors = result.error.issues.map((issue) => issue.message).join(", ");
+		return `Validation error: ${errors}`;
+	}
+
+	return deleteNewsAction(result.data.slug, result.data.newsId);
+}
+
+export async function submitDeleteNewsFormAction(formData: FormData) {
+	await deleteNewsFromFormAction(formData);
 }
 
 export async function getNewsForApp(appSlug: string) {

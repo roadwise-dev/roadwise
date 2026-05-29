@@ -3,12 +3,12 @@ import { eq } from "drizzle-orm";
 import { Eye, EyeOff, Trash2 } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
 import {
-	deleteAppAction,
-	updateAppVisibilityAction,
+	submitDeleteAppFormAction,
+	submitUpdateAppDetailsFormAction,
+	submitUpdateAppVisibilityFormAction,
 } from "@/actions/app-settings";
 import {
 	AlertDialog,
-	AlertDialogAction,
 	AlertDialogCancel,
 	AlertDialogContent,
 	AlertDialogDescription,
@@ -26,7 +26,9 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { db } from "@/db/db";
 import { app } from "@/db/schema";
 
@@ -86,6 +88,62 @@ export default async function SettingsPage({ params }: PageProps) {
 
 			<Card>
 				<CardHeader>
+					<CardTitle>Edit App Details</CardTitle>
+					<CardDescription>
+						Update the information shown in your dashboard and public portal.
+					</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<form action={submitUpdateAppDetailsFormAction} className="space-y-4">
+						<input type="hidden" name="slug" value={dbApp.slug} />
+						<div className="grid gap-4 md:grid-cols-2">
+							<div className="space-y-2">
+								<Label htmlFor="name">App Name</Label>
+								<Input
+									id="name"
+									name="name"
+									defaultValue={dbApp.name}
+									required
+									maxLength={80}
+								/>
+							</div>
+							<div className="space-y-2">
+								<Label htmlFor="domain">Domain</Label>
+								<Input
+									id="domain"
+									name="domain"
+									defaultValue={dbApp.domain}
+									required
+									maxLength={255}
+								/>
+							</div>
+						</div>
+						<div className="space-y-2">
+							<Label htmlFor="description">Description</Label>
+							<Textarea
+								id="description"
+								name="description"
+								defaultValue={dbApp.description || ""}
+								maxLength={240}
+								rows={3}
+							/>
+						</div>
+						<div className="space-y-2">
+							<Label htmlFor="avatarUrl">Avatar URL</Label>
+							<Input
+								id="avatarUrl"
+								name="avatarUrl"
+								defaultValue={dbApp.avatarUrl}
+								maxLength={2048}
+							/>
+						</div>
+						<Button type="submit">Save Changes</Button>
+					</form>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader>
 					<CardTitle>Visibility Settings</CardTitle>
 					<CardDescription>Control who can access your app</CardDescription>
 				</CardHeader>
@@ -119,11 +177,7 @@ export default async function SettingsPage({ params }: PageProps) {
 									: "Your app is private and only accessible to you"}
 							</p>
 						</div>
-						<form
-							action={async (formData) => {
-								await updateAppVisibilityAction(formData);
-							}}
-						>
+						<form action={submitUpdateAppVisibilityFormAction}>
 							<input type="hidden" name="slug" value={dbApp.slug} />
 							<input
 								type="hidden"
@@ -178,19 +232,12 @@ export default async function SettingsPage({ params }: PageProps) {
 								</AlertDialogHeader>
 								<AlertDialogFooter>
 									<AlertDialogCancel>Cancel</AlertDialogCancel>
-									<AlertDialogAction asChild>
-										<form
-											action={async (formData) => {
-												await deleteAppAction(formData);
-											}}
-											className="inline"
-										>
-											<input type="hidden" name="slug" value={dbApp.slug} />
-											<Button type="submit" variant="destructive">
-												Yes, delete app permanently
-											</Button>
-										</form>
-									</AlertDialogAction>
+									<form action={submitDeleteAppFormAction} className="inline">
+										<input type="hidden" name="slug" value={dbApp.slug} />
+										<Button type="submit" variant="destructive">
+											Yes, delete app permanently
+										</Button>
+									</form>
 								</AlertDialogFooter>
 							</AlertDialogContent>
 						</AlertDialog>

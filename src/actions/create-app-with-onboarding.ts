@@ -41,6 +41,7 @@ const createAppSchema = z.object({
 
 export async function createAppWithOnboardingAction(formData: FormData) {
 	try {
+		// Canonical create-app action used by /dashboard/create.
 		// Authenticate user
 		const { userId } = await auth();
 		if (!userId) {

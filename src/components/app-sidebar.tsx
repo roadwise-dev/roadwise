@@ -1,7 +1,6 @@
 "use client";
 
 import {
-	BarChart3,
 	Grid3X3,
 	Home,
 	LayoutDashboard,
@@ -54,11 +53,6 @@ export function AppSidebar({
 					title: "Overview",
 					url: `/dashboard/${currentApp.slug}`,
 					icon: Home,
-				},
-				{
-					title: "Analytics",
-					url: `/dashboard/${currentApp.slug}/analytics`,
-					icon: BarChart3,
 				},
 				{
 					title: "Boards",

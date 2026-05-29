@@ -2,12 +2,12 @@ import { auth } from "@clerk/nextjs/server";
 import { and, count, desc, eq, gte, sql } from "drizzle-orm";
 import {
 	Activity,
-	AlertCircle,
 	Calendar,
 	ExternalLink,
 	Eye,
 	EyeOff,
 	Heart,
+	ListChecks,
 	MessageSquare,
 	TrendingUp,
 	Users,
@@ -101,6 +101,7 @@ export default async function AppOverviewPage({ params }: PageProps) {
 	// Recent activity
 	const recentActivity = await db
 		.select({
+			id: upvote.id,
 			type: sql<string>`'upvote'`,
 			content: feature.title,
 			email: upvote.email,
@@ -125,15 +126,6 @@ export default async function AppOverviewPage({ params }: PageProps) {
 		.groupBy(upvote.email)
 		.orderBy(desc(count()))
 		.limit(5);
-
-	const upvoteGrowth =
-		recentUpvotes.count > 0
-			? Math.round(
-					(recentUpvotes.count /
-						Math.max(totalUpvotes.count - recentUpvotes.count, 1)) *
-						100,
-				)
-			: 0;
 
 	return (
 		<div className="space-y-6">
@@ -209,15 +201,13 @@ export default async function AppOverviewPage({ params }: PageProps) {
 							</div>
 						</div>
 						<div className="text-center">
-							<div className="text-2xl font-bold text-green-600">
-								+{upvoteGrowth}%
-							</div>
-							<div className="text-xs text-muted-foreground">Growth</div>
+							<div className="text-2xl font-bold">{totalUpvotes.count}</div>
+							<div className="text-xs text-muted-foreground">Total Upvotes</div>
 						</div>
 					</div>
 					{topFeatures.length > 0 && (
 						<div className="mt-4 pt-4 border-t">
-							<h4 className="text-sm font-medium mb-2">🔥 Top Requested</h4>
+							<h4 className="text-sm font-medium mb-2">Top requested</h4>
 							<div className="space-y-1">
 								{topFeatures.slice(0, 2).map((feature) => (
 									<div
@@ -241,41 +231,49 @@ export default async function AppOverviewPage({ params }: PageProps) {
 				<Card>
 					<CardHeader>
 						<CardTitle className="flex items-center gap-2">
-							<AlertCircle className="w-5 h-5" />
-							Action Items
+							<ListChecks className="w-5 h-5" />
+							Suggested next steps
 						</CardTitle>
-						<CardDescription>Things that need your attention</CardDescription>
+						<CardDescription>
+							Useful follow-ups based on current app activity
+						</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<div className="space-y-3">
 							{topFeatures.length > 0 && (
-								<div className="flex items-start gap-3 p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg">
-									<MessageSquare className="w-4 h-4 mt-0.5 text-blue-600" />
+								<div className="flex items-start gap-3 rounded-lg border p-3">
+									<MessageSquare className="w-4 h-4 mt-0.5 text-muted-foreground" />
 									<div className="flex-1">
 										<p className="text-sm font-medium">
-											High-priority feature request
+											Most requested feature
 										</p>
 										<p className="text-xs text-muted-foreground">
 											&quot;{topFeatures[0].title}&quot; has{" "}
-											{topFeatures[0].upvotes} upvotes - consider prioritizing
+											{topFeatures[0].upvotes} upvotes.
 										</p>
 									</div>
 									<Button size="sm" variant="outline" asChild>
-										<Link href={`/dashboard/${slug}/feedback`}>Review</Link>
+										<Link href={`/dashboard/${slug}/feedback`}>
+											View feedback
+										</Link>
 									</Button>
 								</div>
 							)}
 							{newsCount.count === 0 && (
-								<div className="flex items-start gap-3 p-3 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg">
-									<Calendar className="w-4 h-4 mt-0.5 text-yellow-600" />
+								<div className="flex items-start gap-3 rounded-lg border p-3">
+									<Calendar className="w-4 h-4 mt-0.5 text-muted-foreground" />
 									<div className="flex-1">
-										<p className="text-sm font-medium">No news posts yet</p>
+										<p className="text-sm font-medium">
+											Publish your first update
+										</p>
 										<p className="text-xs text-muted-foreground">
-											Keep your users engaged with updates and announcements
+											Share product changes with subscribers.
 										</p>
 									</div>
 									<Button size="sm" variant="outline" asChild>
-										<Link href={`/dashboard/${slug}/news`}>Create Post</Link>
+										<Link href={`/dashboard/${slug}/news`}>
+											Create news post
+										</Link>
 									</Button>
 								</div>
 							)}
@@ -300,8 +298,11 @@ export default async function AppOverviewPage({ params }: PageProps) {
 					<CardContent>
 						{recentActivity.length > 0 ? (
 							<div className="space-y-3">
-								{recentActivity.map((activity, i) => (
-									<div key={i} className="flex items-start gap-3 text-sm">
+								{recentActivity.map((activity) => (
+									<div
+										key={activity.id}
+										className="flex items-start gap-3 text-sm"
+									>
 										<Heart className="w-4 h-4 mt-0.5 text-red-500" />
 										<div className="flex-1">
 											<p>

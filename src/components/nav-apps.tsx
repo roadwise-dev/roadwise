@@ -1,6 +1,6 @@
 "use client";
 
-import { Building2, ChevronsUpDown, Plus } from "lucide-react";
+import { Building2, ChevronsUpDown, LayoutGrid, Plus } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -41,9 +41,9 @@ export function NavApps({ apps, currentApp }: NavAppsProps) {
 	// Default to showing "All Apps" when no current app
 	const activeApp = currentApp || {
 		id: "all",
-		name: "All Apps",
+		name: apps.length === 0 ? "Workspace" : "All Apps",
 		slug: "",
-		description: "Manage all your apps",
+		description: apps.length === 0 ? "No apps yet" : "Workspace overview",
 		avatarUrl: null,
 	};
 
@@ -65,8 +65,10 @@ export function NavApps({ apps, currentApp }: NavAppsProps) {
 								size="lg"
 								className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 							>
-								<div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-									{activeApp.avatarUrl ? (
+								<div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+									{activeApp.id === "all" ? (
+										<LayoutGrid className="size-4" />
+									) : activeApp.avatarUrl ? (
 										<Avatar className="size-8">
 											<AvatarImage
 												src={activeApp.avatarUrl}
@@ -84,7 +86,7 @@ export function NavApps({ apps, currentApp }: NavAppsProps) {
 									<span className="truncate font-medium">{activeApp.name}</span>
 									<span className="truncate text-xs">
 										{activeApp.id === "all"
-											? `${apps.length} apps`
+											? activeApp.description
 											: activeApp.description || "Roadwise App"}
 									</span>
 								</div>
@@ -110,14 +112,15 @@ export function NavApps({ apps, currentApp }: NavAppsProps) {
 										id: "all",
 										name: "All Apps",
 										slug: "",
-										description: "Manage all your apps",
+										description:
+											apps.length === 0 ? "No apps yet" : `${apps.length} apps`,
 										avatarUrl: null,
 									})
 								}
 								className="gap-2 p-2"
 							>
 								<div className="flex size-6 items-center justify-center rounded-md border">
-									<Building2 className="size-3.5 shrink-0" />
+									<LayoutGrid className="size-3.5 shrink-0" />
 								</div>
 								All Apps
 							</DropdownMenuItem>

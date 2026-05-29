@@ -2,14 +2,14 @@
 
 import {
 	BarChart3,
-	Building,
 	Grid3X3,
 	Home,
+	LayoutDashboard,
 	MessageSquare,
 	Newspaper,
+	PlusCircle,
 	Settings,
 } from "lucide-react";
-import Link from "next/link";
 import { useMemo } from "react";
 import { NavApps } from "@/components/nav-apps";
 import { NavMain } from "@/components/nav-main";
@@ -19,11 +19,7 @@ import {
 	SidebarContent,
 	SidebarFooter,
 	SidebarHeader,
-	SidebarMenu,
-	SidebarMenuButton,
-	SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import Logo from "./svg/logo";
 
 interface App {
 	id: string;
@@ -89,9 +85,14 @@ export function AppSidebar({
 			// Global navigation
 			return [
 				{
-					title: "All Apps",
+					title: "Overview",
 					url: "/dashboard",
-					icon: Building,
+					icon: LayoutDashboard,
+				},
+				{
+					title: "Create App",
+					url: "/dashboard/create",
+					icon: PlusCircle,
 				},
 			];
 		}

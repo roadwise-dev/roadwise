@@ -7,6 +7,8 @@ import { z } from "zod";
 import { db } from "@/db/db";
 import { app, board } from "@/db/schema";
 
+const DEFAULT_BOARD_NAMES = ["Requested", "In Progress", "Completed"];
+
 const createAppSchema = z.object({
 	// App details
 	appName: z
@@ -31,10 +33,6 @@ const createAppSchema = z.object({
 		.default(""),
 	avatarUrl: z.string().optional().default(""),
 
-	// Board configuration
-	template: z.enum(["simple", "kanban", "product", "custom"]),
-	customBoards: z.array(z.string()).optional().default([]),
-
 	// Settings
 	isPublic: z.boolean().default(true),
 	emailNotifications: z.boolean().default(true),
@@ -54,10 +52,6 @@ export async function createAppWithOnboardingAction(formData: FormData) {
 			appSlug: formData.get("appSlug") as string,
 			appDescription: formData.get("appDescription") as string,
 			avatarUrl: formData.get("avatarUrl") as string,
-			template: formData.get("template") as string,
-			customBoards: JSON.parse(
-				(formData.get("customBoards") as string) || "[]",
-			),
 			isPublic: formData.get("isPublic") === "true",
 			emailNotifications: formData.get("emailNotifications") === "true",
 		};
@@ -75,8 +69,6 @@ export async function createAppWithOnboardingAction(formData: FormData) {
 			appSlug,
 			appDescription,
 			avatarUrl,
-			template,
-			customBoards,
 			isPublic,
 			emailNotifications,
 		} = result.data;
@@ -107,33 +99,19 @@ export async function createAppWithOnboardingAction(formData: FormData) {
 			})
 			.returning();
 
-		// Create boards based on template
-		const boardsToCreate = getBoardsForTemplate(template, customBoards);
-		if (boardsToCreate.length > 0) {
-			await db.insert(board).values(
-				boardsToCreate.map((boardName, index) => ({
-					appId: newApp.id,
-					name: boardName,
-					column: index + 1,
-				})),
-			);
-		}
+		await db.insert(board).values(
+			DEFAULT_BOARD_NAMES.map((boardName, index) => ({
+				appId: newApp.id,
+				name: boardName,
+				column: index + 1,
+			})),
+		);
 
 		return redirect(`/dashboard/${appSlug}`);
 	} catch (error) {
 		console.error("Error creating app:", error);
 		return "An unexpected error occurred. Please try again.";
 	}
-}
-
-function getBoardsForTemplate(template: string, customBoards?: string[]) {
-	const templates = {
-		simple: ["Requested", "In Progress", "Completed"],
-		kanban: ["Backlog", "To Do", "In Progress", "Done"],
-		product: ["Ideas", "Planned", "In Development", "Released"],
-		custom: customBoards?.filter((board) => board.trim()) || [],
-	};
-	return templates[template as keyof typeof templates] || [];
 }
 
 // Helper action for real-time slug validation

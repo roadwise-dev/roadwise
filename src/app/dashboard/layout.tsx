@@ -26,7 +26,9 @@ export default async function DashboardLayout({
 			<ClientSidebar apps={apps} />
 			<SidebarInset>
 				<SiteHeader apps={apps} />
-				<main className="flex-1 overflow-auto p-4 lg:p-6">{children}</main>
+				<main className="min-h-0 flex-1 overflow-auto p-4 lg:p-6">
+					{children}
+				</main>
 			</SidebarInset>
 		</SidebarProvider>
 	);

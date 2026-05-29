@@ -3,45 +3,48 @@
 import { motion } from "motion/react";
 import { Features } from "@/components/blocks/features-8";
 import { HowItWorks } from "@/components/how-it-works";
+import { BeforeAfterWorkflow } from "@/components/landing/before-after-workflow";
 import { CallToAction } from "@/components/landing/cta";
 import Hero from "@/components/landing/hero";
 import Logos from "@/components/landing/logos";
 
 export default function HomePage() {
 	const sections = [
-		{ component: <Hero />, delay: 0 },
-		{ component: <Logos />, delay: 0.1 },
-		{ component: <HowItWorks />, delay: 0.2 },
-		{ component: <Features />, delay: 0.3 },
+		{ id: "hero", component: <Hero />, delay: 0 },
+		{ id: "narrative", component: <Logos />, delay: 0.1 },
+		{ id: "before-after", component: <BeforeAfterWorkflow />, delay: 0.15 },
+		{ id: "workflow", component: <HowItWorks />, delay: 0.2 },
+		{ id: "features", component: <Features />, delay: 0.25 },
 		{
+			id: "cta",
 			component: (
 				<CallToAction
-					title="Ready to get started?"
-					description="Join thousands of product teams using Roadwise to build better products."
+					title="Start collecting better feedback"
+					description="Create a Roadwise board for your product and give users a clear place to request, vote, and follow progress."
 					buttons={[
 						{
-							text: "Sign up for free",
+							text: "Start for free",
 							href: "/signup",
 							variant: "secondary",
 						},
 					]}
 				/>
 			),
-			delay: 0.4,
+			delay: 0.3,
 		},
 	];
 
 	return (
 		<main className="flex flex-col gap-16 sm:gap-30">
-			{sections.map((section, index) => (
+			{sections.map((section) => (
 				<motion.div
-					key={index}
+					key={section.id}
 					initial={{ opacity: 0, y: 40 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true, margin: "-100px" }}
 					transition={{
-						duration: 0.6,
-						delay: section.delay,
+						duration: 0.5,
+						delay: section.delay / 2,
 						ease: "easeOut",
 					}}
 				>

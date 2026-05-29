@@ -8,7 +8,7 @@ export default function CreateAppButton() {
 	const router = useRouter();
 
 	const handleCreateApp = () => {
-		router.push("/dashboard/create?step=app");
+		router.push("/dashboard/create");
 	};
 
 	return (

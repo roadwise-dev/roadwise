@@ -33,7 +33,7 @@ export default function PricingPage() {
 								Standard
 							</h3>
 							<p className="mt-2 text-sm text-muted-foreground">
-								Perfect for indie developers starting out.
+								Perfect for open-source projects starting out.
 							</p>
 						</div>
 						<div className="mb-8 flex items-baseline">
@@ -46,8 +46,8 @@ export default function PricingPage() {
 								"Up to 3 apps",
 								"Unlimited feedback submissions",
 								"Unlimited news updates",
-								"Basic analytics dashboard",
-								"Email support",
+								"REST API access",
+								"Community support",
 							].map((feature, i) => (
 								<li key={i} className="flex items-start gap-3 text-sm">
 									<Check className="size-5 shrink-0 text-foreground" />
@@ -75,7 +75,7 @@ export default function PricingPage() {
 								Pro
 							</h3>
 							<p className="mt-2 text-sm text-background/70">
-								For teams serious about user-driven development.
+								For scale-ups serious about API-driven feedback.
 							</p>
 						</div>
 						<div className="mb-8 flex items-baseline">
@@ -91,8 +91,8 @@ export default function PricingPage() {
 								"All Standard features",
 								"Unlimited apps",
 								"Custom domain support",
-								"Widget for your website",
-								"Advanced analytics",
+								"React drop-in components",
+								"Webhooks & SAML SSO",
 								"Priority support",
 							].map((feature, i) => (
 								<li key={i} className="flex items-start gap-3 text-sm">

@@ -1,27 +1,27 @@
 "use client";
 
-import { BarChart3, Inbox, RefreshCcw } from "lucide-react";
+import { Code, Terminal, Zap } from "lucide-react";
 import { motion } from "motion/react";
 
 const proofPoints = [
 	{
-		title: "Collect requests",
-		description: "A single, clear inbox for user feedback.",
-		icon: Inbox,
+		title: "Lightning Fast",
+		description: "Built on a modern stack for zero-latency interactions.",
+		icon: Zap,
 	},
 	{
-		title: "Prioritize by demand",
-		description: "Data-driven decisions over loud voices.",
-		icon: BarChart3,
+		title: "Open Source",
+		description: "Self-host it or use our managed cloud. Fully transparent codebase.",
+		icon: Code,
 	},
 	{
-		title: "Close the loop",
-		description: "Let users know when their ideas ship.",
-		icon: RefreshCcw,
+		title: "Anywhere you work",
+		description: "Native clients for Raycast, CLI, and MCP. Manage feedback without leaving your terminal.",
+		icon: Terminal,
 	},
 ];
 
-export default function Logos() {
+export default function DeveloperFeatures() {
 	return (
 		<motion.section
 			className="w-full max-w-[1120px] mx-auto px-5"
@@ -32,11 +32,11 @@ export default function Logos() {
 		>
 			<div className="mx-auto max-w-3xl text-center">
 				<h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-					Built for teams that want feedback they can actually use.
+					Built for engineers who ship.
 				</h2>
 				<p className="mt-5 text-lg leading-8 text-muted-foreground sm:text-xl">
-					Roadwise gives your users one clear place to request features, vote on
-					priorities, and follow what changed.
+					Roadwise is a developer-first feedback engine that fits right into your stack.
+					No more scattered requests across GitHub, Slack, and email.
 				</p>
 			</div>
 

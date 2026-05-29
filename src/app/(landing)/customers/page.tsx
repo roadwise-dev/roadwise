@@ -10,42 +10,42 @@ const customers = [
 		category: "Developer Tools",
 		initials: "SB",
 		description:
-			"Roadwise completely changed how we collect feature requests. Our macOS power users now have a dedicated space to vote, and our roadmap has never been clearer.",
+			"Roadwise completely changed how we collect feature requests. Our macOS power users now have a dedicated space to vote, and our roadmap is completely transparent.",
 	},
 	{
 		name: "Albumfy",
 		category: "Music & Entertainment",
 		initials: "AF",
 		description:
-			"We transformed our product roadmap by implementing Roadwise. Music enthusiasts vote on new integrations, keeping our team focused on what truly matters.",
+			"We transformed our API roadmap by implementing Roadwise. Developers vote on new endpoints, keeping our engineering team focused on what truly matters.",
 	},
 	{
 		name: "DevNotes",
 		category: "Productivity",
 		initials: "DN",
 		description:
-			"DevNotes uses Roadwise to gather feedback from developers. We saw a 40% increase in user satisfaction simply by giving them a transparent place to request features.",
+			"DevNotes uses the Roadwise headless API to gather feedback directly in our app. We saw a 40% increase in user satisfaction simply by giving them a transparent place to request features.",
 	},
 	{
 		name: "TaskFlow",
 		category: "Project Management",
 		initials: "TF",
 		description:
-			"TaskFlow implemented Roadwise to prioritize our development backlog. It stopped the endless Slack feature requests and gave us a data-driven pipeline.",
+			"TaskFlow implemented Roadwise to prioritize our development backlog. It stopped the endless GitHub issues and gave us a data-driven pipeline.",
 	},
 	{
 		name: "CodeCollab",
 		category: "Developer Tools",
 		initials: "CC",
 		description:
-			"Managing feature requests used to be a nightmare of duplicate tickets. Roadwise enabled us to build a genuinely community-driven product roadmap.",
+			"Managing feature requests used to be a nightmare of duplicate GitHub issues. Roadwise enabled us to build a genuinely open-source, community-driven roadmap.",
 	},
 	{
 		name: "DesignVault",
 		category: "Design Tools",
 		initials: "DV",
 		description:
-			"DesignVault leverages Roadwise to collect feedback from designers using our asset platform. The minimalist UI perfectly matches our brand aesthetic.",
+			"DesignVault leverages Roadwise to collect feedback from designers using our platform. The drop-in React components perfectly match our brand aesthetic.",
 	},
 ];
 
@@ -101,10 +101,10 @@ export default function CustomersPage() {
 				<div className="flex flex-col items-center justify-center space-y-4 text-center">
 					<div className="space-y-4">
 						<h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-							Trusted by innovative teams.
+							Trusted by engineers who ship.
 						</h1>
 						<p className="mx-auto max-w-[600px] text-lg text-muted-foreground sm:text-xl">
-							Discover how companies of all sizes use Roadwise to build better
+							Discover how modern SaaS startups and open-source projects use Roadwise to build better
 							products with user feedback.
 						</p>
 					</div>

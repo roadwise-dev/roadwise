@@ -33,11 +33,11 @@ export function Features() {
 		<section className="w-full max-w-[1120px] mx-auto px-5 padding-container">
 			<div className="mx-auto max-w-3xl text-center">
 				<h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-					Everything your feedback board needs
+					Everything you need, accessible via API
 				</h2>
 				<p className="mt-4 text-lg leading-8 text-muted-foreground sm:text-xl">
-					A focused set of tools for collecting ideas, understanding demand, and
-					keeping users in the loop.
+					A focused set of tools for collecting ideas and understanding demand.
+					Use our drop-in components or build your own UI.
 				</p>
 			</div>
 
@@ -50,11 +50,11 @@ export function Features() {
 									Boards
 								</p>
 								<h3 className="mt-3 text-2xl font-semibold">
-									Public feedback boards
+									Drop-in React components
 								</h3>
 								<p className="mt-4 text-sm leading-6 text-muted-foreground">
-									Give every product a clean board where users can browse
-									requests, add ideas, comment, and vote.
+									Give every product a clean board using our fully styled components,
+									or consume our headless API for complete control.
 								</p>
 							</div>
 							<div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
@@ -111,11 +111,11 @@ export function Features() {
 								Demand
 							</p>
 							<h3 className="mt-3 text-2xl font-semibold">
-								Voting that shows demand
+								Data-driven sorting
 							</h3>
 							<p className="mt-4 text-sm leading-6 text-muted-foreground">
 								Surface the requests people keep asking for, without manually
-								counting comments or support tickets.
+								triaging GitHub issues or support tickets.
 							</p>
 						</div>
 						<div className="space-y-3">
@@ -210,10 +210,10 @@ export function Features() {
 							<p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">
 								Setup
 							</p>
-							<h3 className="mt-3 text-2xl font-semibold">Fast setup</h3>
+							<h3 className="mt-3 text-2xl font-semibold">Deploy in minutes</h3>
 							<p className="mt-4 text-sm leading-6 text-muted-foreground">
-								Create an app, choose a board setup, and start collecting
-								feedback without building your own portal.
+								Create an app and start collecting feedback instantly.
+								Works seamlessly with Next.js, Vite, and other modern frameworks.
 							</p>
 						</div>
 						<div className="space-y-3">
@@ -239,11 +239,11 @@ export function Features() {
 								Brand
 							</p>
 							<h3 className="mt-3 text-2xl font-semibold">
-								Built for your product
+								Bring your own UI
 							</h3>
 							<p className="mt-4 text-sm leading-6 text-muted-foreground">
-								Customize the board around your app so the feedback experience
-								feels native, not bolted on.
+								Customize completely with our headless architecture or use our
+								beautiful, accessible defaults.
 							</p>
 						</div>
 						<div className="rounded-2xl border bg-muted/30 p-4">

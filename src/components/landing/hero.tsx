@@ -32,7 +32,7 @@ export default function Hero() {
 							variant="outline"
 							className="mb-6 px-4 py-3 text-sm font-medium"
 						>
-							Alpha version - Try Now
+							Open Source & Developer First
 						</Badge>
 					</motion.div>
 
@@ -54,9 +54,9 @@ export default function Hero() {
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.6, delay: 0.4 }}
 					>
-						Create feedback boards for your apps and let your users
+						High-performance, open-source feedback boards.
 						<br />
-						shape the future of your product
+						Integrates seamlessly with your stack via API, CLI, and MCP.
 					</motion.p>
 
 					{/* Centered buttons */}
@@ -208,21 +208,21 @@ function FeatureShowcase() {
 const features = [
 	{
 		id: "1",
-		title: "Dark Mode",
-		description: "Enable dark mode for better night-time usability.",
-		upvotes: 48,
+		title: "Webhooks Support",
+		description: "Receive real-time events for new feedback and upvotes.",
+		upvotes: 84,
 	},
 	{
 		id: "2",
-		title: "Multi-Language Support",
-		description: "Support multiple languages for a global audience.",
-		upvotes: 35,
+		title: "REST API",
+		description: "Read and write feedback data directly from your backend.",
+		upvotes: 62,
 	},
 	{
 		id: "3",
-		title: "Real-Time Notifications",
-		description: "Receive real-time notifications for user feedback.",
-		upvotes: 12,
+		title: "Native CLI Tool",
+		description: "Manage feedback and update roadmap statuses from your terminal.",
+		upvotes: 45,
 	},
 ];
 

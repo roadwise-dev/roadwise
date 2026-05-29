@@ -21,11 +21,11 @@ export default function FeaturesPage() {
 				<div className="flex flex-col items-center justify-center space-y-4 text-center">
 					<div className="space-y-4">
 						<h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-							Everything you need to build better products.
+							Everything you need, accessible via API.
 						</h1>
 						<p className="mx-auto max-w-[600px] text-lg text-muted-foreground sm:text-xl">
 							Roadwise gives you the tools to capture feedback, prioritize by
-							demand, and communicate progress.
+							demand, and communicate progress—all from your terminal or React app.
 						</p>
 					</div>
 				</div>
@@ -80,12 +80,12 @@ export default function FeaturesPage() {
 									<BarChart3 className="size-5" />
 								</div>
 								<h3 className="text-xl font-semibold text-foreground">
-									Analytics
+									REST API
 								</h3>
 							</div>
 							<p className="text-muted-foreground">
-								Gain deep insights into user priorities and track engagement
-								over time.
+								Read and write feedback data directly from your backend with our
+								comprehensive REST API.
 							</p>
 						</div>
 						<div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-muted/30 to-transparent flex items-end justify-center pb-8 opacity-70 transition-opacity duration-500 group-hover:opacity-100">
@@ -109,12 +109,12 @@ export default function FeaturesPage() {
 									<Bell className="size-5" />
 								</div>
 								<h3 className="text-xl font-semibold text-foreground">
-									Notifications
+									Webhooks
 								</h3>
 							</div>
 							<p className="text-muted-foreground">
-								Stay updated instantly when a user submits new feedback or
-								votes.
+								Receive real-time events for new feedback and upvotes directly
+								to your infrastructure.
 							</p>
 						</div>
 						<div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[85%] rounded-lg border border-border bg-background p-4 transition-transform duration-500 group-hover:-translate-y-2">
@@ -162,12 +162,12 @@ export default function FeaturesPage() {
 									<Users className="size-5" />
 								</div>
 								<h3 className="text-xl font-semibold text-foreground">
-									Team Collaboration
+									CLI & MCP Clients
 								</h3>
 							</div>
 							<p className="text-muted-foreground max-w-[400px]">
-								Add your team members to manage statuses, leave internal notes,
-								and coordinate the roadmap together.
+								Manage statuses, leave internal notes, and coordinate the roadmap
+								without ever leaving your terminal or IDE.
 							</p>
 						</div>
 						<div className="absolute bottom-8 right-8 flex -space-x-4">
@@ -190,12 +190,12 @@ export default function FeaturesPage() {
 									<Globe className="size-5" />
 								</div>
 								<h3 className="text-xl font-semibold text-foreground">
-									Global Ready
+									Self-Hostable
 								</h3>
 							</div>
 							<p className="text-muted-foreground">
-								Built to support users worldwide with customizable localization
-								options.
+								Deploy to your own infrastructure with a single Docker command,
+								or use our managed cloud.
 							</p>
 						</div>
 						<div className="absolute -bottom-8 -right-8 opacity-20 transition-transform duration-700 group-hover:rotate-12 group-hover:scale-110">

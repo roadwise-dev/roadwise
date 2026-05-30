@@ -9,6 +9,7 @@ import {
 	updateAppDetailsSchema,
 	updateVisibilitySchema,
 } from "@/lib/validations";
+import type { ThemeStyles } from "@/types/theme";
 import { db } from "../db/db";
 import { app } from "../db/schema";
 
@@ -186,7 +187,7 @@ export async function updateAppAvatarAction(slug: string, avatarUrl: string) {
 	}
 }
 
-export async function updateAppThemeAction(slug: string, theme: string) {
+export async function updateAppThemeAction(slug: string, theme: ThemeStyles | null) {
 	try {
 		const { userId } = await auth();
 		if (!userId) {

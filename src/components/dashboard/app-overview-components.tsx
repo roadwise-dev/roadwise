@@ -67,9 +67,7 @@ export async function AppInsights({ appId }: { appId: string }) {
 					<TrendingUp className="w-5 h-5" />
 					App Insights
 				</CardTitle>
-				<CardDescription>
-					Key metrics and engagement this week
-				</CardDescription>
+				<CardDescription>Key metrics and engagement this week</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<div className="grid grid-cols-2 md:grid-cols-4 gap-4">

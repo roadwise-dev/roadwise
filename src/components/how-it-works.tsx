@@ -47,8 +47,6 @@ const steps = [
 	},
 ];
 
-
-
 export function HowItWorks() {
 	const [activeStep, setActiveStep] = useState(steps[0].id);
 

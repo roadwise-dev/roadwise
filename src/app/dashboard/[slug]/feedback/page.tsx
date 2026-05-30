@@ -13,6 +13,12 @@ interface PageProps {
 	params: Promise<{ slug: string }>;
 }
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Feedback",
+};
+
 export default async function FeedbackPage({ params }: PageProps) {
 	const { userId } = await auth();
 

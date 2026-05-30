@@ -67,8 +67,8 @@ export default function Navbar() {
 							href={getLinkHref(link.href)}
 							className={`text-base transition-colors duration-200 flex items-center space-x-2 rounded px-2 py-1 ${
 								isActive(link.href)
-									? "bg-muted text-black"
-									: "text-muted-foreground hover:text-black hover:bg-muted"
+									? "bg-muted text-foreground"
+									: "text-muted-foreground hover:text-foreground hover:bg-muted"
 							}`}
 						>
 							<link.icon size={18} />

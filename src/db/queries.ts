@@ -1,9 +1,20 @@
 import { count, eq } from "drizzle-orm";
+import { cache } from "react";
 import { db } from "@/db/db";
 import { app as appTable, feature, news, subscribe, upvote } from "@/db/schema";
 import { type AppOverviewCardData } from "@/components/dashboard/global-app-card";
 
-export async function getUserAppsOverview(userId: string): Promise<AppOverviewCardData[]> {
+export const getAppBySlug = cache(async (slug: string) => {
+	const [dbApp] = await db
+		.select()
+		.from(appTable)
+		.where(eq(appTable.slug, slug));
+	return dbApp;
+});
+
+export async function getUserAppsOverview(
+	userId: string,
+): Promise<AppOverviewCardData[]> {
 	const apps = await db
 		.select()
 		.from(appTable)

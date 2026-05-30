@@ -11,12 +11,14 @@ const proofPoints = [
 	},
 	{
 		title: "Open Source",
-		description: "Self-host it or use our managed cloud. Fully transparent codebase.",
+		description:
+			"Self-host it or use our managed cloud. Fully transparent codebase.",
 		icon: Code,
 	},
 	{
 		title: "Anywhere you work",
-		description: "Native clients for Raycast, CLI, and MCP. Manage feedback without leaving your terminal.",
+		description:
+			"Native clients for Raycast, CLI, and MCP. Manage feedback without leaving your terminal.",
 		icon: Terminal,
 	},
 ];
@@ -35,8 +37,9 @@ export default function DeveloperFeatures() {
 					Built for engineers who ship.
 				</h2>
 				<p className="mt-5 text-lg leading-8 text-muted-foreground sm:text-xl">
-					Roadwise is a developer-first feedback engine that fits right into your stack.
-					No more scattered requests across GitHub, Slack, and email.
+					Roadwise is a developer-first feedback engine that fits right into
+					your stack. No more scattered requests across GitHub, Slack, and
+					email.
 				</p>
 			</div>
 

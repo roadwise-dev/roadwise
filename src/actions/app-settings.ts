@@ -67,8 +67,6 @@ export async function updateAppDetailsAction(formData: FormData) {
 	}
 }
 
-
-
 export async function updateAppVisibilityAction(formData: FormData) {
 	try {
 		// Authenticate user
@@ -117,8 +115,6 @@ export async function updateAppVisibilityAction(formData: FormData) {
 	}
 }
 
-
-
 export async function deleteAppAction(formData: FormData) {
 	try {
 		// Authenticate user
@@ -162,8 +158,6 @@ export async function deleteAppAction(formData: FormData) {
 	}
 }
 
-
-
 export async function updateAppAvatarAction(slug: string, avatarUrl: string) {
 	try {
 		const { userId } = await auth();
@@ -191,6 +185,37 @@ export async function updateAppAvatarAction(slug: string, avatarUrl: string) {
 		return { success: true };
 	} catch (error) {
 		console.error("Error updating app avatar:", error);
+		return { error: "An unexpected error occurred. Please try again." };
+	}
+}
+
+export async function updateAppThemeAction(slug: string, theme: any) {
+	try {
+		const { userId } = await auth();
+		if (!userId) {
+			return { error: "Unauthorized" };
+		}
+
+		const [existingApp] = await db.select().from(app).where(eq(app.slug, slug));
+		if (!existingApp) {
+			return { error: "App not found" };
+		}
+
+		if (existingApp.userId !== userId) {
+			return {
+				error: "Unauthorized: You don't have permission to modify this app",
+			};
+		}
+
+		await db.update(app).set({ theme }).where(eq(app.slug, slug));
+
+		revalidatePath(`/dashboard/${slug}`);
+		revalidatePath(`/dashboard/${slug}/theme`);
+		revalidatePath(`/app/${slug}`);
+
+		return { success: true };
+	} catch (error) {
+		console.error("Error updating app theme:", error);
 		return { error: "An unexpected error occurred. Please try again." };
 	}
 }

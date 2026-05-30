@@ -221,7 +221,8 @@ const features = [
 	{
 		id: "3",
 		title: "Native CLI Tool",
-		description: "Manage feedback and update roadmap statuses from your terminal.",
+		description:
+			"Manage feedback and update roadmap statuses from your terminal.",
 		upvotes: 45,
 	},
 ];

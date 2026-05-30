@@ -6,6 +6,7 @@ import {
 	LayoutDashboard,
 	MessageSquare,
 	Newspaper,
+	Palette,
 	PlusCircle,
 	Settings,
 } from "lucide-react";
@@ -68,6 +69,11 @@ export function AppSidebar({
 					title: "News",
 					url: `/dashboard/${currentApp.slug}/news`,
 					icon: Newspaper,
+				},
+				{
+					title: "Theme",
+					url: `/dashboard/${currentApp.slug}/theme`,
+					icon: Palette,
 				},
 				{
 					title: "Settings",

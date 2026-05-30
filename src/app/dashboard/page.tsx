@@ -11,6 +11,11 @@ import { GlobalStatsCards } from "@/components/dashboard/global-stats-cards";
 import { ZeroAppState } from "@/components/dashboard/zero-app-state";
 import { Button } from "@/components/ui/button";
 import { getUserAppsOverview } from "@/db/queries";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Dashboard",
+};
 
 export default async function Dashboard() {
 	const { userId } = await auth();

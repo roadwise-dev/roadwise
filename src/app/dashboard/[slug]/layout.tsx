@@ -1,12 +1,29 @@
 import { auth } from "@clerk/nextjs/server";
-import { eq } from "drizzle-orm";
 import { notFound, redirect } from "next/navigation";
-import { db } from "@/db/db";
-import { app } from "@/db/schema";
+import { Metadata } from "next";
+import { getAppBySlug } from "@/db/queries";
 
 interface AppLayoutProps {
 	children: React.ReactNode;
 	params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+	const { slug } = await params;
+	const dbApp = await getAppBySlug(slug);
+
+	if (!dbApp) return {};
+
+	return {
+		title: {
+			template: `%s | ${dbApp.name} | Roadwise`,
+			default: `${dbApp.name} | Roadwise`,
+		},
+	};
 }
 
 export default async function AppLayout({ children, params }: AppLayoutProps) {
@@ -17,7 +34,7 @@ export default async function AppLayout({ children, params }: AppLayoutProps) {
 	}
 
 	const { slug } = await params;
-	const [dbApp] = await db.select().from(app).where(eq(app.slug, slug));
+	const dbApp = await getAppBySlug(slug);
 
 	if (!dbApp) {
 		notFound();

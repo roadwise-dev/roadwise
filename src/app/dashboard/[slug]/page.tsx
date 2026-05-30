@@ -15,10 +15,17 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { db } from "@/db/db";
 import { app } from "@/db/schema";
+import { getAppBySlug } from "@/db/queries";
 
 interface PageProps {
 	params: Promise<{ slug: string }>;
 }
+
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Overview",
+};
 
 function CardSkeleton() {
 	return <Skeleton className="h-[250px] w-full rounded-xl" />;
@@ -36,7 +43,7 @@ export default async function AppOverviewPage({ params }: PageProps) {
 	}
 
 	const { slug } = await params;
-	const [dbApp] = await db.select().from(app).where(eq(app.slug, slug));
+	const dbApp = await getAppBySlug(slug);
 
 	if (!dbApp) {
 		notFound();

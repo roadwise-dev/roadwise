@@ -121,7 +121,7 @@ export default function UpvoteButton({
 					/>
 					<Input name="feature-id" type="hidden" value={featureInfo.id} />
 					{state.message && (
-						<p className={`mt-2 text-sm text-red-600`}>{state.message}</p>
+						<p className={`mt-2 text-sm text-destructive`}>{state.message}</p>
 					)}
 					<DialogFooter>
 						<DialogClose asChild>

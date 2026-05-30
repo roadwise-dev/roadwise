@@ -76,8 +76,6 @@ export async function createBoardAction(formData: FormData) {
 	}
 }
 
-
-
 export async function updateBoardAction(formData: FormData) {
 	try {
 		const result = boardMutationSchema.safeParse({
@@ -124,8 +122,6 @@ export async function updateBoardAction(formData: FormData) {
 	}
 }
 
-
-
 export async function deleteBoardAction(formData: FormData) {
 	try {
 		const result = deleteBoardSchema.safeParse({
@@ -171,5 +167,3 @@ export async function submitUpdateBoardFormAction(formData: FormData) {
 export async function submitDeleteBoardFormAction(formData: FormData) {
 	await deleteBoardAction(formData);
 }
-
-

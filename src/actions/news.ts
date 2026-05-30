@@ -76,8 +76,6 @@ export async function createNewsFromFormAction(formData: FormData) {
 	return createNewsAction(result.data.slug, formData);
 }
 
-
-
 export async function updateNewsAction(appSlug: string, formData: FormData) {
 	try {
 		const { userId } = await auth();
@@ -184,8 +182,6 @@ export async function deleteNewsFromFormAction(formData: FormData) {
 
 	return deleteNewsAction(result.data.slug, result.data.newsId);
 }
-
-
 
 export async function getNewsForApp(appSlug: string) {
 	try {

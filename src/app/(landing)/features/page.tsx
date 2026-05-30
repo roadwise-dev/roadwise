@@ -25,7 +25,8 @@ export default function FeaturesPage() {
 						</h1>
 						<p className="mx-auto max-w-[600px] text-lg text-muted-foreground sm:text-xl">
 							Roadwise gives you the tools to capture feedback, prioritize by
-							demand, and communicate progress—all from your terminal or React app.
+							demand, and communicate progress—all from your terminal or React
+							app.
 						</p>
 					</div>
 				</div>
@@ -166,8 +167,8 @@ export default function FeaturesPage() {
 								</h3>
 							</div>
 							<p className="text-muted-foreground max-w-[400px]">
-								Manage statuses, leave internal notes, and coordinate the roadmap
-								without ever leaving your terminal or IDE.
+								Manage statuses, leave internal notes, and coordinate the
+								roadmap without ever leaving your terminal or IDE.
 							</p>
 						</div>
 						<div className="absolute bottom-8 right-8 flex -space-x-4">

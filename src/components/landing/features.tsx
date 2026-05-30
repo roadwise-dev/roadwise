@@ -53,8 +53,8 @@ export function Features() {
 									Drop-in React components
 								</h3>
 								<p className="mt-4 text-sm leading-6 text-muted-foreground">
-									Give every product a clean board using our fully styled components,
-									or consume our headless API for complete control.
+									Give every product a clean board using our fully styled
+									components, or consume our headless API for complete control.
 								</p>
 							</div>
 							<div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
@@ -212,8 +212,8 @@ export function Features() {
 							</p>
 							<h3 className="mt-3 text-2xl font-semibold">Deploy in minutes</h3>
 							<p className="mt-4 text-sm leading-6 text-muted-foreground">
-								Create an app and start collecting feedback instantly.
-								Works seamlessly with Next.js, Vite, and other modern frameworks.
+								Create an app and start collecting feedback instantly. Works
+								seamlessly with Next.js, Vite, and other modern frameworks.
 							</p>
 						</div>
 						<div className="space-y-3">
@@ -238,9 +238,7 @@ export function Features() {
 							<p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">
 								Brand
 							</p>
-							<h3 className="mt-3 text-2xl font-semibold">
-								Bring your own UI
-							</h3>
+							<h3 className="mt-3 text-2xl font-semibold">Bring your own UI</h3>
 							<p className="mt-4 text-sm leading-6 text-muted-foreground">
 								Customize completely with our headless architecture or use our
 								beautiful, accessible defaults.

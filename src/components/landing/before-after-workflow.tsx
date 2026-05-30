@@ -174,8 +174,8 @@ export function BeforeAfterWorkflow() {
 					From scattered GitHub issues to a unified feedback loop
 				</h2>
 				<p className="mt-5 text-lg leading-8 text-muted-foreground">
-					Roadwise turns fragmented feedback into one API-first board where users
-					stay in the loop automatically.
+					Roadwise turns fragmented feedback into one API-first board where
+					users stay in the loop automatically.
 				</p>
 			</div>
 
@@ -186,7 +186,8 @@ export function BeforeAfterWorkflow() {
 							Without Roadwise
 						</h3>
 						<p className="text-sm text-muted-foreground/80">
-							Feedback lost in Slack threads, duplicate GitHub issues, and disjointed support tickets.
+							Feedback lost in Slack threads, duplicate GitHub issues, and
+							disjointed support tickets.
 						</p>
 					</div>
 					<ChaosVisual />
@@ -198,7 +199,8 @@ export function BeforeAfterWorkflow() {
 							With Roadwise
 						</h3>
 						<p className="text-sm text-muted-foreground">
-							One API-first feedback board. Your team sees clear demand and users stay in the loop automatically.
+							One API-first feedback board. Your team sees clear demand and
+							users stay in the loop automatically.
 						</p>
 					</div>
 					<ClarityVisual />

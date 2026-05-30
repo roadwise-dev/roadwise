@@ -25,6 +25,12 @@ interface PageProps {
 	params: Promise<{ slug: string }>;
 }
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Boards",
+};
+
 export default async function BoardsPage({ params }: PageProps) {
 	const { userId } = await auth();
 

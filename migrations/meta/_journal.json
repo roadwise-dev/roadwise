@@ -15,6 +15,27 @@
 			"when": 1779963971869,
 			"tag": "0001_baseline_current_schema",
 			"breakpoints": true
+		},
+		{
+			"idx": 2,
+			"version": "6",
+			"when": 1780159471212,
+			"tag": "0002_yummy_morbius",
+			"breakpoints": true
+		},
+		{
+			"idx": 3,
+			"version": "6",
+			"when": 1780159572872,
+			"tag": "0003_dapper_invaders",
+			"breakpoints": true
+		},
+		{
+			"idx": 4,
+			"version": "6",
+			"when": 1780159782325,
+			"tag": "0004_little_inhumans",
+			"breakpoints": true
 		}
 	]
 }

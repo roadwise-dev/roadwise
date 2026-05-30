@@ -1,5 +1,10 @@
 import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Settings",
+};
 import { Eye, EyeOff, Trash2 } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
 import {

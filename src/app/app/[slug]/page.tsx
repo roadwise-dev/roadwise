@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { db } from "@/db/db";
 import { app, board } from "@/db/schema";
+import { getAppBySlug } from "@/db/queries";
 
 export async function generateMetadata({
 	params,
@@ -17,7 +18,9 @@ export async function generateMetadata({
 }) {
 	// read route params
 	const slug = (await params).slug;
-	const [dbApp] = await db.select().from(app).where(eq(app.slug, slug));
+	const dbApp = await getAppBySlug(slug);
+
+	if (!dbApp) return { title: "App Not Found" };
 
 	return {
 		title: dbApp.name,
@@ -28,7 +31,7 @@ export default async function Page(props: {
 	params: Promise<{ slug: string }>;
 }) {
 	const params = await props.params;
-	const [dbApp] = await db.select().from(app).where(eq(app.slug, params.slug));
+	const dbApp = await getAppBySlug(params.slug);
 
 	if (!dbApp) {
 		notFound();
@@ -55,7 +58,7 @@ export default async function Page(props: {
 					</Avatar>
 					<div>
 						<h1 className="text-3xl font-bold">{dbApp.name}</h1>
-						<p className="text-gray-500">{dbApp.description}</p>
+						<p className="text-muted-foreground">{dbApp.description}</p>
 					</div>
 				</div>
 				<Button asChild>

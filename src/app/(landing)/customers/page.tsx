@@ -104,8 +104,8 @@ export default function CustomersPage() {
 							Trusted by engineers who ship.
 						</h1>
 						<p className="mx-auto max-w-[600px] text-lg text-muted-foreground sm:text-xl">
-							Discover how modern SaaS startups and open-source projects use Roadwise to build better
-							products with user feedback.
+							Discover how modern SaaS startups and open-source projects use
+							Roadwise to build better products with user feedback.
 						</p>
 					</div>
 				</div>

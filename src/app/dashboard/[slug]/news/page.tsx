@@ -1,5 +1,10 @@
 import { auth } from "@clerk/nextjs/server";
 import { count, desc, eq } from "drizzle-orm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "News",
+};
 import { Calendar, Mail, Trash2, Users } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
 import { submitDeleteNewsFormAction } from "@/actions/news";

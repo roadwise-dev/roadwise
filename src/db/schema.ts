@@ -6,6 +6,7 @@ import {
 	text,
 	unique,
 } from "drizzle-orm/sqlite-core";
+import { ThemeStyles } from "@/types/theme";
 
 // App table
 export const app = sqliteTable(
@@ -27,6 +28,7 @@ export const app = sqliteTable(
 		emailNotifications: integer("email_notifications", {
 			mode: "boolean",
 		}).default(true),
+		theme: text("theme", { mode: "json" }).$type<ThemeStyles>(),
 		createdAt: integer("created_at", { mode: "timestamp" })
 			.default(sql`(unixepoch())`)
 			.notNull(),
@@ -209,4 +211,3 @@ export type InsertComment = typeof comment.$inferInsert;
 
 export type Subscribe = typeof subscribe.$inferSelect;
 export type InsertSubscribe = typeof subscribe.$inferInsert;
-

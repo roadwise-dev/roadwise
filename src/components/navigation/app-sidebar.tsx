@@ -9,6 +9,7 @@ import {
 	Palette,
 	PlusCircle,
 	Settings,
+	Terminal,
 } from "lucide-react";
 import { useMemo } from "react";
 import { NavApps } from "@/components/navigation/nav-apps";
@@ -93,6 +94,11 @@ export function AppSidebar({
 					title: "Create App",
 					url: "/dashboard/create",
 					icon: PlusCircle,
+				},
+				{
+					title: "Developer",
+					url: "/dashboard/developer",
+					icon: Terminal,
 				},
 			];
 		}

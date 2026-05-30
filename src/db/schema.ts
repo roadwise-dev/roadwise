@@ -190,6 +190,28 @@ export const subscribe = sqliteTable(
 	}),
 );
 
+// API Key table
+export const apiKey = sqliteTable(
+	"api_key",
+	{
+		id: text("id")
+			.primaryKey()
+			.$defaultFn(() => crypto.randomUUID()),
+		userId: text("user_id").notNull(),
+		name: text("name").notNull(),
+		keyHash: text("key_hash").notNull().unique(),
+		hint: text("hint").notNull(),
+		lastUsedAt: integer("last_used_at", { mode: "timestamp" }),
+		createdAt: integer("created_at", { mode: "timestamp" })
+			.default(sql`(unixepoch())`)
+			.notNull(),
+	},
+	(table) => ({
+		userIdIdx: index("api_key_user_id_idx").on(table.userId),
+		keyHashIdx: index("api_key_key_hash_idx").on(table.keyHash),
+	}),
+);
+
 // Type Exports
 export type App = typeof app.$inferSelect;
 export type InsertApp = typeof app.$inferInsert;
@@ -211,3 +233,6 @@ export type InsertComment = typeof comment.$inferInsert;
 
 export type Subscribe = typeof subscribe.$inferSelect;
 export type InsertSubscribe = typeof subscribe.$inferInsert;
+
+export type ApiKey = typeof apiKey.$inferSelect;
+export type InsertApiKey = typeof apiKey.$inferInsert;

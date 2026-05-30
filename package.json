@@ -26,10 +26,12 @@
 		"env:pull:prod": "vercel env pull .env.production.local --environment=production --yes"
 	},
 	"dependencies": {
+		"@asteasolutions/zod-to-openapi": "^8.5.0",
 		"@base-ui/react": "^1.5.0",
 		"@clerk/nextjs": "^6.31.6",
 		"@hookform/resolvers": "^5.2.1",
 		"@libsql/client": "^0.15.14",
+		"@scalar/nextjs-api-reference": "^0.10.19",
 		"@vercel/blob": "^2.4.0",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",

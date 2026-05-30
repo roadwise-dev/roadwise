@@ -39,7 +39,8 @@ export function ThemePicker({ appSlug, currentTheme }: ThemePickerProps) {
 		if (found) activeKey = found[0];
 	}
 
-	const handleSelect = (val: string) => {
+	const handleSelect = (val: string | null) => {
+		if (!val) return;
 		const presetKey = val === "default" ? null : val;
 		const newTheme = presetKey ? defaultPresets[presetKey].styles : null;
 		const newThemeStr = newTheme ? JSON.stringify(newTheme) : null;

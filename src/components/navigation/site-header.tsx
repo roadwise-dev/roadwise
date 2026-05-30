@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { ThemeToggle } from "@/components/dashboard/theme-toggle";
 
 interface App {
 	id: string;
@@ -123,6 +124,7 @@ export function SiteHeader({ apps = [] }: SiteHeaderProps) {
 					<BreadcrumbList>{renderBreadcrumbs()}</BreadcrumbList>
 				</Breadcrumb>
 				<div className="ml-auto flex items-center gap-2">
+					<ThemeToggle />
 					{currentApp && (
 						<Button variant="ghost" size="sm" asChild>
 							<a

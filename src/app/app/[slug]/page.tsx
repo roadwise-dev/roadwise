@@ -8,8 +8,8 @@ import FeatureBoard, {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { db } from "@/db/db";
-import { app, board } from "@/db/schema";
 import { getAppBySlug } from "@/db/queries";
+import { board } from "@/db/schema";
 
 export async function generateMetadata({
 	params,

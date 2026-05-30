@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
-import { eq } from "drizzle-orm";
-import { ExternalLink, Eye, EyeOff } from "lucide-react";
-import Link from "next/link";
+
+import { Eye, EyeOff } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
 import { AppAvatarUpload } from "@/components/dashboard/app-avatar-upload";
@@ -13,15 +12,13 @@ import {
 } from "@/components/dashboard/app-overview-components";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { db } from "@/db/db";
-import { app } from "@/db/schema";
 import { getAppBySlug } from "@/db/queries";
 
 interface PageProps {
 	params: Promise<{ slug: string }>;
 }
 
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Overview",
@@ -75,13 +72,6 @@ export default async function AppOverviewPage({ params }: PageProps) {
 							<p className="text-sm text-muted-foreground">
 								{dbApp.description || "No description"}
 							</p>
-							<Link
-								href={`/app/${dbApp.slug}`}
-								className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"
-							>
-								<ExternalLink className="w-3 h-3" />
-								View Live
-							</Link>
 						</div>
 					</div>
 				</div>

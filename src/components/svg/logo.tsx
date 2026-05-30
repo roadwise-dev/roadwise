@@ -32,6 +32,8 @@ const Logo: React.FC<LogoProps> = ({
 			width={size}
 			height={size}
 			viewBox="0 0 24 24"
+			role="img"
+			aria-label="Roadwise Logo"
 			{...props}
 		>
 			{/* Background with rounded corners */}

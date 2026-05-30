@@ -1,10 +1,11 @@
 import { auth } from "@clerk/nextjs/server";
 import { count, desc, eq } from "drizzle-orm";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "News",
 };
+
 import { Calendar, Mail, Trash2, Users } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
 import { submitDeleteNewsFormAction } from "@/actions/news";
@@ -29,9 +30,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { db } from "@/db/db";
 import { app, news, subscribe } from "@/db/schema";
 

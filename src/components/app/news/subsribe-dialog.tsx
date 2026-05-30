@@ -84,7 +84,7 @@ export function SubscribeDialog({
 
 		if (result.success) {
 			setOpen(false);
-			toast("You successfully subscribed to " + appName, {
+			toast(`You successfully subscribed to ${appName}`, {
 				description: "You will now be notified about new announcements",
 				action: {
 					label: "Undo",

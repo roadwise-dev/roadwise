@@ -88,9 +88,9 @@ function ClarityVisual() {
 					{ votes: 142, status: "Planned", active: true },
 					{ votes: 89, status: "Under Review", active: false },
 					{ votes: 56, status: "Shipped", active: false, shipped: true },
-				].map((item, i) => (
+				].map((item) => (
 					<motion.div
-						key={i}
+						key={item.votes}
 						className={`flex items-center justify-between rounded-2xl border p-3 transition-colors ${
 							item.active ? "border-foreground" : "border-border bg-muted/10"
 						}`}

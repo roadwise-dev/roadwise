@@ -1,13 +1,6 @@
 "use client";
 
-import {
-	ChevronUp,
-	Layout,
-	Megaphone,
-	Search,
-	Send,
-	Sparkles,
-} from "lucide-react";
+import { ChevronUp, Layout, Megaphone, Send } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -87,6 +80,7 @@ export function HowItWorks() {
 						const isActive = activeStep === step.id;
 						return (
 							<button
+								type="button"
 								key={step.id}
 								onClick={() => setActiveStep(step.id)}
 								className={cn(

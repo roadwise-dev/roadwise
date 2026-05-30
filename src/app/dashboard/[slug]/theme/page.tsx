@@ -1,13 +1,14 @@
 import { eq } from "drizzle-orm";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Theme",
 };
+
+import { ThemePicker } from "@/components/dashboard/theme-picker";
 import { db } from "@/db/db";
 import { app } from "@/db/schema";
-import { ThemePicker } from "@/components/dashboard/theme-picker";
 
 export default async function ThemePage(props: {
 	params: Promise<{ slug: string }>;

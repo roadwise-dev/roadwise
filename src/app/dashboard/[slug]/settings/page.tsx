@@ -1,10 +1,11 @@
 import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Settings",
 };
+
 import { Eye, EyeOff, Trash2 } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
 import {
@@ -78,27 +79,15 @@ export default async function SettingsPage({ params }: PageProps) {
 						className="space-y-4"
 					>
 						<input type="hidden" name="slug" value={dbApp.slug} />
-						<div className="grid gap-4 md:grid-cols-2">
-							<div className="space-y-2">
-								<Label htmlFor="name">App Name</Label>
-								<Input
-									id="name"
-									name="name"
-									defaultValue={dbApp.name}
-									required
-									maxLength={80}
-								/>
-							</div>
-							<div className="space-y-2">
-								<Label htmlFor="domain">Domain</Label>
-								<Input
-									id="domain"
-									name="domain"
-									defaultValue={dbApp.domain}
-									required
-									maxLength={255}
-								/>
-							</div>
+						<div className="space-y-2">
+							<Label htmlFor="name">App Name</Label>
+							<Input
+								id="name"
+								name="name"
+								defaultValue={dbApp.name}
+								required
+								maxLength={80}
+							/>
 						</div>
 						<div className="space-y-2">
 							<Label htmlFor="description">Description</Label>

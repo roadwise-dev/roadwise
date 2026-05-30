@@ -3,11 +3,9 @@
 import { useUser } from "@clerk/nextjs";
 import { upload } from "@vercel/blob/client";
 import { ImageIcon, Loader2, X } from "lucide-react";
-import Image from "next/image";
 import { type ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 const allowedImageTypes = [
 	"image/png",
@@ -120,6 +118,7 @@ export function NewsImageUpload({ name = "image" }: NewsImageUploadProps) {
 
 			{imageUrl ? (
 				<div className="relative group rounded-md border overflow-hidden bg-muted/50 w-full aspect-video flex items-center justify-center">
+					{/* biome-ignore lint/performance/noImgElement: blob url */}
 					<img
 						src={imageUrl}
 						alt="News attachment"
@@ -153,9 +152,10 @@ export function NewsImageUpload({ name = "image" }: NewsImageUploadProps) {
 					</div>
 				</div>
 			) : (
-				<div
+				<button
+					type="button"
 					onClick={triggerUpload}
-					className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center gap-2 text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-colors cursor-pointer ${isUploading ? "opacity-50 pointer-events-none" : ""}`}
+					className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center gap-2 text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-colors cursor-pointer w-full ${isUploading ? "opacity-50 pointer-events-none" : ""}`}
 				>
 					{isUploading ? (
 						<>
@@ -177,7 +177,7 @@ export function NewsImageUpload({ name = "image" }: NewsImageUploadProps) {
 							</div>
 						</>
 					)}
-				</div>
+				</button>
 			)}
 		</div>
 	);

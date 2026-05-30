@@ -121,19 +121,14 @@ for (const file of migrationFiles) {
 		.split("--> statement-breakpoint")
 		.map((statement) => statement.trim())
 		.filter((statement) => statement && !statement.startsWith("--"));
-
-	try {
-		for (const statement of statements) {
-			await client.execute(statement);
-		}
-
-		await client.execute({
-			sql: "INSERT INTO __roadwise_migrations (name, hash) VALUES (?, ?)",
-			args: [file, hash],
-		});
-	} catch (error) {
-		throw error;
+	for (const statement of statements) {
+		await client.execute(statement);
 	}
+
+	await client.execute({
+		sql: "INSERT INTO __roadwise_migrations (name, hash) VALUES (?, ?)",
+		args: [file, hash],
+	});
 }
 
 client.close();

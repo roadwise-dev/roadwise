@@ -9,9 +9,9 @@ export function MeasureVisual() {
 					{ title: "Dark mode support", votes: 243, active: true },
 					{ title: "API access for enterprise", votes: 189, active: false },
 					{ title: "Mobile app notifications", votes: 94, active: false },
-				].map((item, i) => (
+				].map((item) => (
 					<div
-						key={i}
+						key={item.title}
 						className={cn(
 							"flex items-center gap-4 rounded-2xl border p-3",
 							item.active

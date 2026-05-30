@@ -1,5 +1,5 @@
 import { MessageSquare } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getComments } from "@/actions/comments";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -54,12 +54,12 @@ export function FeatureDetailDialog({
 	};
 
 	// Load comments for a feature
-	const loadComments = async (featureId: string) => {
+	const loadComments = useCallback(async (featureId: string) => {
 		setLoadingComments(true);
 		const fetchedComments = await getComments(featureId);
 		setComments(fetchedComments);
 		setLoadingComments(false);
-	};
+	}, []);
 
 	// Handle comment added
 	const handleCommentAdded = () => {
@@ -74,7 +74,7 @@ export function FeatureDetailDialog({
 			loadComments(feature.id);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [open, feature]);
+	}, [open, feature, loadingComments, loadComments, comments.length]);
 
 	// Clear comments when dialog closes
 	useEffect(() => {

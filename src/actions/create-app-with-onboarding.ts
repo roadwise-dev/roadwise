@@ -4,7 +4,6 @@ import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect, unstable_rethrow } from "next/navigation";
-import { z } from "zod";
 import { db } from "@/db/db";
 import { app, board } from "@/db/schema";
 import { createAppSchema } from "@/lib/validations";

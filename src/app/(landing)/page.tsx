@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Features } from "@/components/landing/features";
 import { HowItWorks } from "@/components/how-it-works";
 import { BeforeAfterWorkflow } from "@/components/landing/before-after-workflow";
 import { CallToAction } from "@/components/landing/cta";
-import Hero from "@/components/landing/hero";
 import DeveloperFeatures from "@/components/landing/developer-features";
+import { Features } from "@/components/landing/features";
+import Hero from "@/components/landing/hero";
 
 export default function HomePage() {
 	const sections = [

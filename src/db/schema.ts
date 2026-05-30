@@ -6,7 +6,7 @@ import {
 	text,
 	unique,
 } from "drizzle-orm/sqlite-core";
-import { ThemeStyles } from "@/types/theme";
+import type { ThemeStyles } from "@/types/theme";
 
 // App table
 export const app = sqliteTable(

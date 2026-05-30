@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: its fine */
+
 import { config } from "dotenv";
 import { drizzle } from "drizzle-orm/libsql";
 

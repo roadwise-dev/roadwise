@@ -4,14 +4,13 @@ import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { z } from "zod";
-import { db } from "../db/db";
-import { app } from "../db/schema";
 import {
 	deleteAppSchema,
 	updateAppDetailsSchema,
 	updateVisibilitySchema,
 } from "@/lib/validations";
+import { db } from "../db/db";
+import { app } from "../db/schema";
 
 export async function updateAppDetailsAction(formData: FormData) {
 	try {
@@ -24,7 +23,6 @@ export async function updateAppDetailsAction(formData: FormData) {
 			slug: formData.get("slug"),
 			name: formData.get("name"),
 			description: formData.get("description"),
-			domain: formData.get("domain"),
 			avatarUrl: formData.get("avatarUrl"),
 		});
 
@@ -35,7 +33,7 @@ export async function updateAppDetailsAction(formData: FormData) {
 			return `Validation error: ${errors}`;
 		}
 
-		const { slug, name, description, domain, avatarUrl } = result.data;
+		const { slug, name, description, avatarUrl } = result.data;
 		const [existingApp] = await db.select().from(app).where(eq(app.slug, slug));
 
 		if (!existingApp) {
@@ -51,7 +49,6 @@ export async function updateAppDetailsAction(formData: FormData) {
 			.set({
 				name,
 				description,
-				domain,
 				avatarUrl,
 			})
 			.where(eq(app.slug, slug));
@@ -189,7 +186,7 @@ export async function updateAppAvatarAction(slug: string, avatarUrl: string) {
 	}
 }
 
-export async function updateAppThemeAction(slug: string, theme: any) {
+export async function updateAppThemeAction(slug: string, theme: string) {
 	try {
 		const { userId } = await auth();
 		if (!userId) {

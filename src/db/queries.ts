@@ -1,8 +1,8 @@
 import { count, eq } from "drizzle-orm";
 import { cache } from "react";
+import type { AppOverviewCardData } from "@/components/dashboard/global-app-card";
 import { db } from "@/db/db";
 import { app as appTable, feature, news, subscribe, upvote } from "@/db/schema";
-import { type AppOverviewCardData } from "@/components/dashboard/global-app-card";
 
 export const getAppBySlug = cache(async (slug: string) => {
 	const [dbApp] = await db

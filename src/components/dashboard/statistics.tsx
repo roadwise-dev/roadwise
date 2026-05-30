@@ -40,9 +40,9 @@ export function Statistics() {
 					engagement across the globe.
 				</p>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-					{stats.map((stat, index) => (
+					{stats.map((stat, _index) => (
 						<Card
-							key={index}
+							key={stat.title}
 							className="border-black/10 shadow-xs hover:shadow-md transition-shadow"
 						>
 							<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

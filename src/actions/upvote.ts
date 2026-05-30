@@ -1,7 +1,6 @@
 "use server";
 
 import { and, eq } from "drizzle-orm";
-import { z } from "zod";
 import { db } from "@/db/db";
 import { upvote } from "@/db/schema";
 import { upvoteSchema } from "@/lib/validations";

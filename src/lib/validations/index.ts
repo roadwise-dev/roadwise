@@ -23,15 +23,7 @@ export const updateAppDetailsSchema = z.object({
 		.optional()
 		.or(z.literal(""))
 		.transform((val) => (val ? val.trim() : null)),
-	domain: z
-		.string()
-		.min(1, "Domain is required")
-		.max(255, "Domain must be less than 255 characters")
-		.regex(
-			/^(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,}$/,
-			"Enter a valid domain",
-		)
-		.transform((val) => val.trim().toLowerCase()),
+
 	avatarUrl: z
 		.string()
 		.max(2048, "Avatar URL must be less than 2048 characters")

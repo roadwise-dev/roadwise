@@ -1,24 +1,23 @@
 "use client";
 
 import { ChevronUp, Save } from "lucide-react";
-import { useState, useTransition, useId } from "react";
+import { useId, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { updateAppThemeAction } from "@/actions/app-settings";
-import { defaultPresets } from "@/lib/theme-presets";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
-	SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { defaultPresets } from "@/lib/theme-presets";
 
 interface ThemePickerProps {
 	appSlug: string;
-	currentTheme: any | null;
+	currentTheme: string | null;
 }
 
 export function ThemePicker({ appSlug, currentTheme }: ThemePickerProps) {
@@ -79,9 +78,9 @@ export function ThemePicker({ appSlug, currentTheme }: ThemePickerProps) {
 			// Default Roadwise theme colors (approximate)
 			return (
 				<div className="flex gap-1 mr-2">
-					{["#0f172a", "#f1f5f9", "#e2e8f0", "#94a3b8"].map((c, i) => (
+					{["#0f172a", "#f1f5f9", "#e2e8f0", "#94a3b8"].map((c) => (
 						<div
-							key={i}
+							key={c}
 							className="w-2.5 h-2.5 rounded-full border border-black/10"
 							style={{ backgroundColor: c }}
 						/>
@@ -96,9 +95,9 @@ export function ThemePicker({ appSlug, currentTheme }: ThemePickerProps) {
 
 		return (
 			<div className="flex gap-1 mr-2">
-				{colors.map((c, i) => (
+				{colors.map((c) => (
 					<div
-						key={i}
+						key={c}
 						className="w-2.5 h-2.5 rounded-full border border-black/10 shadow-sm"
 						style={{ backgroundColor: c }}
 					/>
@@ -119,12 +118,20 @@ export function ThemePicker({ appSlug, currentTheme }: ThemePickerProps) {
 				</div>
 				<div className="flex items-center gap-3 w-full sm:w-auto">
 					<div className="w-full sm:w-[280px]">
-						<Select value={activeKey} onValueChange={handleSelect} disabled={isPending}>
+						<Select
+							value={activeKey}
+							onValueChange={handleSelect}
+							disabled={isPending}
+						>
 							<SelectTrigger className="w-full">
 								<div className="flex items-center truncate">
-									<ColorDots presetKey={activeKey === "default" ? null : activeKey} />
+									<ColorDots
+										presetKey={activeKey === "default" ? null : activeKey}
+									/>
 									<span className="truncate">
-										{activeKey === "default" ? "Roadwise Default" : defaultPresets[activeKey]?.label}
+										{activeKey === "default"
+											? "Roadwise Default"
+											: defaultPresets[activeKey]?.label}
 									</span>
 								</div>
 							</SelectTrigger>

@@ -1,17 +1,14 @@
 import { auth } from "@clerk/nextjs/server";
 
 import { Plus } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import {
-	type AppOverviewCardData,
-	GlobalAppCard,
-} from "@/components/dashboard/global-app-card";
+import { GlobalAppCard } from "@/components/dashboard/global-app-card";
 import { GlobalStatsCards } from "@/components/dashboard/global-stats-cards";
 import { ZeroAppState } from "@/components/dashboard/zero-app-state";
 import { Button } from "@/components/ui/button";
 import { getUserAppsOverview } from "@/db/queries";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Dashboard",

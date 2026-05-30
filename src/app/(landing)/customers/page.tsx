@@ -93,7 +93,10 @@ function CustomerCard({ customer }: { customer: (typeof customers)[0] }) {
 
 export default function CustomersPage() {
 	// Duplicate customers array for seamless marquee loop
-	const marqueeCustomers = [...customers, ...customers];
+	const marqueeCustomers = [
+		...customers.map((c) => ({ ...c, _key: `${c.name}-1` })),
+		...customers.map((c) => ({ ...c, _key: `${c.name}-2` })),
+	];
 
 	return (
 		<main className="flex flex-col w-full pb-24">
@@ -116,7 +119,7 @@ export default function CustomersPage() {
 				<div className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-4 border-t border-border pt-12">
 					{metrics.map((metric, i) => (
 						<motion.div
-							key={i}
+							key={metric.description}
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true, margin: "-50px" }}
@@ -146,8 +149,8 @@ export default function CustomersPage() {
 						}}
 						className="flex w-max gap-6 px-3"
 					>
-						{marqueeCustomers.map((customer, i) => (
-							<CustomerCard key={i} customer={customer} />
+						{marqueeCustomers.map((customer) => (
+							<CustomerCard key={customer._key} customer={customer} />
 						))}
 					</motion.div>
 					{/* Gradient Masks */}

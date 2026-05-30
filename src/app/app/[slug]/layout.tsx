@@ -1,8 +1,8 @@
+import { eq } from "drizzle-orm";
+import { notFound } from "next/navigation";
 import Navbar from "@/components/implemented/navbar";
 import { db } from "@/db/db";
 import { app } from "@/db/schema";
-import { eq } from "drizzle-orm";
-import { notFound } from "next/navigation";
 
 export default async function PublicAppLayout({
 	children,
@@ -38,7 +38,9 @@ export default async function PublicAppLayout({
 					${darkStyles}
 				}
 			`}</style>
-			<div className={`flex flex-col min-h-screen bg-background text-foreground transition-colors ${slugId}`}>
+			<div
+				className={`flex flex-col min-h-screen bg-background text-foreground transition-colors ${slugId}`}
+			>
 				{/* Navbar */}
 				<Navbar />
 				<div className="w-full px-8 py-4 max-w-[1440px] mx-auto grow">

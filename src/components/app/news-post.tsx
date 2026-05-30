@@ -62,18 +62,19 @@ export function NewsPost({
 
 			{link && (
 				<p className="mb-2">
-					{link.text.split("here").map((part, i, arr) =>
-						i === arr.length - 1 ? (
-							part
+					{link.text.split("here").map((part, i, arr) => {
+						const isLast = i === arr.length - 1;
+						return isLast ? (
+							<span key={part}>{part}</span>
 						) : (
-							<span key={i}>
+							<span key={part}>
 								{part}
 								<Link href={link.url} className="hover:underline">
 									here
 								</Link>
 							</span>
-						),
-					)}
+						);
+					})}
 				</p>
 			)}
 		</div>

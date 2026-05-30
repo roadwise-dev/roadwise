@@ -56,10 +56,10 @@ export function Pricing() {
 					user feedback today.
 				</p>
 				<div className="grid md:grid-cols-2 gap-8">
-					{plans.map((plan, index) => (
+					{plans.map((plan) => (
 						<Card
-							key={index}
-							className={`flex flex-col ${index === 1 ? "border-black" : "border-gray-200"}`}
+							key={plan.name}
+							className={`flex flex-col ${plan.name === "Pro (Coming Soon!)" ? "border-black" : "border-gray-200"}`}
 						>
 							<CardHeader>
 								<CardTitle className="text-2xl font-bold">
@@ -75,8 +75,8 @@ export function Pricing() {
 									)}
 								</div>
 								<ul className="space-y-2">
-									{plan.features.map((feature, featureIndex) => (
-										<li key={featureIndex} className="flex items-center">
+									{plan.features.map((feature) => (
+										<li key={feature} className="flex items-center">
 											<Check className="h-5 w-5 mr-2 text-black" />
 											<span>{feature}</span>
 										</li>
@@ -86,7 +86,9 @@ export function Pricing() {
 							<CardFooter>
 								<Button
 									className="w-full"
-									variant={index === 1 ? "default" : "outline"}
+									variant={
+										plan.name === "Pro (Coming Soon!)" ? "default" : "outline"
+									}
 								>
 									{plan.cta}
 								</Button>

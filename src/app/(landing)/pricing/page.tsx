@@ -48,8 +48,8 @@ export default function PricingPage() {
 								"Unlimited news updates",
 								"REST API access",
 								"Community support",
-							].map((feature, i) => (
-								<li key={i} className="flex items-start gap-3 text-sm">
+							].map((feature, _i) => (
+								<li key={feature} className="flex items-start gap-3 text-sm">
 									<Check className="size-5 shrink-0 text-foreground" />
 									<span className="text-muted-foreground leading-relaxed">
 										{feature}
@@ -94,8 +94,8 @@ export default function PricingPage() {
 								"React drop-in components",
 								"Webhooks & SAML SSO",
 								"Priority support",
-							].map((feature, i) => (
-								<li key={i} className="flex items-start gap-3 text-sm">
+							].map((feature, _i) => (
+								<li key={feature} className="flex items-start gap-3 text-sm">
 									<Check className="size-5 shrink-0 text-background" />
 									<span className="text-background/80 leading-relaxed">
 										{feature}
@@ -104,6 +104,7 @@ export default function PricingPage() {
 							))}
 						</ul>
 						<button
+							type="button"
 							disabled
 							className="flex h-12 w-full items-center justify-center rounded-xl bg-background/10 text-sm font-medium text-background/50 cursor-not-allowed"
 						>

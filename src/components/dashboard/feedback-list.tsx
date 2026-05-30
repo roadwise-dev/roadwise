@@ -1,10 +1,10 @@
 "use client";
 
 import { Heart, MessageSquare, Search } from "lucide-react";
-import Link from "next/link";
+
 import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+
 import {
 	Card,
 	CardContent,
@@ -38,7 +38,11 @@ interface FeedbackListProps {
 	boards: BoardOption[];
 }
 
-export function FeedbackList({ appSlug, features, boards }: FeedbackListProps) {
+export function FeedbackList({
+	appSlug: _appSlug,
+	features,
+	boards,
+}: FeedbackListProps) {
 	const [query, setQuery] = useState("");
 	const [boardFilter, setBoardFilter] = useState("all");
 
@@ -71,13 +75,6 @@ export function FeedbackList({ appSlug, features, boards }: FeedbackListProps) {
 						here.
 					</CardDescription>
 				</CardHeader>
-				<CardContent>
-					<Button asChild>
-						<Link href={`/app/${appSlug}/feature-request`}>
-							Open request form
-						</Link>
-					</Button>
-				</CardContent>
 			</Card>
 		);
 	}

@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
+import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import { Metadata } from "next";
 import { getAppBySlug } from "@/db/queries";
 
 interface AppLayoutProps {

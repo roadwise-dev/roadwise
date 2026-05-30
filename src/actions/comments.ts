@@ -28,7 +28,7 @@ export async function createComment(
 			};
 		}
 
-		if (!data.email || !data.email.includes("@")) {
+		if (!data.email?.includes("@")) {
 			return {
 				success: false,
 				error: "Please enter a valid email address",

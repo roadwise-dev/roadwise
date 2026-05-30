@@ -46,8 +46,8 @@ async function NewsContent({ appId }: { appId: string }) {
 
 	return (
 		<div className="border-t border-gray-200">
-			{dbNews.map((news, index) => (
-				<div key={index}>
+			{dbNews.map((news) => (
+				<div key={news.id}>
 					<NewsPost
 						date={news.date}
 						title={news.title}
@@ -65,8 +65,8 @@ async function NewsContent({ appId }: { appId: string }) {
 function NewsLoadingSkeleton() {
 	return (
 		<div className="border-t border-gray-200 py-8 space-y-6">
-			{[1, 2, 3].map((i) => (
-				<div key={i} className="space-y-3">
+			{[1, 2, 3].map((val) => (
+				<div key={val} className="space-y-3">
 					<Skeleton className="h-4 w-24 rounded" />
 					<div className="flex justify-between items-center gap-2 mb-4">
 						<Skeleton className="h-8 w-64 rounded" />

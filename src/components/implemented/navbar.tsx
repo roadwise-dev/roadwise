@@ -1,6 +1,6 @@
 "use client";
 
-import { Map, MessageCircle, Newspaper } from "lucide-react";
+import { Map as MapIcon, MessageCircle, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -23,7 +23,7 @@ export default function Navbar() {
 	}, []);
 
 	const links = [
-		{ href: "", label: "Roadmap", icon: Map },
+		{ href: "", label: "Roadmap", icon: MapIcon },
 		{ href: "feature-request", label: "Features", icon: MessageCircle },
 		{ href: "news", label: "News", icon: Newspaper },
 	];

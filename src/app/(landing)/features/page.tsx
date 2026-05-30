@@ -52,9 +52,9 @@ export default function FeaturesPage() {
 						</div>
 						<div className="relative h-48 w-full translate-y-8 translate-x-8 rounded-tl-xl border border-border bg-muted/20 transition-transform duration-500 group-hover:translate-y-4 group-hover:translate-x-4">
 							<div className="absolute inset-0 p-6 space-y-4">
-								{[1, 2].map((i) => (
+								{[1, 2].map((val) => (
 									<div
-										key={i}
+										key={`feedback-${val}`}
 										className="flex items-center gap-4 rounded-xl border border-border bg-background p-4"
 									>
 										<div className="flex flex-col items-center justify-center rounded-md border border-border bg-muted/30 p-2">
@@ -91,9 +91,9 @@ export default function FeaturesPage() {
 						</div>
 						<div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-muted/30 to-transparent flex items-end justify-center pb-8 opacity-70 transition-opacity duration-500 group-hover:opacity-100">
 							<div className="flex items-end gap-2 h-24">
-								{[40, 70, 45, 90, 65, 100].map((h, i) => (
+								{[40, 70, 45, 90, 65, 100].map((h) => (
 									<div
-										key={i}
+										key={`stat-${h}`}
 										className="w-8 rounded-t-sm bg-foreground/20"
 										style={{ height: `${h}%` }}
 									/>
@@ -172,12 +172,12 @@ export default function FeaturesPage() {
 							</p>
 						</div>
 						<div className="absolute bottom-8 right-8 flex -space-x-4">
-							{[1, 2, 3, 4].map((i) => (
+							{[1, 2, 3, 4].map((val) => (
 								<div
-									key={i}
+									key={`avatar-${val}`}
 									className="flex size-14 items-center justify-center rounded-full border-4 border-background bg-muted text-lg font-medium text-muted-foreground transition-transform duration-300 hover:-translate-y-2 hover:z-10"
 								>
-									T{i}
+									T{val}
 								</div>
 							))}
 						</div>

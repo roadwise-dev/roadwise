@@ -1,74 +1,41 @@
 import Link from "next/link";
-import Logo from "../svg/logo";
+import Logo from "@/components/svg/logo";
+import { sourceUrl } from "./demo-data";
+import styles from "./landing.module.css";
 
 export default function Footer() {
 	return (
-		<footer className="w-full bg-background my-10 sm:my-16">
-			<div className="w-full max-w-[1120px] mx-auto px-5 padding-container">
-				{/* Logo/description and navigation links */}
-				<div className="flex flex-col md:flex-row md:justify-between mb-8 gap-8">
-					{/* Logo and description */}
-					<div className="flex-1 max-w-md">
-						<Link
-							href="/"
-							className="inline-flex items-center gap-2 mb-3 hover:opacity-80 transition-opacity"
-						>
-							<Logo width={28} height={28} variant="whiteOnBlack" />
-							<h2 className="text-lg font-semibold text-foreground">
-								Roadwise
-							</h2>
+		<footer className={styles.footer}>
+			<div className={styles.wrap}>
+				<div className={styles.footerMain}>
+					<div>
+						<Link href="/" className={styles.brand} aria-label="Roadwise home">
+							<Logo size={27} variant="blackOnWhite" />
+							<span>Roadwise</span>
 						</Link>
-						<p className="text-sm text-muted-foreground">
-							Build better products with user feedback. Collect feature
-							requests, prioritize your roadmap, and keep your users informed.
-						</p>
+						<p>Open-source product feedback.</p>
 					</div>
-
-					{/* Navigation links */}
-					<nav aria-label="Footer">
-						<div className="flex flex-wrap gap-6 h-full items-end">
-							<Link
-								href="/features"
-								className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-							>
-								Features
-							</Link>
-							<Link
-								href="/customers"
-								className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-							>
-								Customers
-							</Link>
-							<Link
-								href="/pricing"
-								className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-							>
-								Pricing
-							</Link>
-						</div>
+					<nav aria-label="Footer product links">
+						<span>Product</span>
+						<Link href="/#product">Feedback & roadmap</Link>
+						<Link href="/#ecosystem">Developer ecosystem</Link>
+						<Link href="/#pricing">Free cloud</Link>
+					</nav>
+					<nav aria-label="Footer resource links">
+						<span>Resources</span>
+						<a href={sourceUrl} target="_blank" rel="noopener noreferrer">
+							Source code ↗
+						</a>
+						<Link href="/#hosting">Self-host Roadwise</Link>
+						<Link href="/app/roadwise">Our feedback board ↗</Link>
 					</nav>
 				</div>
-
-				{/* Copyright and legal links */}
-				<div className="pt-6 border-t flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-					<p className="text-sm text-muted-foreground">
-						&copy; {new Date().getFullYear()} Roadwise. All rights reserved.
-					</p>
-
-					<div className="flex gap-6">
-						<Link
-							href="/terms-of-service"
-							className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-						>
-							Terms of Service
-						</Link>
-						<Link
-							href="/privacy-policy"
-							className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-						>
-							Privacy Policy
-						</Link>
-					</div>
+				<div className={styles.footerBottom}>
+					<span>© {new Date().getFullYear()} Roadwise</span>
+					<span>
+						<Link href="/privacy-policy">Privacy</Link>
+						<Link href="/terms-of-service">Terms</Link>
+					</span>
 				</div>
 			</div>
 		</footer>

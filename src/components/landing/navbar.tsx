@@ -1,120 +1,88 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import Logo from "../svg/logo";
+import { useEffect, useRef, useState } from "react";
+import Logo from "@/components/svg/logo";
 import { AuthButtons } from "./auth-buttons";
-
-const navigationItems = [
-	{ href: "/features", label: "Features", ariaLabel: "View features" },
-	{ href: "/customers", label: "Customers", ariaLabel: "View customers" },
-	{ href: "/pricing", label: "Pricing", ariaLabel: "View pricing" },
-];
-
-function DesktopNavLink({ item }: { item: (typeof navigationItems)[0] }) {
-	const pathname = usePathname();
-	const isActive = pathname === item.href;
-
-	return (
-		<Link
-			href={item.href}
-			className={`text-sm font-semibold transition-colors px-4 py-2 ${
-				isActive
-					? "text-foreground"
-					: "text-muted-foreground hover:text-foreground"
-			}`}
-			aria-label={item.ariaLabel}
-		>
-			{item.label}
-		</Link>
-	);
-}
-
-function MobileNavLink({
-	item,
-	onClose,
-}: {
-	item: (typeof navigationItems)[0];
-	onClose: () => void;
-}) {
-	const pathname = usePathname();
-	const isActive = pathname === item.href;
-
-	return (
-		<Link
-			href={item.href}
-			className={`block px-3 py-2 text-sm rounded-lg transition-colors ${
-				isActive
-					? "text-foreground bg-muted/50 font-medium"
-					: "text-foreground/70 hover:text-foreground hover:bg-muted/30"
-			}`}
-			onClick={onClose}
-		>
-			{item.label}
-		</Link>
-	);
-}
+import { landingLinks, publicDemoUrl } from "./demo-data";
+import styles from "./landing.module.css";
 
 export default function Navbar() {
-	const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-	const toggleMenu = () => {
-		setIsMenuOpen(!isMenuOpen);
-	};
-
+	const [open, setOpen] = useState(false);
+	const toggleRef = useRef<HTMLButtonElement>(null);
+	useEffect(() => {
+		if (!open) return;
+		function closeMenu(event: KeyboardEvent) {
+			if (event.key === "Escape") {
+				setOpen(false);
+				toggleRef.current?.focus();
+			}
+		}
+		document.addEventListener("keydown", closeMenu);
+		return () => document.removeEventListener("keydown", closeMenu);
+	}, [open]);
 	return (
 		<>
-			<header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-max px-4">
-				<div className="flex items-center gap-6 rounded-full border border-border bg-background/80 backdrop-blur-md px-6 py-3">
-					<Link href="/" className="flex items-center gap-2 pr-2">
-						<Logo variant="whiteOnBlack" width={24} height={24} />
-						<span className="text-base font-bold tracking-tight">Roadwise</span>
+			<a className={styles.skip} href="#main">
+				Skip to content
+			</a>
+			<header className={styles.header}>
+				<div className={`${styles.wideWrap} ${styles.navWrap}`}>
+					<Link
+						href="/"
+						className={styles.brand}
+						aria-label="Roadwise home"
+						onClick={() => setOpen(false)}
+					>
+						<Logo size={27} variant="whiteOnBlack" />
+						<span>Roadwise</span>
 					</Link>
-
-					<nav className="hidden md:flex items-center gap-2">
-						{navigationItems.map((item) => (
-							<DesktopNavLink key={item.href} item={item} />
+					<nav className={styles.desktopNav} aria-label="Main navigation">
+						{landingLinks.map((link) => (
+							<Link key={link.href} href={link.href}>
+								{link.label}
+							</Link>
 						))}
 					</nav>
-
-					<div className="hidden md:flex pl-2">
+					<div className={styles.navActions}>
+						<a href={publicDemoUrl} className={styles.demoLink}>
+							View demo
+						</a>
 						<AuthButtons />
+						<button
+							ref={toggleRef}
+							type="button"
+							className={styles.menuToggle}
+							aria-label={open ? "Close navigation" : "Open navigation"}
+							aria-expanded={open}
+							aria-controls="mobile-navigation"
+							onClick={() => setOpen((value) => !value)}
+						>
+							{open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+						</button>
 					</div>
-
-					<Button
-						variant="ghost"
-						size="icon"
-						className="md:hidden size-8 rounded-full"
-						onClick={toggleMenu}
-						aria-label="Toggle menu"
-					>
-						<Menu className="size-4" />
-					</Button>
 				</div>
+				<nav
+					className={styles.mobileMenu}
+					id="mobile-navigation"
+					hidden={!open}
+					aria-label="Mobile navigation"
+				>
+					<a href={publicDemoUrl} onClick={() => setOpen(false)}>
+						View demo
+					</a>
+					{landingLinks.map((link) => (
+						<Link
+							key={link.href}
+							href={link.href}
+							onClick={() => setOpen(false)}
+						>
+							{link.label}
+						</Link>
+					))}
+				</nav>
 			</header>
-
-			{/* Mobile menu - floating dropdown */}
-			{isMenuOpen && (
-				<div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-40 md:hidden w-[90%] max-w-[300px]">
-					<div className="bg-background/90 backdrop-blur-md border border-border rounded-2xl p-4">
-						<div className="space-y-2">
-							{navigationItems.map((item) => (
-								<MobileNavLink
-									key={item.href}
-									item={item}
-									onClose={() => setIsMenuOpen(false)}
-								/>
-							))}
-							<div className="pt-2 mt-2 border-t border-border">
-								<AuthButtons />
-							</div>
-						</div>
-					</div>
-				</div>
-			)}
 		</>
 	);
 }

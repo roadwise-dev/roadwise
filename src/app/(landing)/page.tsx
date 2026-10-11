@@ -1,55 +1,29 @@
-"use client";
-
-import { motion } from "motion/react";
-import { HowItWorks } from "@/components/how-it-works";
-import { BeforeAfterWorkflow } from "@/components/landing/before-after-workflow";
-import { CallToAction } from "@/components/landing/cta";
-import DeveloperFeatures from "@/components/landing/developer-features";
-import { Features } from "@/components/landing/features";
+import type { Metadata } from "next";
 import Hero from "@/components/landing/hero";
+import {
+	Closing,
+	Ecosystem,
+	Hosting,
+	Workflow,
+} from "@/components/landing/home-sections";
+import styles from "@/components/landing/landing.module.css";
+import ProductDemo from "@/components/landing/product-demo";
+
+export const metadata: Metadata = {
+	title: { absolute: "Roadwise — Open-source product feedback." },
+	description:
+		"Collect feedback, understand demand, organize your roadmap, and publish updates. Open-source product feedback for developers and small teams. Use our free cloud or host it yourself.",
+};
 
 export default function HomePage() {
-	const sections = [
-		{ id: "hero", component: <Hero />, delay: 0 },
-		{ id: "narrative", component: <DeveloperFeatures />, delay: 0.1 },
-		{ id: "before-after", component: <BeforeAfterWorkflow />, delay: 0.15 },
-		{ id: "workflow", component: <HowItWorks />, delay: 0.2 },
-		{ id: "features", component: <Features />, delay: 0.25 },
-		{
-			id: "cta",
-			component: (
-				<CallToAction
-					title="Start collecting better feedback"
-					description="Create a Roadwise board for your product and give users a clear place to request, vote, and follow progress."
-					buttons={[
-						{
-							text: "Start for free",
-							href: "/signup",
-						},
-					]}
-				/>
-			),
-			delay: 0.3,
-		},
-	];
-
 	return (
-		<main className="flex flex-col gap-16 sm:gap-30">
-			{sections.map((section) => (
-				<motion.div
-					key={section.id}
-					initial={{ opacity: 0, y: 40 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true, margin: "-100px" }}
-					transition={{
-						duration: 0.5,
-						delay: section.delay / 2,
-						ease: "easeOut",
-					}}
-				>
-					{section.component}
-				</motion.div>
-			))}
-		</main>
+		<div className={styles.home}>
+			<Hero />
+			<ProductDemo />
+			<Workflow />
+			<Ecosystem />
+			<Hosting />
+			<Closing />
+		</div>
 	);
 }

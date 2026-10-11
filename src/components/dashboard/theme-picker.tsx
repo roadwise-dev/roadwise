@@ -14,10 +14,11 @@ import {
 	SelectTrigger,
 } from "@/components/ui/select";
 import { defaultPresets } from "@/lib/theme-presets";
+import type { ThemeStyles } from "@/types/theme";
 
 interface ThemePickerProps {
 	appSlug: string;
-	currentTheme: string | null;
+	currentTheme: ThemeStyles | null;
 }
 
 export function ThemePicker({ appSlug, currentTheme }: ThemePickerProps) {

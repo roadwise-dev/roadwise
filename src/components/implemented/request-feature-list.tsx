@@ -52,7 +52,7 @@ export default function RequestFeatureList({
 		<div className="flex flex-col">
 			<div className="flex gap-4 mb-6">
 				<div className="relative grow">
-					<Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
+					<Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
 					<Input
 						type="text"
 						placeholder="Search features..."
@@ -76,10 +76,9 @@ export default function RequestFeatureList({
 							</CardHeader>
 							<CardContent>
 								<div className="flex justify-between items-center">
-									<div className="flex items-center">
+									<div className="flex items-center text-muted-foreground">
 										<MessageSquare className="h-4 w-4 mr-1" />
-										{/* <span className="text-sm text-gray-500">{feature.comments.length}</span> */}
-										<span className="text-sm text-gray-500">2</span>
+										<span className="text-sm">2</span>
 									</div>
 									<div>
 										{feature.tags.map((tag) => (
@@ -100,11 +99,11 @@ export default function RequestFeatureList({
 			) : (
 				<div className="text-center py-10">
 					<h2 className="text-2xl font-semibold mb-2">No results found</h2>
-					<p className="text-gray-600">
+					<p className="text-muted-foreground">
 						We couldn&apos;t find any features matching your search or selected
 						tags.
 					</p>
-					<p className="text-gray-600">
+					<p className="text-muted-foreground">
 						Try adjusting your search terms or selected tags, or{" "}
 						<Button variant="link" className="p-0 h-auto font-semibold">
 							submit a new feature request

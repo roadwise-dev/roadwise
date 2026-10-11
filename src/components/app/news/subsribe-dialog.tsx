@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useUserData } from "@/hooks/use-user-data";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
 	email: z.string().email({ message: "Please enter a valid email address" }),
@@ -45,9 +46,11 @@ type FormValues = z.infer<typeof formSchema>;
 export function SubscribeDialog({
 	appId,
 	appName,
+	className,
 }: {
 	appId: string;
 	appName: string;
+	className?: string;
 }) {
 	const [open, setOpen] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -104,7 +107,11 @@ export function SubscribeDialog({
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button variant="outline" size="sm" className="flex items-center gap-2">
+				<Button
+					variant="outline"
+					size="sm"
+					className={cn("flex items-center gap-2", className)}
+				>
 					<Bell className="h-4 w-4" />
 					Subscribe to updates
 				</Button>

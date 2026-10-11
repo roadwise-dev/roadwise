@@ -16,7 +16,7 @@
 - **Server Actions**: Use "use server" directive, handle auth with Clerk, return redirects
 - **Database**: Use Drizzle ORM with proper schema imports from `@/db/schema`
 - **Styling**: Tailwind CSS with `cn()` utility, minimalistic design using shadcn components
-- **Forms**: React Hook Form with Zod validation, Radix UI components
+- **Forms**: React Hook Form with Zod validation, Base UI primitives via shadcn/ui
 - **Error Handling**: Return string messages from server actions, redirect on auth failure
 - **File Structure**: Group by feature in `/components`, actions in `/actions`, shared UI in `/components/ui`
 

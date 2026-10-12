@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { type ReactElement, useEffect, useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -29,6 +29,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useUserData } from "@/hooks/use-user-data";
 
@@ -49,13 +50,16 @@ type FormValues = z.infer<typeof formSchema>;
 export function CreateFeatureDialog({
 	appId,
 	appName,
+	trigger,
 }: {
 	appId: string;
 	appName: string;
+	trigger?: ReactElement;
 }) {
 	const [open, setOpen] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [tagInput, setTagInput] = useState("");
+	const tagInputId = useId();
 	const { userData, isLoaded, updateName } = useUserData();
 	const router = useRouter();
 
@@ -145,10 +149,12 @@ export function CreateFeatureDialog({
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button className="flex items-center gap-2">
-					<Plus className="h-4 w-4" />
-					New Request
-				</Button>
+				{trigger ?? (
+					<Button className="flex items-center gap-2">
+						<Plus className="h-4 w-4" />
+						New Request
+					</Button>
+				)}
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[525px]">
 				<DialogHeader>
@@ -208,9 +214,10 @@ export function CreateFeatureDialog({
 						/>
 
 						<div className="space-y-2">
-							<FormLabel>Tags (optional)</FormLabel>
+							<Label htmlFor={tagInputId}>Tags (optional)</Label>
 							<div className="flex gap-2">
 								<Input
+									id={tagInputId}
 									placeholder="Add a tag"
 									value={tagInput}
 									onChange={(e) => setTagInput(e.target.value)}

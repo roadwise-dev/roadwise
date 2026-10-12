@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { FeatureRequestLink } from "@/components/app/feature-request-link";
+import { CreateFeatureDialog } from "@/components/app/request-feature-dialog";
 import FeatureBoard, {
 	FeatureBoardSkeleton,
 } from "@/components/implemented/feature-board";
@@ -61,11 +61,11 @@ export default async function Page(props: {
 						<p className="text-muted-foreground">{dbApp.description}</p>
 					</div>
 				</div>
-				<Button asChild>
-					<FeatureRequestLink appSlug={dbApp.slug}>
-						Request a feature
-					</FeatureRequestLink>
-				</Button>
+				<CreateFeatureDialog
+					appId={dbApp.id}
+					appName={dbApp.name}
+					trigger={<Button>Request a feature</Button>}
+				/>
 			</div>
 			{/* Use flex-1 to make the grid take up all remaining space */}
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">

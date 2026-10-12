@@ -4,6 +4,7 @@ import { Map as MapIcon, MessageCircle, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ThemeToggle } from "@/components/dashboard/theme-toggle";
 import { isSubdomain } from "@/lib/config";
 
 export default function Navbar() {
@@ -66,18 +67,19 @@ export default function Navbar() {
 							key={link.href}
 							href={getLinkHref(link.href)}
 							prefetch={true}
-							className={`text-base transition-colors duration-200 flex items-center space-x-2 rounded px-2 py-1 ${
+							className={`text-base transition-colors duration-200 flex items-center gap-2 rounded px-2 py-1 ${
 								isActive(link.href)
 									? "bg-muted text-foreground"
 									: "text-muted-foreground hover:text-foreground hover:bg-muted"
 							}`}
 						>
 							<link.icon size={18} />
-							<span>{link.label}</span>
+							<span className="sr-only sm:not-sr-only">{link.label}</span>
 						</Link>
 					))}
 				</div>
-				<div>
+				<div className="flex shrink-0 items-center gap-3">
+					<ThemeToggle />
 					<Link
 						href="https://roadwiseapp.com"
 						target="_blank"

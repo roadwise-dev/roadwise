@@ -12,7 +12,7 @@
 	--rw-ring: #888;
 	--rw-faint: #757575;
 	--rw-button-radius: 8px;
-	--rw-content-width: 1448px;
+	--rw-content-width: 1200px;
 	min-height: 100vh;
 	background: var(--rw-background);
 	color: var(--rw-foreground);

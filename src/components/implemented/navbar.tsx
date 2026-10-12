@@ -65,6 +65,7 @@ export default function Navbar() {
 						<Link
 							key={link.href}
 							href={getLinkHref(link.href)}
+							prefetch={true}
 							className={`text-base transition-colors duration-200 flex items-center space-x-2 rounded px-2 py-1 ${
 								isActive(link.href)
 									? "bg-muted text-foreground"

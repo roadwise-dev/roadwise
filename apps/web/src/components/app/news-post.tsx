@@ -73,12 +73,10 @@ export function NewsPost({
 				</div>
 			)}
 
-			<p className="max-w-[70ch] whitespace-pre-wrap break-words leading-7">
-				{content}
-			</p>
+			<p className="whitespace-pre-wrap break-words leading-7">{content}</p>
 
 			{link && (
-				<p className="mt-3 max-w-[70ch] break-words leading-7">
+				<p className="mt-3 break-words leading-7">
 					{link.text.split("here").map((part, i, arr) => {
 						const isLast = i === arr.length - 1;
 						return isLast ? (

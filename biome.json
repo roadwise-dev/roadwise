@@ -20,7 +20,7 @@
 	},
 	"overrides": [
 		{
-			"includes": ["src/components/ui/**"],
+			"includes": ["apps/web/src/components/ui/**"],
 			"linter": {
 				"enabled": false
 			},

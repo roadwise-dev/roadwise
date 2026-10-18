@@ -1,4 +1,4 @@
-import { Context, Effect, Layer } from "effect";
+import { Context, Effect, Layer, Option } from "effect";
 import { NotLoggedInError } from "./errors";
 
 export interface ConfigData {
@@ -8,6 +8,7 @@ export interface ConfigData {
 }
 
 export const DEFAULT_URL = "https://roadwiseapp.com";
+export const DEV_URL = "http://localhost:3000";
 
 const HOME = process.env.HOME || process.env.USERPROFILE || "";
 const XDG_CONFIG_HOME = process.env.XDG_CONFIG_HOME;
@@ -17,6 +18,40 @@ export const CONFIG_DIR = XDG_CONFIG_HOME
 	: `${HOME}/.config/roadwise`;
 
 export const CONFIG_PATH = `${CONFIG_DIR}/config.json`;
+
+// Resolves server URL adhering to standard precedence:
+// 1. Explicit --url flag
+// 2. Explicit --dev flag (http://localhost:3000)
+// 3. Environment variables (ROADWISE_URL, ROADWISE_BASE_URL)
+// 4. Saved config (~/.config/roadwise/config.json)
+// 5. Default fallback (https://roadwiseapp.com)
+export const resolveServerUrl = (options: {
+	url?: Option.Option<string> | string;
+	dev?: boolean;
+	configUrl?: string;
+}): string => {
+	if (typeof options.url === "string" && options.url.trim().length > 0) {
+		return options.url.trim().replace(/\/+$/, "");
+	}
+	if (
+		options.url &&
+		typeof options.url !== "string" &&
+		Option.isSome(options.url)
+	) {
+		return options.url.value.trim().replace(/\/+$/, "");
+	}
+	if (options.dev) {
+		return DEV_URL;
+	}
+	const envUrl = process.env.ROADWISE_URL ?? process.env.ROADWISE_BASE_URL;
+	if (envUrl) {
+		return envUrl.trim().replace(/\/+$/, "");
+	}
+	if (options.configUrl) {
+		return options.configUrl.trim().replace(/\/+$/, "");
+	}
+	return DEFAULT_URL;
+};
 
 // Native Bun file reading from ~/.config/roadwise/config.json
 export const readConfig = async (): Promise<ConfigData> => {
@@ -61,12 +96,9 @@ export const CliConfigLive = Layer.effect(
 	Effect.gen(function* () {
 		const fromDisk = yield* Effect.promise(() => readConfig());
 		const token = fromDisk.token ?? process.env.ROADWISE_API_KEY;
-		const url =
-			fromDisk.url ??
-			fromDisk.baseUrl ??
-			process.env.ROADWISE_URL ??
-			process.env.ROADWISE_BASE_URL ??
-			DEFAULT_URL;
+		const url = resolveServerUrl({
+			configUrl: fromDisk.url ?? fromDisk.baseUrl,
+		});
 
 		if (!token) {
 			return yield* Effect.fail(

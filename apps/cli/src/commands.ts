@@ -1,99 +1,114 @@
 import { makeEffectClient } from "@roadwise/sdk";
-import { Console, Effect, Option } from "effect";
+import { Console, Effect } from "effect";
 import { Argument, Command, Flag } from "effect/cli";
 import {
-	CliConfig,
-	CliConfigLive,
 	DEFAULT_URL,
 	readConfig,
+	resolveServerUrl,
 	saveConfig,
 } from "./config";
+import { NotLoggedInError } from "./errors";
 
 const urlFlag = Flag.String("url").pipe(
 	Flag.optional,
-	Flag.withDescription("Override the Roadwise server URL"),
+	Flag.withDescription("Override the Roadwise server URL for this command"),
+);
+
+const devFlag = Flag.Boolean("dev").pipe(
+	Flag.withDefault(false),
+	Flag.withDescription(
+		"Connect to local development server (http://localhost:3000)",
+	),
 );
 
 // --- 1. roadwise auth login ---
-const authLoginCommand = Command.make("login", { url: urlFlag }, ({ url }) =>
-	Effect.gen(function* () {
-		yield* Console.log("Roadwise CLI Login");
+const authLoginCommand = Command.make(
+	"login",
+	{ url: urlFlag, dev: devFlag },
+	({ url, dev }) =>
+		Effect.gen(function* () {
+			yield* Console.log("Roadwise CLI Login");
 
-		const input = prompt("Enter your API key (rw_...): ");
-		const token = input?.trim();
+			const input = prompt("Enter your API key (rw_...): ");
+			const token = input?.trim();
 
-		// Stage 1: Local format validation
-		if (!token) {
-			yield* Console.error("Error: API key cannot be empty.");
-			return;
-		}
+			// Stage 1: Local format validation
+			if (!token) {
+				yield* Console.error("Error: API key cannot be empty.");
+				return;
+			}
 
-		if (!token.startsWith("rw_") || token.length < 20) {
-			yield* Console.error(
-				"Error: Invalid token format. Roadwise API keys must start with 'rw_'.",
-			);
-			return;
-		}
+			if (!token.startsWith("rw_") || token.length < 20) {
+				yield* Console.error(
+					"Error: Invalid token format. Roadwise API keys must start with 'rw_'.",
+				);
+				return;
+			}
 
-		const fromDisk = yield* Effect.promise(() => readConfig());
-		const serverUrl = (
-			Option.isSome(url) ? url.value : (fromDisk.url ?? DEFAULT_URL)
-		).replace(/\/+$/, "");
+			const fromDisk = yield* Effect.promise(() => readConfig());
+			const serverUrl = resolveServerUrl({
+				url,
+				dev,
+				configUrl: fromDisk.url,
+			});
 
-		yield* Console.log(`Connecting to ${serverUrl}...`);
+			yield* Console.log(`Connecting to ${serverUrl}...`);
 
-		// Stage 2: Server verification before saving
-		const testClient = yield* makeEffectClient({
-			apiKey: token,
-			url: serverUrl,
-		});
-		const me = yield* testClient.auth.me({});
-
-		yield* Effect.promise(() =>
-			saveConfig({
-				...fromDisk,
-				token,
+			// Stage 2: Server verification before saving
+			const testClient = yield* makeEffectClient({
+				apiKey: token,
 				url: serverUrl,
-			}),
-		);
+			});
+			const me = yield* testClient.auth.me({});
 
-		const userDisplay = me.name ? `${me.name} (${me.email})` : me.email;
-		yield* Console.log(
-			`Token verified. Logged in as: ${userDisplay}. Config saved to ~/.config/roadwise/config.json`,
-		);
-	}),
+			yield* Effect.promise(() =>
+				saveConfig({
+					...fromDisk,
+					token,
+					url: serverUrl,
+				}),
+			);
+
+			const userDisplay = me.name ? `${me.name} (${me.email})` : me.email;
+			yield* Console.log(
+				`Token verified. Logged in as: ${userDisplay}. Config saved to ~/.config/roadwise/config.json`,
+			);
+		}),
 );
 
 // --- 2. roadwise auth status ---
-const authStatusCommand = Command.make("status", {}, () =>
-	Effect.gen(function* () {
-		const fromDisk = yield* Effect.promise(() => readConfig());
-		const token = fromDisk.token ?? process.env.ROADWISE_API_KEY;
-		const url =
-			fromDisk.url ??
-			process.env.ROADWISE_URL ??
-			process.env.ROADWISE_BASE_URL ??
-			DEFAULT_URL;
+const authStatusCommand = Command.make(
+	"status",
+	{ url: urlFlag, dev: devFlag },
+	({ url, dev }) =>
+		Effect.gen(function* () {
+			const fromDisk = yield* Effect.promise(() => readConfig());
+			const token = fromDisk.token ?? process.env.ROADWISE_API_KEY;
+			const serverUrl = resolveServerUrl({
+				url,
+				dev,
+				configUrl: fromDisk.url,
+			});
 
-		if (!token) {
-			yield* Console.log("You are not logged in to Roadwise.");
-			yield* Console.log("Run 'roadwise auth login' to authenticate.");
-			return;
-		}
+			if (!token) {
+				yield* Console.log("You are not logged in to Roadwise.");
+				yield* Console.log("Run 'roadwise auth login' to authenticate.");
+				return;
+			}
 
-		const masked = `${token.slice(0, 7)}........${token.slice(-4)}`;
-		yield* Console.log("Roadwise Authentication Status:");
-		yield* Console.log(`  Server:  ${url}`);
-		yield* Console.log(`  Token:   ${masked}`);
-		yield* Console.log("  Status:  Verifying with server...");
+			const masked = `${token.slice(0, 7)}........${token.slice(-4)}`;
+			yield* Console.log("Roadwise Authentication Status:");
+			yield* Console.log(`  Server:  ${serverUrl}`);
+			yield* Console.log(`  Token:   ${masked}`);
+			yield* Console.log("  Status:  Verifying with server...");
 
-		const client = yield* makeEffectClient({ apiKey: token, url });
-		const me = yield* client.auth.me({});
+			const client = yield* makeEffectClient({ apiKey: token, url: serverUrl });
+			const me = yield* client.auth.me({});
 
-		const userDisplay = me.name ? `${me.name} (${me.email})` : me.email;
-		yield* Console.log(`  User:    ${userDisplay}`);
-		yield* Console.log("  Status:  Valid (authenticated)");
-	}),
+			const userDisplay = me.name ? `${me.name} (${me.email})` : me.email;
+			yield* Console.log(`  User:    ${userDisplay}`);
+			yield* Console.log("  Status:  Valid (authenticated)");
+		}),
 );
 
 // --- 3. roadwise auth logout ---
@@ -113,27 +128,30 @@ const authLogoutCommand = Command.make("logout", {}, () =>
 );
 
 // --- 4. roadwise auth whoami ---
-const authWhoamiCommand = Command.make("whoami", {}, () =>
-	Effect.gen(function* () {
-		const fromDisk = yield* Effect.promise(() => readConfig());
-		const token = fromDisk.token ?? process.env.ROADWISE_API_KEY;
-		const url =
-			fromDisk.url ??
-			process.env.ROADWISE_URL ??
-			process.env.ROADWISE_BASE_URL ??
-			DEFAULT_URL;
+const authWhoamiCommand = Command.make(
+	"whoami",
+	{ url: urlFlag, dev: devFlag },
+	({ url, dev }) =>
+		Effect.gen(function* () {
+			const fromDisk = yield* Effect.promise(() => readConfig());
+			const token = fromDisk.token ?? process.env.ROADWISE_API_KEY;
+			const serverUrl = resolveServerUrl({
+				url,
+				dev,
+				configUrl: fromDisk.url,
+			});
 
-		if (!token) {
-			yield* Console.error(
-				"Error: You are not logged in. Run 'roadwise auth login' first.",
-			);
-			return;
-		}
+			if (!token) {
+				yield* Console.error(
+					"Error: You are not logged in. Run 'roadwise auth login' first.",
+				);
+				return;
+			}
 
-		const client = yield* makeEffectClient({ apiKey: token, url });
-		const me = yield* client.auth.me({});
-		yield* Console.log(me.name ? `${me.name} <${me.email}>` : me.email);
-	}),
+			const client = yield* makeEffectClient({ apiKey: token, url: serverUrl });
+			const me = yield* client.auth.me({});
+			yield* Console.log(me.name ? `${me.name} <${me.email}>` : me.email);
+		}),
 );
 
 // Group: roadwise auth <login | status | logout | whoami>
@@ -209,31 +227,51 @@ export const configCommand = Command.make("config").pipe(
 );
 
 // --- 8. roadwise apps ls ---
-const appsListCommand = Command.make("ls", {}, () =>
-	Effect.gen(function* () {
-		const config = yield* CliConfig;
+const appsListCommand = Command.make(
+	"ls",
+	{ url: urlFlag, dev: devFlag },
+	({ url, dev }) =>
+		Effect.gen(function* () {
+			const fromDisk = yield* Effect.promise(() => readConfig());
+			const token = fromDisk.token ?? process.env.ROADWISE_API_KEY;
 
-		yield* Effect.logDebug(`Connecting to ${config.url}...`);
+			if (!token) {
+				return yield* Effect.fail(
+					new NotLoggedInError({
+						message: "You are not logged in. Run 'roadwise auth login' first.",
+					}),
+				);
+			}
 
-		const client = yield* makeEffectClient({
-			apiKey: config.token,
-			url: config.url,
-		});
+			const serverUrl = resolveServerUrl({
+				url,
+				dev,
+				configUrl: fromDisk.url,
+			});
 
-		const response = yield* client.apps.list({});
+			yield* Effect.logDebug(`Connecting to ${serverUrl}...`);
 
-		yield* Effect.logDebug(`Received ${response.data.length} app(s) from API`);
+			const client = yield* makeEffectClient({
+				apiKey: token,
+				url: serverUrl,
+			});
 
-		if (response.data.length === 0) {
-			yield* Console.log("No apps found on your account.");
-			return;
-		}
+			const response = yield* client.apps.list({});
 
-		yield* Console.log(`Found ${response.data.length} app(s):\n`);
-		for (const app of response.data) {
-			yield* Console.log(`- ${app.name} (${app.slug}) - ${app.domain}`);
-		}
-	}).pipe(Effect.provide(CliConfigLive)),
+			yield* Effect.logDebug(
+				`Received ${response.data.length} app(s) from API`,
+			);
+
+			if (response.data.length === 0) {
+				yield* Console.log("No apps found on your account.");
+				return;
+			}
+
+			yield* Console.log(`Found ${response.data.length} app(s):\n`);
+			for (const app of response.data) {
+				yield* Console.log(`- ${app.name} (${app.slug}) - ${app.domain}`);
+			}
+		}),
 );
 
 // Group: roadwise apps <ls>

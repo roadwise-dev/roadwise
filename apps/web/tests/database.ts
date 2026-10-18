@@ -19,6 +19,12 @@ export async function createTestDatabase() {
 			email_notifications INTEGER DEFAULT 1, theme TEXT,
 			created_at INTEGER NOT NULL DEFAULT (unixepoch())
 		);
+		CREATE TABLE api_key (
+			id TEXT PRIMARY KEY NOT NULL, user_id TEXT NOT NULL,
+			name TEXT NOT NULL, key_hash TEXT NOT NULL UNIQUE,
+			hint TEXT NOT NULL, last_used_at INTEGER,
+			created_at INTEGER NOT NULL DEFAULT (unixepoch())
+		);
 		CREATE TABLE board (
 			id TEXT PRIMARY KEY NOT NULL,
 			app_id TEXT NOT NULL REFERENCES app(id) ON DELETE CASCADE,

@@ -1,0 +1,12 @@
+{
+	"private": true,
+	"name": "@roadwise/sdk",
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"dependencies": {
+		"@roadwise/contracts": "workspace:*",
+		"effect": "4.0.5"
+	}
+}

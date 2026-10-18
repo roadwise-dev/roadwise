@@ -3,6 +3,7 @@
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ThemeToggle } from "@/components/dashboard/theme-toggle";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -14,7 +15,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { ThemeToggle } from "@/components/dashboard/theme-toggle";
 
 interface App {
 	id: string;

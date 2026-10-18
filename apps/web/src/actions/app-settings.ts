@@ -187,7 +187,10 @@ export async function updateAppAvatarAction(slug: string, avatarUrl: string) {
 	}
 }
 
-export async function updateAppThemeAction(slug: string, theme: ThemeStyles | null) {
+export async function updateAppThemeAction(
+	slug: string,
+	theme: ThemeStyles | null,
+) {
 	try {
 		const { userId } = await auth();
 		if (!userId) {

@@ -1,0 +1,25 @@
+{
+	"name": "@roadwise/cli",
+	"version": "0.1.0",
+	"type": "module",
+	"main": "./src/index.ts",
+	"bin": {
+		"roadwise": "./src/index.ts"
+	},
+	"private": true,
+	"scripts": {
+		"typecheck": "bun check"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^7"
+	},
+	"dependencies": {
+		"@effect/platform-bun": "4.0.5",
+		"@roadwise/contracts": "workspace:*",
+		"@roadwise/sdk": "workspace:*",
+		"effect": "^4.0.5"
+	}
+}

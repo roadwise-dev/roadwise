@@ -1,4 +1,9 @@
-import { ApiKeyAuth, CurrentUser } from "@roadwise/contracts";
+import {
+	ApiKeyAuth,
+	AuthenticationUnavailableError,
+	CurrentUser,
+	UnauthorizedError,
+} from "@roadwise/contracts";
 import { eq } from "drizzle-orm";
 import { Effect, Layer, Redacted } from "effect";
 import { HttpServerRequest } from "effect/http";
@@ -15,18 +20,22 @@ export function makeApiKeyAuthLayer(database: typeof db) {
 					const request = yield* HttpServerRequest.HttpServerRequest;
 
 					if (!request.headers.authorization?.startsWith("Bearer ")) {
-						return yield* Effect.fail({
-							error:
-								"Missing or invalid Authorization header. Format must be 'Bearer <token>'" as const,
-						});
+						return yield* Effect.fail(
+							new UnauthorizedError({
+								error:
+									"Missing or invalid Authorization header. Format must be 'Bearer <token>'",
+							}),
+						);
 					}
 
 					const token = Redacted.value(credential);
 
 					if (!token) {
-						return yield* Effect.fail({
-							error: "Missing token" as const,
-						});
+						return yield* Effect.fail(
+							new UnauthorizedError({
+								error: "Missing token",
+							}),
+						);
 					}
 
 					const keyHash = hashToken(token);
@@ -41,17 +50,22 @@ export function makeApiKeyAuthLayer(database: typeof db) {
 						Effect.tapError((error) =>
 							Effect.logError("API key lookup failed", error),
 						),
-						Effect.mapError(() => ({
-							error: "Internal server error during authentication" as const,
-						})),
+						Effect.mapError(
+							() =>
+								new AuthenticationUnavailableError({
+									error: "Internal server error during authentication",
+								}),
+						),
 					);
 
 					const record = records[0];
 
 					if (!record) {
-						return yield* Effect.fail({
-							error: "Invalid API key" as const,
-						});
+						return yield* Effect.fail(
+							new UnauthorizedError({
+								error: "Invalid API key",
+							}),
+						);
 					}
 
 					yield* Effect.tryPromise(() =>

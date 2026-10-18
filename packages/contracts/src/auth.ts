@@ -1,27 +1,40 @@
 import { Context, Schema } from "effect";
-import { HttpApiMiddleware, HttpApiSecurity } from "effect/http-api";
+import {
+	HttpApiMiddleware,
+	HttpApiSchema,
+	HttpApiSecurity,
+} from "effect/http-api";
 
 export class CurrentUser extends Context.Service<
 	CurrentUser,
 	{ readonly userId: string }
 >()("roadwise/CurrentUser") {}
 
-export const Unauthorized = Schema.Struct({
-	error: Schema.Literals([
-		"Missing or invalid Authorization header. Format must be 'Bearer <token>'",
-		"Missing token",
-		"Invalid API key",
-	]),
-}).annotate({ httpApiStatus: 401 });
+export class UnauthorizedError extends Schema.TaggedError<UnauthorizedError>()(
+	"UnauthorizedError",
+	{
+		error: Schema.Literals([
+			"Missing or invalid Authorization header. Format must be 'Bearer <token>'",
+			"Missing token",
+			"Invalid API key",
+		]),
+	},
+) {}
 
-export const AuthenticationUnavailable = Schema.Struct({
-	error: Schema.Literal("Internal server error during authentication"),
-}).annotate({ httpApiStatus: 500 });
+export class AuthenticationUnavailableError extends Schema.TaggedError<AuthenticationUnavailableError>()(
+	"AuthenticationUnavailableError",
+	{
+		error: Schema.Literal("Internal server error during authentication"),
+	},
+) {}
 
 export class ApiKeyAuth extends HttpApiMiddleware.Service<
 	ApiKeyAuth,
 	{ provides: CurrentUser }
 >()("roadwise/ApiKeyAuth", {
 	security: { bearer: HttpApiSecurity.bearer },
-	error: [Unauthorized, AuthenticationUnavailable],
+	error: [
+		UnauthorizedError.pipe(HttpApiSchema.status(401)),
+		AuthenticationUnavailableError.pipe(HttpApiSchema.status(500)),
+	],
 }) {}

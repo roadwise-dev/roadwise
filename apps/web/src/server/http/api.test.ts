@@ -127,6 +127,7 @@ describe("apps HTTP API", () => {
 			);
 			assert.equal(response.status, 401);
 			assert.deepEqual(await response.json(), {
+				_tag: "UnauthorizedError",
 				error:
 					"Missing or invalid Authorization header. Format must be 'Bearer <token>'",
 			});
@@ -136,7 +137,10 @@ describe("apps HTTP API", () => {
 	it("rejects an unknown API key", async () => {
 		const response = await request("rw_unknown-key");
 		assert.equal(response.status, 401);
-		assert.deepEqual(await response.json(), { error: "Invalid API key" });
+		assert.deepEqual(await response.json(), {
+			_tag: "UnauthorizedError",
+			error: "Invalid API key",
+		});
 	});
 
 	it("returns only the owner's apps, sorted and encoded for JSON", async () => {
@@ -164,7 +168,10 @@ describe("apps HTTP API", () => {
 		await fixture.database.delete(apiKey).where(eq(apiKey.id, "owner-key"));
 		const response = await request(ownerToken);
 		assert.equal(response.status, 401);
-		assert.deepEqual(await response.json(), { error: "Invalid API key" });
+		assert.deepEqual(await response.json(), {
+			_tag: "UnauthorizedError",
+			error: "Invalid API key",
+		});
 	});
 
 	it("returns a public 500 error when the key lookup fails", async () => {
@@ -172,6 +179,7 @@ describe("apps HTTP API", () => {
 		const response = await request(ownerToken);
 		assert.equal(response.status, 500);
 		assert.deepEqual(await response.json(), {
+			_tag: "AuthenticationUnavailableError",
 			error: "Internal server error during authentication",
 		});
 	});

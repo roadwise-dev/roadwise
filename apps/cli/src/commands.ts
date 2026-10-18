@@ -127,44 +127,16 @@ const authLogoutCommand = Command.make("logout", {}, () =>
 	}),
 );
 
-// --- 4. roadwise auth whoami ---
-const authWhoamiCommand = Command.make(
-	"whoami",
-	{ url: urlFlag, dev: devFlag },
-	({ url, dev }) =>
-		Effect.gen(function* () {
-			const fromDisk = yield* Effect.promise(() => readConfig());
-			const token = fromDisk.token ?? process.env.ROADWISE_API_KEY;
-			const serverUrl = resolveServerUrl({
-				url,
-				dev,
-				configUrl: fromDisk.url,
-			});
-
-			if (!token) {
-				yield* Console.error(
-					"Error: You are not logged in. Run 'roadwise auth login' first.",
-				);
-				return;
-			}
-
-			const client = yield* makeEffectClient({ apiKey: token, url: serverUrl });
-			const me = yield* client.auth.me({});
-			yield* Console.log(me.name ? `${me.name} <${me.email}>` : me.email);
-		}),
-);
-
-// Group: roadwise auth <login | status | logout | whoami>
+// Group: roadwise auth <login | status | logout>
 export const authCommand = Command.make("auth").pipe(
 	Command.withSubcommands([
 		authLoginCommand,
 		authStatusCommand,
 		authLogoutCommand,
-		authWhoamiCommand,
 	]),
 );
 
-// --- 5. roadwise config set <key> <value> ---
+// --- 4. roadwise config set <key> <value> ---
 const configKeyArg = Argument.String("key");
 const configValueArg = Argument.String("value");
 
@@ -188,21 +160,24 @@ const configSetCommand = Command.make(
 		}),
 );
 
-// --- 6. roadwise config get <key> ---
-const configGetCommand = Command.make("get", { key: configKeyArg }, ({ key }) =>
-	Effect.gen(function* () {
-		const fromDisk = yield* Effect.promise(() => readConfig());
-		if (key === "url" || key === "baseUrl") {
-			yield* Console.log(fromDisk.url ?? DEFAULT_URL);
-		} else {
-			yield* Console.error(
-				`Error: Unknown configuration key '${key}'. Supported keys: url (or baseUrl)`,
-			);
-		}
-	}),
+// --- 5. roadwise config get <key> ---
+const configGetCommand = Command.make(
+	"get",
+	{ key: configKeyArg },
+	({ key }) =>
+		Effect.gen(function* () {
+			const fromDisk = yield* Effect.promise(() => readConfig());
+			if (key === "url" || key === "baseUrl") {
+				yield* Console.log(fromDisk.url ?? DEFAULT_URL);
+			} else {
+				yield* Console.error(
+					`Error: Unknown configuration key '${key}'. Supported keys: url (or baseUrl)`,
+				);
+			}
+		}),
 );
 
-// --- 7. roadwise config list ---
+// --- 6. roadwise config list ---
 const configListCommand = Command.make("list", {}, () =>
 	Effect.gen(function* () {
 		const fromDisk = yield* Effect.promise(() => readConfig());
@@ -226,7 +201,7 @@ export const configCommand = Command.make("config").pipe(
 	]),
 );
 
-// --- 8. roadwise apps ls ---
+// --- 7. roadwise apps ls ---
 const appsListCommand = Command.make(
 	"ls",
 	{ url: urlFlag, dev: devFlag },

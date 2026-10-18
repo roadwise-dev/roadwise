@@ -52,4 +52,11 @@ export class Roadwise {
 			return E.runPromise(client.apps.list({}));
 		},
 	};
+
+	readonly auth = {
+		me: async () => {
+			const client = await this.clientPromise;
+			return E.runPromise(client.auth.me({}));
+		},
+	};
 }

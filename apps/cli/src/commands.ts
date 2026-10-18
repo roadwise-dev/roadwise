@@ -47,7 +47,7 @@ const authLoginCommand = Command.make("login", { url: urlFlag }, ({ url }) =>
 			apiKey: token,
 			url: serverUrl,
 		});
-		yield* testClient.apps.list({});
+		const me = yield* testClient.auth.me({});
 
 		yield* Effect.promise(() =>
 			saveConfig({
@@ -57,8 +57,9 @@ const authLoginCommand = Command.make("login", { url: urlFlag }, ({ url }) =>
 			}),
 		);
 
+		const userDisplay = me.name ? `${me.name} (${me.email})` : me.email;
 		yield* Console.log(
-			"Token verified. Successfully logged in. Config saved to ~/.config/roadwise/config.json",
+			`Token verified. Logged in as: ${userDisplay}. Config saved to ~/.config/roadwise/config.json`,
 		);
 	}),
 );
@@ -87,8 +88,10 @@ const authStatusCommand = Command.make("status", {}, () =>
 		yield* Console.log("  Status:  Verifying with server...");
 
 		const client = yield* makeEffectClient({ apiKey: token, url });
-		yield* client.apps.list({});
+		const me = yield* client.auth.me({});
 
+		const userDisplay = me.name ? `${me.name} (${me.email})` : me.email;
+		yield* Console.log(`  User:    ${userDisplay}`);
 		yield* Console.log("  Status:  Valid (authenticated)");
 	}),
 );
@@ -109,16 +112,41 @@ const authLogoutCommand = Command.make("logout", {}, () =>
 	}),
 );
 
-// Group: roadwise auth <login | status | logout>
+// --- 4. roadwise auth whoami ---
+const authWhoamiCommand = Command.make("whoami", {}, () =>
+	Effect.gen(function* () {
+		const fromDisk = yield* Effect.promise(() => readConfig());
+		const token = fromDisk.token ?? process.env.ROADWISE_API_KEY;
+		const url =
+			fromDisk.url ??
+			process.env.ROADWISE_URL ??
+			process.env.ROADWISE_BASE_URL ??
+			DEFAULT_URL;
+
+		if (!token) {
+			yield* Console.error(
+				"Error: You are not logged in. Run 'roadwise auth login' first.",
+			);
+			return;
+		}
+
+		const client = yield* makeEffectClient({ apiKey: token, url });
+		const me = yield* client.auth.me({});
+		yield* Console.log(me.name ? `${me.name} <${me.email}>` : me.email);
+	}),
+);
+
+// Group: roadwise auth <login | status | logout | whoami>
 export const authCommand = Command.make("auth").pipe(
 	Command.withSubcommands([
 		authLoginCommand,
 		authStatusCommand,
 		authLogoutCommand,
+		authWhoamiCommand,
 	]),
 );
 
-// --- 4. roadwise config set <key> <value> ---
+// --- 5. roadwise config set <key> <value> ---
 const configKeyArg = Argument.String("key");
 const configValueArg = Argument.String("value");
 
@@ -142,7 +170,7 @@ const configSetCommand = Command.make(
 		}),
 );
 
-// --- 5. roadwise config get <key> ---
+// --- 6. roadwise config get <key> ---
 const configGetCommand = Command.make("get", { key: configKeyArg }, ({ key }) =>
 	Effect.gen(function* () {
 		const fromDisk = yield* Effect.promise(() => readConfig());
@@ -156,7 +184,7 @@ const configGetCommand = Command.make("get", { key: configKeyArg }, ({ key }) =>
 	}),
 );
 
-// --- 6. roadwise config list ---
+// --- 7. roadwise config list ---
 const configListCommand = Command.make("list", {}, () =>
 	Effect.gen(function* () {
 		const fromDisk = yield* Effect.promise(() => readConfig());
@@ -180,7 +208,7 @@ export const configCommand = Command.make("config").pipe(
 	]),
 );
 
-// --- 7. roadwise apps ls ---
+// --- 8. roadwise apps ls ---
 const appsListCommand = Command.make("ls", {}, () =>
 	Effect.gen(function* () {
 		const config = yield* CliConfig;

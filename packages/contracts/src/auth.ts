@@ -38,3 +38,8 @@ export class ApiKeyAuth extends HttpApiMiddleware.Service<
 		AuthenticationUnavailableError.pipe(HttpApiSchema.status(500)),
 	],
 }) {}
+
+export const UserProfile = Schema.Struct({
+	email: Schema.String,
+	name: Schema.NullOr(Schema.String),
+});

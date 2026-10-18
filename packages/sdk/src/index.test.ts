@@ -7,6 +7,7 @@ describe("Roadwise SDK", () => {
 		const client = new Roadwise({ apiKey: "rw_test_key" });
 		assert.ok(client);
 		assert.equal(typeof client.apps.list, "function");
+		assert.equal(typeof client.auth.me, "function");
 	});
 
 	it("initializes with custom baseUrl", () => {
@@ -16,6 +17,7 @@ describe("Roadwise SDK", () => {
 		});
 		assert.ok(client);
 		assert.equal(typeof client.apps.list, "function");
+		assert.equal(typeof client.auth.me, "function");
 	});
 
 	it("initializes with custom url option", () => {
@@ -25,5 +27,6 @@ describe("Roadwise SDK", () => {
 		});
 		assert.ok(client);
 		assert.equal(typeof client.apps.list, "function");
+		assert.equal(typeof client.auth.me, "function");
 	});
 });

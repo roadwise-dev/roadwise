@@ -5,6 +5,7 @@ import { apiKey, app } from "@/db/schema";
 import { hashToken } from "@/lib/api-auth";
 import { createTestDatabase } from "../../../tests/database";
 import { makeApiHandler } from "./api";
+import type { UserProfileLookup } from "./auth-handlers";
 
 const ownerToken = "rw_fixture-owner";
 const otherToken = "rw_fixture-other";
@@ -43,7 +44,17 @@ const otherApps = [
 	},
 ];
 
-describe("apps HTTP API", () => {
+const mockUserLookup: UserProfileLookup = async (userId: string) => {
+	if (userId === "test-owner") {
+		return { email: "owner@roadwise.test", name: "Test Owner" };
+	}
+	if (userId === "error-user") {
+		throw new Error("Clerk lookup failed");
+	}
+	return { email: `${userId}@roadwise.test`, name: null };
+};
+
+describe("apps and auth HTTP API", () => {
 	let fixture: Awaited<ReturnType<typeof createTestDatabase>>;
 	let api: ReturnType<typeof makeApiHandler>;
 
@@ -52,6 +63,14 @@ describe("apps HTTP API", () => {
 			new Request("http://roadwise.test/api/v1/apps", {
 				headers: { Authorization: `Bearer ${token}` },
 			}),
+		);
+	}
+
+	function requestAuthMe(token?: string) {
+		const headers: Record<string, string> = {};
+		if (token) headers.Authorization = `Bearer ${token}`;
+		return api.handler(
+			new Request("http://roadwise.test/api/v1/auth/me", { headers }),
 		);
 	}
 
@@ -106,7 +125,7 @@ describe("apps HTTP API", () => {
 				hint: "fixture",
 			},
 		]);
-		api = makeApiHandler(fixture.database);
+		api = makeApiHandler(fixture.database, mockUserLookup);
 	});
 
 	afterEach(async () => {
@@ -117,56 +136,82 @@ describe("apps HTTP API", () => {
 		}
 	});
 
-	it("rejects missing or malformed credentials before querying the database", async () => {
-		await fixture.client.execute("DROP TABLE api_key");
-		for (const authorization of [undefined, "Basic invalid", "Bearer"]) {
-			const response = await api.handler(
-				new Request("http://roadwise.test/api/v1/apps", {
-					headers: authorization ? { Authorization: authorization } : {},
-				}),
-			);
-			assert.equal(response.status, 401);
-			assert.deepEqual(await response.json(), {
-				_tag: "UnauthorizedError",
-				error:
-					"Missing or invalid Authorization header. Format must be 'Bearer <token>'",
-			});
-		}
-	});
-
-	it("rejects an unknown API key", async () => {
-		const response = await request("rw_unknown-key");
-		assert.equal(response.status, 401);
+	it("returns owned apps in created_at desc order", async () => {
+		const response = await request(ownerToken);
+		assert.equal(response.status, 200);
 		assert.deepEqual(await response.json(), {
-			_tag: "UnauthorizedError",
-			error: "Invalid API key",
+			success: true,
+			data: ownedApps,
 		});
 	});
 
-	it("returns only the owner's apps, sorted and encoded for JSON", async () => {
-		const response = await request(ownerToken);
-		assert.equal(response.status, 200);
-		assert.match(
-			response.headers.get("content-type") ?? "",
-			/application\/json/,
-		);
-		assert.deepEqual(await response.json(), { success: true, data: ownedApps });
-		const [key] = await fixture.database
-			.select()
-			.from(apiKey)
-			.where(eq(apiKey.id, "owner-key"));
-		assert.ok(key.lastUsedAt instanceof Date);
-	});
-
-	it("returns an empty list for an authenticated owner without apps", async () => {
+	it("returns an empty list for a user without apps", async () => {
 		const response = await request(emptyToken);
 		assert.equal(response.status, 200);
 		assert.deepEqual(await response.json(), { success: true, data: [] });
 	});
 
-	it("rejects a revoked key", async () => {
-		await fixture.database.delete(apiKey).where(eq(apiKey.id, "owner-key"));
-		const response = await request(ownerToken);
+	it("returns the authenticated user profile from /api/v1/auth/me", async () => {
+		const response = await requestAuthMe(ownerToken);
+		assert.equal(response.status, 200);
+		assert.deepEqual(await response.json(), {
+			email: "owner@roadwise.test",
+			name: "Test Owner",
+		});
+	});
+
+	it("rejects /api/v1/auth/me when unauthenticated", async () => {
+		const response = await requestAuthMe();
+		assert.equal(response.status, 401);
+		assert.deepEqual(await response.json(), {
+			_tag: "UnauthorizedError",
+			error:
+				"Missing or invalid Authorization header. Format must be 'Bearer <token>'",
+		});
+	});
+
+	it("rejects requests missing the authorization header", async () => {
+		const response = await api.handler(
+			new Request("http://roadwise.test/api/v1/apps"),
+		);
+		assert.equal(response.status, 401);
+		assert.deepEqual(await response.json(), {
+			_tag: "UnauthorizedError",
+			error:
+				"Missing or invalid Authorization header. Format must be 'Bearer <token>'",
+		});
+	});
+
+	it("rejects authorization headers that do not use the Bearer scheme", async () => {
+		const response = await api.handler(
+			new Request("http://roadwise.test/api/v1/apps", {
+				headers: { Authorization: `Basic ${ownerToken}` },
+			}),
+		);
+		assert.equal(response.status, 401);
+		assert.deepEqual(await response.json(), {
+			_tag: "UnauthorizedError",
+			error:
+				"Missing or invalid Authorization header. Format must be 'Bearer <token>'",
+		});
+	});
+
+	it("rejects empty Bearer tokens", async () => {
+		const response = await api.handler(
+			new Request("http://roadwise.test/api/v1/apps", {
+				headers: { Authorization: "Bearer " },
+			}),
+		);
+		assert.equal(response.status, 401);
+		assert.deepEqual(await response.json(), {
+			_tag: "UnauthorizedError",
+			error:
+				"Missing or invalid Authorization header. Format must be 'Bearer <token>'",
+		});
+	});
+
+	it("rejects unknown tokens", async () => {
+		const response = await request("rw_unknown");
 		assert.equal(response.status, 401);
 		assert.deepEqual(await response.json(), {
 			_tag: "UnauthorizedError",

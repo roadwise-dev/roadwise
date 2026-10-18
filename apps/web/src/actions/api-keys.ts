@@ -20,9 +20,10 @@ export async function createApiKey(name: string) {
 
 	// Generate a secure random token
 	const rawToken = "rw_" + crypto.randomBytes(24).toString("hex");
-	
+
 	const keyHash = hashToken(rawToken);
-	const hint = rawToken.substring(0, 7) + "..." + rawToken.substring(rawToken.length - 4);
+	const hint =
+		rawToken.substring(0, 7) + "..." + rawToken.substring(rawToken.length - 4);
 
 	try {
 		await db.insert(apiKey).values({
@@ -33,7 +34,7 @@ export async function createApiKey(name: string) {
 		});
 
 		revalidatePath("/dashboard/developer");
-		
+
 		// Return the raw token ONLY ONCE. It cannot be retrieved again.
 		return { token: rawToken };
 	} catch (error) {
@@ -73,7 +74,7 @@ export async function revokeApiKey(id: string) {
 		await db
 			.delete(apiKey)
 			.where(and(eq(apiKey.id, id), eq(apiKey.userId, userId)));
-			
+
 		revalidatePath("/dashboard/developer");
 		return { success: true };
 	} catch (error) {

@@ -1,16 +1,10 @@
-import { ApiReference } from '@scalar/nextjs-api-reference';
-import { getOpenApiSpec } from '@/lib/openapi';
+import { db } from "@/db/db";
+import { makeApiHandler } from "@/server/http/api";
 
-const spec = getOpenApiSpec();
+const { handler } = makeApiHandler(db);
 
-export const GET = ApiReference({
-	spec: {
-		content: spec as any,
-	},
-	theme: 'default',
-	layout: 'modern',
-	hideDownloadButton: true,
-	metaData: {
-		title: 'Roadwise API Reference',
-	},
-});
+export const runtime = "nodejs";
+
+export function GET(request: Request) {
+	return handler(request);
+}

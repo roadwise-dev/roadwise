@@ -1,48 +1,48 @@
 {
-  "version": "7",
-  "dialect": "sqlite",
-  "entries": [
-    {
-      "idx": 0,
-      "version": "6",
-      "when": 1779953331970,
-      "tag": "0000_feature_app_id_nullable_board",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1779963971869,
-      "tag": "0001_baseline_current_schema",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1780159471212,
-      "tag": "0002_yummy_morbius",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1780159572872,
-      "tag": "0003_dapper_invaders",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "6",
-      "when": 1780159782325,
-      "tag": "0004_little_inhumans",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "6",
-      "when": 1780167550245,
-      "tag": "0005_damp_switch",
-      "breakpoints": true
-    }
-  ]
+	"version": "7",
+	"dialect": "sqlite",
+	"entries": [
+		{
+			"idx": 0,
+			"version": "6",
+			"when": 1779953331970,
+			"tag": "0000_feature_app_id_nullable_board",
+			"breakpoints": true
+		},
+		{
+			"idx": 1,
+			"version": "6",
+			"when": 1779963971869,
+			"tag": "0001_baseline_current_schema",
+			"breakpoints": true
+		},
+		{
+			"idx": 2,
+			"version": "6",
+			"when": 1780159471212,
+			"tag": "0002_yummy_morbius",
+			"breakpoints": true
+		},
+		{
+			"idx": 3,
+			"version": "6",
+			"when": 1780159572872,
+			"tag": "0003_dapper_invaders",
+			"breakpoints": true
+		},
+		{
+			"idx": 4,
+			"version": "6",
+			"when": 1780159782325,
+			"tag": "0004_little_inhumans",
+			"breakpoints": true
+		},
+		{
+			"idx": 5,
+			"version": "6",
+			"when": 1780167550245,
+			"tag": "0005_damp_switch",
+			"breakpoints": true
+		}
+	]
 }

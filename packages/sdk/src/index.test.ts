@@ -1,0 +1,32 @@
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
+import { Roadwise } from "./index";
+
+describe("Roadwise SDK", () => {
+	it("initializes with default options", () => {
+		const client = new Roadwise({ apiKey: "rw_test_key" });
+		assert.ok(client);
+		assert.equal(typeof client.apps.list, "function");
+		assert.equal(typeof client.auth.me, "function");
+	});
+
+	it("initializes with custom baseUrl", () => {
+		const client = new Roadwise({
+			apiKey: "rw_test_key",
+			baseUrl: "https://my-selfhosted-roadwise.internal/",
+		});
+		assert.ok(client);
+		assert.equal(typeof client.apps.list, "function");
+		assert.equal(typeof client.auth.me, "function");
+	});
+
+	it("initializes with custom url option", () => {
+		const client = new Roadwise({
+			apiKey: "rw_test_key",
+			url: "https://my-selfhosted-roadwise.internal/",
+		});
+		assert.ok(client);
+		assert.equal(typeof client.apps.list, "function");
+		assert.equal(typeof client.auth.me, "function");
+	});
+});

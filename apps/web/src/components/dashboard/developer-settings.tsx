@@ -1,19 +1,41 @@
 "use client";
 
-import { useState } from "react";
-import { createApiKey, revokeApiKey, type getApiKeys } from "@/actions/api-keys";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { toast } from "sonner";
-import { Trash2, Copy, Key, ArrowRight } from "lucide-react";
-import { Label } from "@/components/ui/label";
+import { ArrowRight, Copy, Key, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import { toast } from "sonner";
+import {
+	createApiKey,
+	type getApiKeys,
+	revokeApiKey,
+} from "@/actions/api-keys";
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 type ApiKeyList = Awaited<ReturnType<typeof getApiKeys>>;
 
-export function DeveloperSettings({ initialKeys }: { initialKeys: ApiKeyList }) {
+export function DeveloperSettings({
+	initialKeys,
+}: {
+	initialKeys: ApiKeyList;
+}) {
 	const [keys, setKeys] = useState(initialKeys);
 	const [isCreating, setIsCreating] = useState(false);
 	const [newKeyName, setNewKeyName] = useState("");
@@ -38,22 +60,27 @@ export function DeveloperSettings({ initialKeys }: { initialKeys: ApiKeyList }) 
 		if (result.token) {
 			setGeneratedToken(result.token);
 			setNewKeyName("");
-			
+
 			// Optimistically update the list without a full refetch
 			const newKeyEntry = {
 				id: "temp-" + Date.now(),
 				name: newKeyName,
-				hint: result.token.substring(0, 7) + "..." + result.token.substring(result.token.length - 4),
+				hint:
+					result.token.substring(0, 7) +
+					"..." +
+					result.token.substring(result.token.length - 4),
 				createdAt: new Date(),
-				lastUsedAt: null
+				lastUsedAt: null,
 			};
-			
+
 			setKeys([newKeyEntry as any, ...keys]);
 		}
 	};
 
 	const handleRevokeKey = async (id: string) => {
-		const confirmed = window.confirm("Are you sure you want to revoke this key? Any application using it will lose access immediately.");
+		const confirmed = window.confirm(
+			"Are you sure you want to revoke this key? Any application using it will lose access immediately.",
+		);
 		if (!confirmed) return;
 
 		const result = await revokeApiKey(id);
@@ -62,7 +89,7 @@ export function DeveloperSettings({ initialKeys }: { initialKeys: ApiKeyList }) 
 			return;
 		}
 
-		setKeys(keys.filter(k => k.id !== id));
+		setKeys(keys.filter((k) => k.id !== id));
 		toast.success("API key revoked");
 	};
 
@@ -81,18 +108,26 @@ export function DeveloperSettings({ initialKeys }: { initialKeys: ApiKeyList }) 
 							<CardDescription>
 								Use these tokens to authenticate with the Roadwise API.
 								<br />
-								<Link href="/docs/api" className="inline-flex items-center text-primary hover:underline mt-2" target="_blank">
-									Read the API Documentation <ArrowRight className="ml-1 h-3 w-3" />
+								<Link
+									href="/docs/api"
+									className="inline-flex items-center text-primary hover:underline mt-2"
+									target="_blank"
+								>
+									Read the API Documentation{" "}
+									<ArrowRight className="ml-1 h-3 w-3" />
 								</Link>
 							</CardDescription>
 						</div>
-						<Dialog open={isDialogOpen} onOpenChange={(open) => {
-							setIsDialogOpen(open);
-							if (!open) {
-								setGeneratedToken(null);
-								setNewKeyName("");
-							}
-						}}>
+						<Dialog
+							open={isDialogOpen}
+							onOpenChange={(open) => {
+								setIsDialogOpen(open);
+								if (!open) {
+									setGeneratedToken(null);
+									setNewKeyName("");
+								}
+							}}
+						>
 							<DialogTrigger asChild>
 								<Button>Generate New Token</Button>
 							</DialogTrigger>
@@ -100,7 +135,8 @@ export function DeveloperSettings({ initialKeys }: { initialKeys: ApiKeyList }) 
 								<DialogHeader>
 									<DialogTitle>Generate API Key</DialogTitle>
 									<DialogDescription>
-										Create a new token to access the Roadwise API from external applications.
+										Create a new token to access the Roadwise API from external
+										applications.
 									</DialogDescription>
 								</DialogHeader>
 
@@ -132,14 +168,24 @@ export function DeveloperSettings({ initialKeys }: { initialKeys: ApiKeyList }) 
 												For your security, it will never be shown again.
 											</p>
 											<div className="flex gap-2 items-center mt-2">
-												<Input value={generatedToken} readOnly className="font-mono" />
-												<Button variant="outline" size="icon" onClick={() => copyToClipboard(generatedToken)}>
+												<Input
+													value={generatedToken}
+													readOnly
+													className="font-mono"
+												/>
+												<Button
+													variant="outline"
+													size="icon"
+													onClick={() => copyToClipboard(generatedToken)}
+												>
 													<Copy className="h-4 w-4" />
 												</Button>
 											</div>
 										</div>
 										<DialogFooter>
-											<Button onClick={() => setIsDialogOpen(false)}>I have copied it</Button>
+											<Button onClick={() => setIsDialogOpen(false)}>
+												I have copied it
+											</Button>
 										</DialogFooter>
 									</div>
 								)}
@@ -155,7 +201,10 @@ export function DeveloperSettings({ initialKeys }: { initialKeys: ApiKeyList }) 
 					) : (
 						<div className="space-y-4">
 							{keys.map((key) => (
-								<div key={key.id} className="flex items-center justify-between p-4 rounded-lg border border-border bg-card">
+								<div
+									key={key.id}
+									className="flex items-center justify-between p-4 rounded-lg border border-border bg-card"
+								>
 									<div className="space-y-1">
 										<div className="font-medium">{key.name}</div>
 										<div className="text-sm font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded-md w-fit">
@@ -166,9 +215,9 @@ export function DeveloperSettings({ initialKeys }: { initialKeys: ApiKeyList }) 
 										<div>
 											Created {new Date(key.createdAt).toLocaleDateString()}
 										</div>
-										<Button 
-											variant="ghost" 
-											size="icon" 
+										<Button
+											variant="ghost"
+											size="icon"
 											className="text-destructive hover:text-destructive hover:bg-destructive/10"
 											onClick={() => handleRevokeKey(key.id)}
 										>

@@ -1,0 +1,11 @@
+{
+	"private": true,
+	"name": "@roadwise/contracts",
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"dependencies": {
+		"effect": "4.0.5"
+	}
+}
